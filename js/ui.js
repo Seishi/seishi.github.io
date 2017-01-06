@@ -1,9 +1,9 @@
-getClass('line').forEach(function (ele) {
-  ele.style.opacity = '0';
-})
+// getClass('line').forEach(function (ele) {
+//   ele.style.opacity = '0';
+// })
 window.onload = function () {
 
-//右侧目录判断是否显示
+  // 右侧目录判断是否显示
   var airticleContent = document.querySelector('.article .inner');
   var toc = getClass('toc-content')[0];
 
@@ -11,7 +11,7 @@ window.onload = function () {
     airticleContent.removeChild(toc)
   }
 
-//  切换头部选中状态
+  // 切换头部选中状态
   var type = window.location.pathname.split('/')[1];
   var headerNavs = getClass('main-nav-link');
   if (type === 'overview') {
@@ -47,10 +47,8 @@ window.onload = function () {
       })
     })
   });
-  
 
-
-//滚屏时右侧边栏根据当前标题高亮对应目录项
+  //滚屏时右侧边栏根据当前标题高亮对应目录项
   var headings = getClass('article-heading');
   var tocLinks = getClass('toc-link');
   var tocLinksHref = [];
@@ -88,7 +86,7 @@ window.onload = function () {
   var currentRangeStart = 0;
   var currentRangeEnd = headingTops[1];
   var currentIndex = 0;
-  
+
   function getCurrentHeading (top) {
     for (var i = 0; i < headingTops.length; i++) {
       if (top >= headingTops[i] && top <= headingTops[i + 1]) {
@@ -144,98 +142,22 @@ window.onload = function () {
     window.scrollTo(0, 0);
   });
 
-  var jsVersionContent = getClass('js-version');
-  var androidSyncVersionContent = getClass('android-sync-version');
-  var androidAuthVersionContent = getClass('android-auth-version');
-  var iosDownLoadSync = getClass('ios-download-sync');
-  var iosDownLoadAuth = getClass('ios-download-auth');
-  var iosDownLoadCore = getClass('ios-download-core');
-  var videoWebVersionContent = getClass('video-web-version');
-  var videoAndroidVersionContent = getClass('video-android-version');
-  var videoIosVersionContent = getClass('video-ios-version');
-  var videoAndroidDownloadSrc = getClass('video-android-download');
-  var videoIosDownloadSrc = getClass('video-ios-download');
-  var imAndroidDownloadSrc = getClass('im-android-download');
-  var imIosDownloadSrc = getClass('im-ios-download');
-    var config = {
-      authDomain: "wd-download.wilddog.com",
-      syncURL: "https://wd-download.wilddogio.com"
-    };
-
-    wilddog.initializeApp(config);
-    var ref = wilddog.sync().ref();
-    ref.once('value', function (snap) {
-      var jsVersion = snap.val().WilddogJavaScript.version;
-      var iosAuthVersion = snap.val().WilddogAuthiOS.version;
-      var iosSyncVersion = snap.val().WilddogSynciOS.version;
-      var androidSyncVersion = snap.val().WilddogSyncAndroid.version;
-      var androidAuthVersion = snap.val().WilddogAuthAndroid.version;
-      var videoWebVersion = snap.val().WilddogVideoWeb.version;
-      var videoAndroidVersion = snap.val().WilddogVideoAndroid.version;
-      var videoIosVersion = snap.val().WilddogVideoiOS.version;
-      var imAndroidDownload = snap.val().WilddogIMAndroid.cdn;
-      var imIosDownload = snap.val().WilddogIMiOS.cdn;
-      jsVersionContent.forEach(function (ele) {
-        ele.textContent = jsVersion;
-      });
-      androidSyncVersionContent.forEach(function (ele) {
-        ele.textContent = androidSyncVersion;
-      });
-      androidAuthVersionContent.forEach(function (ele) {
-        ele.textContent = androidAuthVersion;
-      });
-      videoWebVersionContent.forEach(function (ele) {
-        ele.textContent = videoWebVersion;
-      });
-      videoAndroidVersionContent.forEach(function (ele) {
-        ele.textContent = videoAndroidVersion;
-      });
-      videoIosVersionContent.forEach(function (ele) {
-        ele.textContent = videoIosVersion;
-      });
-      iosDownLoadSync.forEach(function (ele) {
-        ele.setAttribute('href', snap.val().WilddogSynciOS.cdn);
-      });
-      iosDownLoadAuth.forEach(function (ele) {
-        ele.setAttribute('href', snap.val().WilddogAuthiOS.cdn);
-      });
-      iosDownLoadCore.forEach(function (ele) {
-        ele.setAttribute('href', snap.val().WilddogCoreiOS.cdn);
-      });
-      videoAndroidDownloadSrc.forEach(function (ele) {
-        ele.setAttribute('href', videoAndroidDownload);
-      });
-      videoIosDownloadSrc.forEach(function (ele) {
-        ele.setAttribute('href', videoIosDownload);
-      });
-      getClass('line').forEach(function (ele) {
-        ele.style.opacity = '1';
-      })
-      imAndroidDownloadSrc.forEach(function (ele) {
-        ele.setAttribute('href', imAndroidDownload);
-      });
-      imIosDownloadSrc.forEach(function (ele) {
-        ele.setAttribute('href', imIosDownload);
-      });
-    });
-
-    var slides = getClass('slide');
-    slides.forEach(function (ele) {
-      var tabs = [].slice.call(ele.getElementsByClassName('slide-tab'), 0);
-      var contents = [].slice.call(ele.getElementsByClassName('slide-content'), 0);
-      tabs.forEach(function (tab) {
-        tab.addEventListener('click', function () {
-          getSiblings(tab).forEach(function (sibling) {
-            removeClass(sibling, 'tab-current')
-          });
-          var index = tabs.indexOf(this);
-          addClass(this, 'tab-current');
-          contents.forEach(function (content) {
-            removeClass(content, 'slide-content-show')
-          });
-          addClass(contents[index], 'slide-content-show');
-        })
+  var slides = getClass('slide');
+  slides.forEach(function (ele) {
+    var tabs = [].slice.call(ele.getElementsByClassName('slide-tab'), 0);
+    var contents = [].slice.call(ele.getElementsByClassName('slide-content'), 0);
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        getSiblings(tab).forEach(function (sibling) {
+          removeClass(sibling, 'tab-current')
+        });
+        var index = tabs.indexOf(this);
+        addClass(this, 'tab-current');
+        contents.forEach(function (content) {
+          removeClass(content, 'slide-content-show')
+        });
+        addClass(contents[index], 'slide-content-show');
       })
     })
-
+  })
 };

@@ -37,6 +37,7 @@ var toggleClass = function (ele, className) {
     removeClass(ele, className)
   }
 };
+
 function getQueryStringByName(name){
   var result = location.search.match(new RegExp("[\?\&]" + name+ "=([^\&]+)","i"));
   if(result == null || result.length < 1){
@@ -47,10 +48,10 @@ function getQueryStringByName(name){
 
 function ajax(options){
   var xmlreq;
-  if(window.ActiveXObject){ //如果是IE浏览器    
-    xmlreq = new ActiveXObject("Microsoft.XMLHTTP");    
-  }else if(window.XMLHttpRequest){ //非IE浏览器    
-    xmlreq = new XMLHttpRequest();    
+  if(window.ActiveXObject){ //如果是IE浏览器
+    xmlreq = new ActiveXObject("Microsoft.XMLHTTP");
+  }else if(window.XMLHttpRequest){ //非IE浏览器
+    xmlreq = new XMLHttpRequest();
   };
   xmlreq.onreadystatechange = function () {
     if (xmlreq.readyState == 4) {
@@ -66,13 +67,6 @@ function ajax(options){
   xmlreq.send(options.data)
 }
 
-var user;
-var currentPath = window.location.href;
-getClass('register')[0].setAttribute('href', 'https://www.wilddog.com/my-account/signup?next=' + currentPath);
-getClass('register-link')[0].setAttribute('href', 'https://www.wilddog.com/my-account/signup?next=' + currentPath);
-getClass('login')[0].setAttribute('href', 'https://www.wilddog.com/my-account/login?next=' + currentPath);
-getClass('logout-btn')[0].setAttribute('href', 'https://www.wilddog.com/account/logout?next=' + currentPath);
-
 //是否显示底部注册入口
 var novice = getClass('novice');
 var showNovice = sessionStorage.getItem('ssn');
@@ -84,50 +78,19 @@ novice.forEach(function (ele, index) {
     sessionStorage.setItem('ssn', false);
   });
 });
+
 //是否显示底部意见反馈
 var feedBack = getClass('feed-back')[0];
 var showFeedBack = sessionStorage.getItem('sfb');
 if (feedBack) {
-    if (showFeedBack == undefined || showFeedBack == true) {
-      feedBack.style.display = 'block';
-    } else {
-      feedBack.style.display = 'none';
-    }
-    /*用户反馈点击关闭*/
-    getClass('close-feed')[0].addEventListener('click', function () {
-      feedBack.style.display = 'none';
-      sessionStorage.setItem('sfb', false);
-    });
+  if (showFeedBack == undefined || showFeedBack == true) {
+    feedBack.style.display = 'block';
+  } else {
+    feedBack.style.display = 'none';
+  }
+  /*用户反馈点击关闭*/
+  getClass('close-feed')[0].addEventListener('click', function () {
+    feedBack.style.display = 'none';
+    sessionStorage.setItem('sfb', false);
+  });
 }
-//登录信息
-var userProfile = getClass('header-user')[0];
-var loginTab = getClass('header-info')[0];
-creatIframe(function () {
-  window.addEventListener('message', function(event) {
-    if (event.origin === "https://www.wilddog.com") {
-      user = event.data;
-      if (showNovice == undefined || showNovice == true) {
-        if (user.email && user.avatar) {
-          getClass('novice-register')[0].style.display = 'none';
-          getClass('novice-help')[0].style.display = 'block';
-        } else {
-          getClass('novice-register')[0].style.display = 'block';
-          getClass('novice-help')[0].style.display = 'none';
-        }
-      } else {
-        novice.forEach(function (ele) {
-          ele.style.display = 'none';
-        });
-      }
-      if (user.email && user.avatar) {
-        getClass('user-email')[0].textContent = user.email;
-        getClass('profile-avatar')[0].setAttribute('src', user.avatar);
-        loginTab.style.display = 'block';
-        userProfile.style.display = 'none';
-      } else {
-        loginTab.style.display = 'none';
-        userProfile.style.display = 'block';
-      }
-    }
-  })
-});
