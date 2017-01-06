@@ -1,13 +1,3 @@
-var creatIframe = function(cb) {
-    var iframe = document.createElement('iframe');
-    iframe.src = 'https://www.wilddog.com/iframe/dociframe';
-    iframe.style.opacity = 0;
-    iframe.width = 1;
-    iframe.height = 1;
-    document.body.appendChild(iframe);
-    cb();
-};
-
 var getClass = function (className) {
   return [].slice.call(document.getElementsByClassName(className))
 };
