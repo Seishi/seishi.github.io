@@ -1,0 +1,12 @@
+{
+  "id": "20261003-15-ex14-ellipse-120-min",
+  "slug": "ex14-ellipse-120-min",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "ellipse"
+  ],
+  "title": "椭圆 $\\dfrac{x^{2}}{5}+\\dfrac{y^{2}}{4}=1$ 上有三个点 $A,B,C$，满足 $\\angle AOB=\\angle BOC=\\angle COA$。则 $|OA|^{2}-\\dfrac{2}{|OB|^{2}}-\\dfrac{2}{|OC|^{2}}$ 的最小值为多少？",
+  "answer": "$\\dfrac{63}{20}$"
+}

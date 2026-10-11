@@ -1,0 +1,12 @@
+{
+  "id": "20261003-07-ex6-hyperbola-eccentricity",
+  "slug": "ex6-hyperbola-eccentricity",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "hyperbola"
+  ],
+  "title": "双曲线 $\\dfrac{x^{2}}{a^{2}}-\\dfrac{y^{2}}{b^{2}}=1$（$a,b>0$）的右焦点为 $F$。过 $F$ 的直线交双曲线于 $A,B$，点 $C$ 是 $A$ 关于原点的对称点。若 $CF\\perp AB$ 且 $|CF|=\\dfrac{4}{3}|FB|$，求离心率。",
+  "answer": "$\\dfrac{\\sqrt{109}}{7}$；$\\sqrt{13}$"
+}

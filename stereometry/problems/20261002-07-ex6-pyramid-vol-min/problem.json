@@ -1,0 +1,350 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "body": "custom",
+    "scale": 0.9,
+    "points": {
+      "A": [
+        "0",
+        "3*sqrt(2)/2",
+        "0"
+      ],
+      "B": [
+        "5",
+        "9*sqrt(2)/2",
+        "0"
+      ],
+      "C": [
+        "0",
+        "0",
+        "0"
+      ],
+      "D": [
+        "5",
+        "0",
+        "0"
+      ],
+      "P": [
+        "9/5",
+        "0",
+        "12/5"
+      ],
+      "Ap": [
+        "0",
+        "6*sqrt(2)",
+        "0"
+      ],
+      "Bp": [
+        "5",
+        "2*sqrt(2)",
+        "0"
+      ]
+    },
+    "topo": {
+      "spheres": [
+        "P",
+        "A",
+        "B",
+        "C",
+        "D",
+        "Ap",
+        "Bp"
+      ],
+      "edges": [
+        {
+          "a": "A",
+          "b": "B"
+        },
+        {
+          "a": "B",
+          "b": "C"
+        },
+        {
+          "a": "C",
+          "b": "D"
+        },
+        {
+          "a": "D",
+          "b": "A"
+        },
+        {
+          "a": "P",
+          "b": "A"
+        },
+        {
+          "a": "P",
+          "b": "B"
+        },
+        {
+          "a": "P",
+          "b": "C"
+        },
+        {
+          "a": "P",
+          "b": "D"
+        },
+        {
+          "a": "A",
+          "b": "C"
+        },
+        {
+          "a": "B",
+          "b": "D"
+        },
+        {
+          "a": "Ap",
+          "b": "Bp"
+        },
+        {
+          "a": "Ap",
+          "b": "C"
+        },
+        {
+          "a": "Bp",
+          "b": "D"
+        },
+        {
+          "a": "P",
+          "b": "Ap"
+        },
+        {
+          "a": "P",
+          "b": "Bp"
+        }
+      ]
+    },
+    "query": {
+      "type": "volume",
+      "kind": "tetra",
+      "pts": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    "_note": "所求不属于 5 类 query；index.html 由 _render.py 精确渲染。"
+  },
+  "lesson": {
+    "language": "zh-CN",
+    "meta": "交互解题 · 体积最小值",
+    "title": "四棱锥 $P$-$ABCD$ 中，$\\triangle PAB$ 为直角三角形，且它在平面 $PDC$ 上的投影恰为 $\\triangle PDC$。已知 $PC=3$，$PD=4$，$CD=5$，求四棱锥 $P$-$ABCD$ 体积的最小值",
+    "answerLabel": "体积的最小值",
+    "answerValue": "$12 \\sqrt{2}$"
+  },
+  "steps": [
+    {
+      "title": "由 $3$-$4$-$5$ 与投影条件建系",
+      "content": "<p>底面 $ABCD$ 在 $z=0$。$PC=3$、$PD=4$、$CD=5$，故 $\\triangle PDC$ 直角在 $P$。把 $C$ 放原点、$CD$ 沿 $x$ 轴，并取 $P$ 在 $xz$ 平面：</p>$$C(0,0,0),\\ D(5,0,0),\\ P\\left(\\dfrac{9}{5},0,\\dfrac{12}{5}\\right).$$<p>$\\triangle PAB$ 在平面 $PDC$ 上的投影恰为 $\\triangle PDC$，故 $A$、$B$ 在该平面上的射影分别是 $C$、$D$，于是 $AC\\perp$ 平面 $PDC$、$BD\\perp$ 平面 $PDC$。</p>",
+      "highlight": [
+        "Axis",
+        "Plane_ABCD",
+        "Plane_PDC",
+        "Len_PC",
+        "Len_PD",
+        "Len_CD",
+        "Point_P",
+        "Point_C",
+        "Point_D"
+      ],
+      "cameraPos": {
+        "x": 15.16,
+        "y": 8.43,
+        "z": 9.04
+      }
+    },
+    {
+      "title": "用高度参数表示底面",
+      "content": "<p>平面 $PDC$ 的法向量沿 $y$ 轴，故</p>$$A=(0,h_1,0),\\quad B=(5,h_2,0).$$<p>为使底面是凸四边形，$h_1$、$h_2$ 同号。底面积为 $\\dfrac{5}{2}(|h_1|+|h_2|)$，$P$ 到底面距离 $\\dfrac{12}{5}$，体积</p>$$V=2(|h_1|+|h_2|).$$",
+      "highlight": [
+        "Point_A",
+        "Point_B",
+        "Point_C",
+        "Point_D",
+        "Plane_ABCD",
+        "Line_AC",
+        "Line_BD"
+      ],
+      "cameraPos": {
+        "x": 11.77,
+        "y": 9.92,
+        "z": 12.16
+      }
+    },
+    {
+      "title": "情形一：直角在 $A$",
+      "content": "<p>$\\overrightarrow{PA}\\cdot\\overrightarrow{AB}=0$ 化成 $h_1(h_2-h_1)=9$。取 $h_1>0$、$h_2>0$，则 $h_2=h_1+\\dfrac{9}{h_1}$，</p>$$V=2\\left(2h_1+\\dfrac{9}{h_1}\\right)\\ge 12\\sqrt{2},$$<p>当 $h_1=\\dfrac{3\\sqrt{2}}{2}$、$h_2=\\dfrac{9\\sqrt{2}}{2}$ 时等号成立。图中实线底面 $ABCD$ 就是这一款。</p>",
+      "highlight": [
+        "Plane_PAB",
+        "Plane_ABCD",
+        "Point_P",
+        "Point_A",
+        "Point_B",
+        "Len_PA",
+        "Len_AB",
+        "Line_AC",
+        "Line_BD"
+      ],
+      "cameraPos": {
+        "x": 10.93,
+        "y": 12.59,
+        "z": 9.56
+      }
+    },
+    {
+      "title": "情形二：直角在 $B$",
+      "content": "<p>$\\overrightarrow{PB}\\cdot\\overrightarrow{BA}=0$ 化成 $h_2(h_1-h_2)=16$，$h_1=h_2+\\dfrac{16}{h_2}$，</p>$$V=2\\left(2h_2+\\dfrac{16}{h_2}\\right)\\ge 16\\sqrt{2},$$<p>当 $h_2=2\\sqrt{2}$、$h_1=6\\sqrt{2}$ 时等号成立。图中虚线底面 $A'B'CD$ 就是这一款，比情形一大。直角在 $P$ 时更大。故全局最小为 $12 \\sqrt{2}$。</p>",
+      "highlight": [
+        "Plane_PApBp",
+        "Plane_ApBpCD",
+        "Point_P",
+        "Point_Ap",
+        "Point_Bp",
+        "Line_ApC",
+        "Line_BpD"
+      ],
+      "cameraPos": {
+        "x": 12.93,
+        "y": 11.07,
+        "z": 9.27
+      }
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {
+        "type": "axes",
+        "size": 5
+      },
+      "Point_P": {
+        "type": "point",
+        "center": "P"
+      },
+      "Point_A": {
+        "type": "point",
+        "center": "A"
+      },
+      "Point_B": {
+        "type": "point",
+        "center": "B"
+      },
+      "Point_C": {
+        "type": "point",
+        "center": "C"
+      },
+      "Point_D": {
+        "type": "point",
+        "center": "D"
+      },
+      "Point_Ap": {
+        "type": "point",
+        "center": "Ap"
+      },
+      "Point_Bp": {
+        "type": "point",
+        "center": "Bp"
+      },
+      "Line_AC": {
+        "type": "line",
+        "a": "A",
+        "b": "C",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_BD": {
+        "type": "line",
+        "a": "B",
+        "b": "D",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_ApC": {
+        "type": "line",
+        "a": "Ap",
+        "b": "C",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_BpD": {
+        "type": "line",
+        "a": "Bp",
+        "b": "D",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Len_PC": {
+        "type": "measure",
+        "a": "P",
+        "b": "C",
+        "label": "3"
+      },
+      "Len_PD": {
+        "type": "measure",
+        "a": "P",
+        "b": "D",
+        "label": "4"
+      },
+      "Len_CD": {
+        "type": "measure",
+        "a": "C",
+        "b": "D",
+        "label": "5"
+      },
+      "Len_PA": {
+        "type": "measure",
+        "a": "P",
+        "b": "A",
+        "label": "PA"
+      },
+      "Len_AB": {
+        "type": "measure",
+        "a": "A",
+        "b": "B",
+        "label": "AB"
+      },
+      "Plane_ABCD": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      "Plane_PDC": {
+        "type": "plane",
+        "pts": [
+          "P",
+          "D",
+          "C"
+        ]
+      },
+      "Plane_PAB": {
+        "type": "plane",
+        "pts": [
+          "P",
+          "A",
+          "B"
+        ]
+      },
+      "Plane_PApBp": {
+        "type": "plane",
+        "pts": [
+          "P",
+          "Ap",
+          "Bp"
+        ]
+      },
+      "Plane_ApBpCD": {
+        "type": "plane",
+        "pts": [
+          "Ap",
+          "Bp",
+          "D",
+          "C"
+        ]
+      }
+    }
+  },
+  "_answer": "12 \\sqrt{2}"
+}

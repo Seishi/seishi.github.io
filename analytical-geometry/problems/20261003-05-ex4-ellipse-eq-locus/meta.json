@@ -1,0 +1,12 @@
+{
+  "id": "20261003-05-ex4-ellipse-eq-locus",
+  "slug": "ex4-ellipse-eq-locus",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "ellipse"
+  ],
+  "title": "设椭圆 $C:\\dfrac{x^{2}}{a^{2}}+\\dfrac{y^{2}}{b^{2}}=1\\ (a>b>0)$ 的左、右焦点分别为 $F_1,F_2$。过点 $F_1$ 且倾斜角为 $\\alpha$ 的直线 $l$ 与椭圆交于 $A,B$ 两点。若 $\\cos\\alpha=\\dfrac{5}{13}$，$5\\overrightarrow{F_1A}=8\\overrightarrow{BF_1}$，且点 $F_2$ 到直线 $AB$ 的距离为 $\\dfrac{72}{13}$。 (1) 求椭圆 $C$ 的方程； (2) 若 $P,Q$ 为椭圆 $C$ 的右准线上的两点，且 $|PQ|=3$，求 $\\triangle F_1PQ$ 内切圆圆心 $M$ 的轨迹。",
+  "answer": "$\\dfrac{x^{2}}{25}+\\dfrac{y^{2}}{16}=1$；$81 \\left(3 x - 8\\right)^{2} = \\left(3 x - 25\\right)^{2} \\left(204 x + 9 y^{2} - 544\\right)\\left(\\dfrac{3481}{408} - \\dfrac{3 \\sqrt{4705}}{136}\\le x<\\dfrac{25}{3}\\right)$"
+}

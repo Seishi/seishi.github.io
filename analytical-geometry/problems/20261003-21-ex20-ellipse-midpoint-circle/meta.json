@@ -1,0 +1,12 @@
+{
+  "id": "20261003-21-ex20-ellipse-midpoint-circle",
+  "slug": "ex20-ellipse-midpoint-circle",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "ellipse"
+  ],
+  "title": "椭圆 $\\mathcal{E}$ 的焦点为 $F_1,F_2$，$P$ 在 $\\mathcal{E}$ 上。直线 $PF_1$、$PF_2$ 分别再交 $\\mathcal{E}$ 于 $A,B$，点 $A,B$ 处的切线交于 $Q$。证明 $PQ$ 的中点在 $\\triangle PF_1F_2$ 的外接圆上。",
+  "answer": "中点 $M\\left(0, - \\dfrac{3 \\sqrt{3}}{2}\\right)$ 在 $\\triangle PF_1F_2$ 的外接圆上"
+}

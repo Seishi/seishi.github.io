@@ -1,0 +1,12 @@
+{
+  "id": "20261003-06-ex5-ellipse-area-ratio",
+  "slug": "ex5-ellipse-area-ratio",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "ellipse"
+  ],
+  "title": "已知椭圆 $C$ 的离心率为 $\\dfrac{1}{2}$，左、右焦点分别为 $F_1,F_2$。设 $P$ 为 $C$ 上不与椭圆顶点重合的一点，记 $\\triangle PF_1F_2$ 的重心、内心分别为 $G,I$。若 $\\dfrac{|PI|}{|PG|}=\\dfrac{\\sqrt{3}}{2}$，求 $\\triangle PGI$ 与 $\\triangle PF_1F_2$ 的面积之比。",
+  "answer": "$\\dfrac{\\sqrt{2}}{18}$"
+}

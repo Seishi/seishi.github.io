@@ -1,0 +1,277 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "body": "custom",
+    "scale": 2.4,
+    "points": {
+      "A": [
+        "0",
+        "0",
+        "0"
+      ],
+      "B": [
+        "1",
+        "0",
+        "0"
+      ],
+      "C": [
+        "1",
+        "1",
+        "0"
+      ],
+      "D": [
+        "1/2",
+        "1",
+        "sqrt(3)/2"
+      ],
+      "E": [
+        "1/2",
+        "0",
+        "sqrt(3)/2"
+      ],
+      "E2": [
+        "-5/14",
+        "6/7",
+        "3*sqrt(3)/14"
+      ]
+    },
+    "topo": {
+      "spheres": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "E2"
+      ],
+      "edges": [
+        {
+          "a": "A",
+          "b": "B"
+        },
+        {
+          "a": "B",
+          "b": "C"
+        },
+        {
+          "a": "C",
+          "b": "D"
+        },
+        {
+          "a": "D",
+          "b": "E"
+        },
+        {
+          "a": "E",
+          "b": "A"
+        },
+        {
+          "a": "D",
+          "b": "E2"
+        },
+        {
+          "a": "E2",
+          "b": "A"
+        }
+      ]
+    },
+    "query": {
+      "type": "volume",
+      "kind": "tetra",
+      "pts": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    "_note": "所求不属于 5 类 query；index.html 由 _render.py 精确渲染。"
+  },
+  "lesson": {
+    "language": "zh-CN",
+    "meta": "交互解题 · 空间折线",
+    "title": "已知空间中五个点 $A,B,C,D,E$ 满足 $AB=BC=CD=DE=EA$，且 $\\angle ABC,\\angle BCD,\\angle CDE,\\angle DEA,\\angle EAB$ 中有四个是直角，求最后一个角的所有可能大小",
+    "answerLabel": "最后一个角的可能大小",
+    "answers": [
+      {
+        "label": "情形一",
+        "value": "$60^{\\circ}$"
+      },
+      {
+        "label": "情形二",
+        "value": "$\\arccos\\left(-\\dfrac{5}{14}\\right)$"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "title": "折成单位向量链",
+      "content": "<p>令 $\\vec v_1=\\overrightarrow{AB},\\ldots,\\vec v_5=\\overrightarrow{EA}$，则 $|\\vec v_i|=1$ 且 $\\vec v_1+\\cdots+\\vec v_5=\\vec 0$。</p><p>顶点角为 $90^{\\circ}$ 当且仅当相邻向量垂直：$\\vec v_i\\cdot\\vec v_{i+1}=0$。四个直角意味着五个相邻对里恰有四对垂直。</p>",
+      "highlight": [
+        "Axis",
+        "Point_A",
+        "Point_B",
+        "Point_C",
+        "Point_D",
+        "Point_E",
+        "Line_AB",
+        "Line_BC"
+      ],
+      "cameraPos": {
+        "x": 4.94,
+        "y": 4.08,
+        "z": 5.03
+      }
+    },
+    {
+      "title": "情形一：最后一个角为 $60^{\\circ}$",
+      "content": "<p>不妨设 $\\vec v_1=(1,0,0)$，$\\vec v_2=(0,1,0)$，后面三个单位向量依次垂直。其中一解把 $E$ 送到 $\\bigl(\\dfrac{1}{2},0,\\dfrac{\\sqrt{3}}{2}\\bigr)$，折线 $ABCDE$ 如图中实线。</p><p>$\\angle EAB$ 满足 $\\cos\\angle EAB=\\overrightarrow{AE}\\cdot\\overrightarrow{AB}=\\dfrac{1}{2}$，故最后一个角为 $60^{\\circ}$。</p>",
+      "highlight": [
+        "Point_A",
+        "Point_B",
+        "Point_C",
+        "Point_D",
+        "Point_E",
+        "Line_AB",
+        "Line_BC",
+        "Line_CD",
+        "Line_DE",
+        "Line_EA",
+        "Plane_EAB"
+      ],
+      "cameraPos": {
+        "x": 4.69,
+        "y": 5.2,
+        "z": 4.05
+      }
+    },
+    {
+      "title": "情形二：最后一个角为 $\\arccos\\bigl(-\\dfrac{5}{14}\\bigr)$",
+      "content": "<p>另一解共用折线 $ABCD$，把 $E$ 换到 $E'\\bigl(-\\dfrac{5}{14},\\dfrac{6}{7},\\dfrac{3\\sqrt{3}}{14}\\bigr)$（图中虚线）。</p><p>$\\cos\\angle E'AB=-\\dfrac{5}{14}$。两种本质不同的构型给出最后一个角的所有可能：$60^{\\circ}$ 或 $\\arccos\\left(-\\dfrac{5}{14}\\right)$。</p>",
+      "highlight": [
+        "Point_A",
+        "Point_B",
+        "Point_C",
+        "Point_D",
+        "Point_E2",
+        "Line_AB",
+        "Line_BC",
+        "Line_CD",
+        "Line_DE2",
+        "Line_E2A",
+        "Plane_E2AB"
+      ],
+      "cameraPos": {
+        "x": 3.75,
+        "y": 5.55,
+        "z": 4.5
+      }
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {
+        "type": "axes",
+        "size": 2
+      },
+      "Point_A": {
+        "type": "point",
+        "center": "A"
+      },
+      "Point_B": {
+        "type": "point",
+        "center": "B"
+      },
+      "Point_C": {
+        "type": "point",
+        "center": "C"
+      },
+      "Point_D": {
+        "type": "point",
+        "center": "D"
+      },
+      "Point_E": {
+        "type": "point",
+        "center": "E"
+      },
+      "Point_E2": {
+        "type": "point",
+        "center": "E2"
+      },
+      "Line_AB": {
+        "type": "line",
+        "a": "A",
+        "b": "B",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_BC": {
+        "type": "line",
+        "a": "B",
+        "b": "C",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_CD": {
+        "type": "line",
+        "a": "C",
+        "b": "D",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_DE": {
+        "type": "line",
+        "a": "D",
+        "b": "E",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_EA": {
+        "type": "line",
+        "a": "E",
+        "b": "A",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_DE2": {
+        "type": "line",
+        "a": "D",
+        "b": "E2",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_E2A": {
+        "type": "line",
+        "a": "E2",
+        "b": "A",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Plane_ABC": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "Plane_EAB": {
+        "type": "plane",
+        "pts": [
+          "E",
+          "A",
+          "B"
+        ]
+      },
+      "Plane_E2AB": {
+        "type": "plane",
+        "pts": [
+          "E2",
+          "A",
+          "B"
+        ]
+      }
+    }
+  },
+  "_answer": "60^{\\circ}"
+}

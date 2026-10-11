@@ -1,0 +1,238 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "body": "custom",
+    "scale": 2.2,
+    "points": {
+      "A": [
+        "6 - 4*sqrt(2)",
+        "sqrt(-3 + 14*sqrt(2))/4",
+        "0"
+      ],
+      "B": [
+        "0",
+        "0",
+        "1"
+      ],
+      "C": [
+        "-1/2 - sqrt(2)/4",
+        "0",
+        "0"
+      ],
+      "D": [
+        "1/4 + sqrt(2)/4",
+        "0",
+        "0"
+      ],
+      "H": [
+        "0",
+        "0",
+        "0"
+      ],
+      "M": [
+        "-1/4 - sqrt(2)/8",
+        "0",
+        "0"
+      ]
+    },
+    "topo": {
+      "spheres": [
+        "B",
+        "A",
+        "C",
+        "D",
+        "H",
+        "M"
+      ],
+      "edges": [
+        {
+          "a": "A",
+          "b": "C"
+        },
+        {
+          "a": "C",
+          "b": "D"
+        },
+        {
+          "a": "D",
+          "b": "A"
+        },
+        {
+          "a": "B",
+          "b": "A"
+        },
+        {
+          "a": "B",
+          "b": "C"
+        },
+        {
+          "a": "B",
+          "b": "D"
+        },
+        {
+          "a": "B",
+          "b": "H"
+        },
+        {
+          "a": "A",
+          "b": "H"
+        },
+        {
+          "a": "C",
+          "b": "H"
+        }
+      ]
+    },
+    "query": {
+      "type": "volume",
+      "kind": "tetra",
+      "pts": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    "_note": "所求不属于 5 类 query；index.html 由 _render.py 精确渲染。"
+  },
+  "lesson": {
+    "language": "zh-CN",
+    "meta": "交互解题 · 线段最小值",
+    "title": "三棱锥 $A$-$BCD$ 中，点 $B$ 在平面 $ACD$ 上的射影 $H$ 在线段 $CD$ 上。设 $M$ 是线段 $CH$ 的中点。若 $\\angle BAH=30^{\\circ}$，$AB=2$，$\\triangle ABM$、$\\triangle ABD$ 的面积均为 $1$，则线段 $CD$ 长度的最小值是",
+    "answerLabel": "$CD$ 长度的最小值",
+    "answerValue": "$\\dfrac{\\sqrt{2}}{2} + \\dfrac{3}{4}$"
+  },
+  "steps": [
+    {
+      "title": "把射影放到原点",
+      "content": "<p>平面 $ACD$ 取作 $z=0$，$H$ 为原点，$CD$ 沿 $x$ 轴，$BH\\perp$ 平面 $ACD$，故 $B$ 在 $z$ 轴上。</p><p>$\\angle BAH=30^{\\circ}$、$AB=2$ 推出 $|AH|=\\sqrt{3}$、$BH=1$：</p>$$\\cos 30^{\\circ}=\\dfrac{|AH|}{AB}\\implies |AH|=\\sqrt{3},\\quad B=(0,0,1).$$<p>设 $C=(-p,0,0)$、$D=(q,0,0)$，且 $p>0,q>0$ 以保证 $H$ 在线段 $CD$ 上，$CD=p+q$。</p>",
+      "highlight": [
+        "Axis",
+        "Plane_ACD",
+        "Point_H",
+        "Point_B",
+        "Line_BH",
+        "Len_AB",
+        "Point_A",
+        "Point_C",
+        "Point_D"
+      ],
+      "cameraPos": {
+        "x": 3.97,
+        "y": 3.78,
+        "z": 3.79
+      }
+    },
+    {
+      "title": "面积条件",
+      "content": "<p>$M$ 是 $CH$ 中点，$M=\\left(-\\dfrac{p}{2},0,0\\right)$。$S_{\\triangle ABD}=S_{\\triangle ABM}=1$，即 $\\bigl|(\\overrightarrow{AB}\\times\\overrightarrow{AD})\\bigr|=2$、$\\bigl|(\\overrightarrow{AB}\\times\\overrightarrow{AM})\\bigr|=2$。</p><p>再加 $|AH|^{2}=3$，得到</p>$$p=\\dfrac{2q}{4q-1},\\qquad q\\in\\bigl[2-\\sqrt{3},\\,2+\\sqrt{3}\\bigr].$$",
+      "highlight": [
+        "Point_M",
+        "Point_A",
+        "Point_B",
+        "Point_D",
+        "Plane_ABD",
+        "Plane_ABM",
+        "Len_AB"
+      ],
+      "cameraPos": {
+        "x": 3.48,
+        "y": 4.69,
+        "z": 3.26
+      }
+    },
+    {
+      "title": "对 $q$ 求 $CD$ 的最小值",
+      "content": "<p>$CD=p+q=\\dfrac{q(4q+1)}{4q-1}$。求导得唯一驻点 $q=\\dfrac{1+\\sqrt{2}}{4}$ 落在区间内，</p>$$CD_{\\min}=\\dfrac{3}{4}+\\dfrac{\\sqrt{2}}{2}=\\dfrac{\\sqrt{2}}{2} + \\dfrac{3}{4}.$$<p>端点处 $CD=6\\pm\\sqrt{3}$ 都更大。故线段 $CD$ 长度的最小值为 $\\dfrac{\\sqrt{2}}{2} + \\dfrac{3}{4}$。</p>",
+      "highlight": [
+        "Line_CD",
+        "Point_C",
+        "Point_D",
+        "Point_H",
+        "Point_M"
+      ],
+      "cameraPos": {
+        "x": 4.2,
+        "y": 3.25,
+        "z": 3.98
+      }
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {
+        "type": "axes",
+        "size": 2.5
+      },
+      "Point_H": {
+        "type": "point",
+        "center": "H"
+      },
+      "Point_B": {
+        "type": "point",
+        "center": "B"
+      },
+      "Point_A": {
+        "type": "point",
+        "center": "A"
+      },
+      "Point_C": {
+        "type": "point",
+        "center": "C"
+      },
+      "Point_D": {
+        "type": "point",
+        "center": "D"
+      },
+      "Point_M": {
+        "type": "point",
+        "center": "M"
+      },
+      "Line_BH": {
+        "type": "line",
+        "a": "B",
+        "b": "H",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_CD": {
+        "type": "line",
+        "a": "C",
+        "b": "D",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Len_AB": {
+        "type": "measure",
+        "a": "A",
+        "b": "B",
+        "label": "2"
+      },
+      "Plane_ACD": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "C",
+          "D"
+        ]
+      },
+      "Plane_ABD": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "B",
+          "D"
+        ]
+      },
+      "Plane_ABM": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "B",
+          "M"
+        ]
+      }
+    }
+  },
+  "_answer": "\\dfrac{\\sqrt{2}}{2} + \\dfrac{3}{4}"
+}

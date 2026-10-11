@@ -1,0 +1,68 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["ellipse"],
+    "frame": {"xmin": -6, "xmax": 6, "ymin": -4, "ymax": 4},
+    "curves": {
+      "C": {"type": "ellipse", "a": 2, "b": 1, "center": [0, 0], "axis": "x"},
+      "l": {"type": "line", "a": 1, "b": -2, "c": 0}
+    },
+    "points": {},
+    "givens": [
+      {"name": "F", "kind": "focus", "of": "C", "which": "right"},
+      {"name": "A", "kind": "intersection", "of": ["C", "l"], "which": "right"},
+      {"name": "B", "kind": "intersection", "of": ["C", "l"], "which": "left"},
+      {"name": "P", "kind": "on_curve", "curve": "C", "t": "pi/3"},
+      {"name": "M", "kind": "midpoint", "of": ["A", "B"]}
+    ],
+    "lengths": {"AB": ["A", "B"]},
+    "query": {"type": "chord_length", "line": "l", "curve": "C"}
+  },
+  "lesson": {
+    "meta": "交互解题 · 椭圆弦长",
+    "title": "椭圆 $\\dfrac{x^{2}}{4}+y^{2}=1$ 与直线 $x-2y=0$ 交于 $A$、$B$，求弦 $AB$ 的长",
+    "answerLabel": "弦 $AB$ 的长"
+  },
+  "steps": [
+    {
+      "title": "建立平面直角坐标系",
+      "content": "<p>椭圆方程 ${{eq.C}}$。交点 $A{{mp.A}}$，$B{{mp.B}}$。</p>",
+      "highlight": ["Axis", "Curve_C", "Len_AB"]
+    },
+    {
+      "title": "联立直线与椭圆",
+      "content": "<p>直线 $x-2y=0$ 与椭圆联立，交于 $A$、$B$。</p>",
+      "highlight": ["Line_AB", "Point_A", "Point_B"]
+    },
+    {
+      "title": "计算弦长",
+      "content": "<p>弦长 $|AB|={{vals.len}}$。</p>",
+      "highlight": ["Line_AB", "Curve_C", "Point_A", "Point_B"]
+    },
+    {
+      "title": "代入得答案",
+      "content": "<p>所以弦 $AB$ 的长为 ${{answer}}$。</p>",
+      "highlight": ["Line_AB", "Curve_C", "Point_A", "Point_B"]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_C": {"type": "ellipse", "curve": "C"},
+      "Line_AB": {"type": "line", "a": "A", "b": "B", "color": "emphasis"},
+      "Point_A": {"type": "point", "center": "A"},
+      "Point_B": {"type": "point", "center": "B"},
+      "Point_F": {"type": "point", "center": "F"},
+      "Point_P": {"type": "point", "center": "P"},
+      "Point_M": {"type": "point", "center": "M"},
+      "Len_AB": {"type": "measure", "a": "A", "b": "B", "label": "{{vals.len_AB}}"}
+    },
+    "draggable": {
+      "point": "P",
+      "on": "C",
+      "t": "pi/3",
+      "standardLabel": "标准位 t=π/3",
+      "readouts": [{"label": "弦长 AB", "type": "length", "pts": ["A", "B"]}]
+    }
+  }
+}

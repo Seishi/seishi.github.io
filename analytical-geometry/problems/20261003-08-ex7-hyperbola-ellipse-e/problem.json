@@ -1,0 +1,73 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["hyperbola", "ellipse"],
+    "frame": {"xmin": -14, "xmax": 14, "ymin": -13, "ymax": 13},
+    "curves": {
+      "H": {"type": "hyperbola", "a": 1, "b": "2*sqrt(2+sqrt(5))", "center": [0, 0], "transverse": "x"},
+      "E": {"type": "ellipse", "a": "11/2+5*sqrt(5)/2", "b": "sqrt(210+94*sqrt(5))/2", "center": [0, 0], "axis": "x"},
+      "l": {"type": "line", "points": ["M", "F2"]},
+      "yaxis": {"type": "line", "a": 1, "b": 0, "c": 0}
+    },
+    "points": {
+      "A1": [-1, 0],
+      "A2": [1, 0]
+    },
+    "givens": [
+      {"name": "F1", "kind": "focus", "of": "H", "which": "left"},
+      {"name": "F2", "kind": "focus", "of": "H", "which": "right"},
+      {"name": "M", "kind": "on_curve", "curve": "H", "which": "left", "t": "acosh(3/2+sqrt(5)/2)"},
+      {"name": "N", "kind": "intersection", "of": ["l", "yaxis"]}
+    ],
+    "query": {
+      "type": "custom",
+      "expr": "(3-sqrt(5))/2",
+      "vals": {"eh": "2+sqrt(5)"}
+    }
+  },
+  "lesson": {
+    "meta": "交互解题 · 椭圆离心率",
+    "title": "双曲线 $C:\\dfrac{x^{2}}{a^{2}}-\\dfrac{y^{2}}{b^{2}}=1$（$a,b>0$）的左、右焦点为 $F_1,F_2$，左、右顶点为 $A_1,A_2$。过 $F_2$ 的直线分别交左支和 $y$ 轴于 $M,N$。已知 $MF_1\\parallel NA_1$ 且 $MA_1\\parallel NA_2$。若 $M$ 还在以 $F_1,F_2$ 为焦点的椭圆上，求该椭圆的离心率。",
+    "answerLabel": "椭圆的离心率"
+  },
+  "steps": [
+    {
+      "title": "建立坐标系",
+      "content": "<p>以双曲线中心为原点、实轴为 $x$ 轴。设 $c^{2}=a^{2}+b^{2}$，$e=\\dfrac{c}{a}>1$。左、右焦点 $F_1(-c,0)$、$F_2(c,0)$，左、右顶点 $A_1(-a,0)$、$A_2(a,0)$。</p>",
+      "highlight": ["Axis", "Curve_H", "Point_F1", "Point_F2", "Point_A1", "Point_A2"]
+    },
+    {
+      "title": "两条平行给出横坐标",
+      "content": "<p>设直线交左支于 $M(x_1,y_1)$、交 $y$ 轴于 $N(0,n)$，$y_1\\neq 0$。</p><p>$MF_1\\parallel NA_1$：$\\overrightarrow{MF_1}=(-c-x_1,-y_1)$，$\\overrightarrow{NA_1}=(-a,-n)$，叉积为零得 $n(c+x_1)=ay_1$。</p><p>$MA_1\\parallel NA_2$：$\\overrightarrow{MA_1}=(-a-x_1,-y_1)$，$\\overrightarrow{NA_2}=(a,-n)$，得 $n(a+x_1)=-ay_1$。</p><p>两式相除：$\\dfrac{c+x_1}{a+x_1}=-1$，故 $x_1=-\\dfrac{a+c}{2}$。图中 $M{{mp.M}}$，$N{{mp.N}}$。</p>",
+      "highlight": ["Curve_H", "Line_MN", "Seg_MF1", "Seg_NA1", "Seg_MA1", "Seg_NA2", "Point_M", "Point_N", "Point_F1", "Point_F2", "Point_A1", "Point_A2"]
+    },
+    {
+      "title": "直线过右焦点，定出双曲线离心率",
+      "content": "<p>由上一组平行，$n=\\dfrac{2ay_1}{c-a}$。另一方面，$M$ 与 $F_2$ 的连线交 $y$ 轴的纵坐标为 $\\dfrac{2cy_1}{a+3c}$。两者相等且 $y_1\\neq 0$：</p><p>$$\\dfrac{a}{c-a}=\\dfrac{c}{a+3c}\\implies a^{2}+4ac-c^{2}=0.$$</p><p>即 $e^{2}-4e-1=0$。因 $e>1$，得双曲线离心率 $e={{vals.eh}}$。此时 $M$ 确在左支上，纵坐标可取正（取负时图形关于 $x$ 轴对称，椭圆离心率相同）。</p>",
+      "highlight": ["Curve_H", "Line_MN", "Point_M", "Point_N", "Point_F2", "Point_A1", "Point_A2"]
+    },
+    {
+      "title": "同一对焦点的椭圆",
+      "content": "<p>$M$ 在左支上，故 $|MF_2|-|MF_1|=2a$。直接计算得 $|MF_1|=\\dfrac{(c-a)(c+2a)}{2a}$，于是</p><p>$$|MF_1|+|MF_2|=\\dfrac{c(a+c)}{a}.$$</p><p>以 $F_1,F_2$ 为焦点且过 $M$ 的椭圆，半焦距仍为 $c$，长半轴等于焦半径之和的一半，离心率</p><p>$$e'=\\dfrac{2c}{|MF_1|+|MF_2|}=\\dfrac{2a}{a+c}=\\dfrac{2}{1+e}=\\dfrac{2}{3+\\sqrt{5}}=\\dfrac{3-\\sqrt{5}}{2}.$$</p><p>即 $e'={{answer}}$。</p>",
+      "highlight": ["Curve_H", "Curve_E", "Line_MN", "Point_M", "Point_F1", "Point_F2", "Point_N"]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_H": {"type": "hyperbola", "curve": "H", "color": "curve"},
+      "Curve_E": {"type": "ellipse", "curve": "E", "color": "emphasis"},
+      "Line_MN": {"type": "line", "a": "M", "b": "N", "color": "emphasis"},
+      "Seg_MF1": {"type": "segment", "a": "M", "b": "F1", "color": "normal"},
+      "Seg_NA1": {"type": "segment", "a": "N", "b": "A1", "color": "normal"},
+      "Seg_MA1": {"type": "segment", "a": "M", "b": "A1", "color": "aux"},
+      "Seg_NA2": {"type": "segment", "a": "N", "b": "A2", "color": "aux"},
+      "Point_M": {"type": "point", "center": "M"},
+      "Point_N": {"type": "point", "center": "N"},
+      "Point_F1": {"type": "point", "center": "F1"},
+      "Point_F2": {"type": "point", "center": "F2"},
+      "Point_A1": {"type": "point", "center": "A1"},
+      "Point_A2": {"type": "point", "center": "A2"}
+    }
+  }
+}

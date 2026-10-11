@@ -1,0 +1,231 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "body": "custom",
+    "scale": 2.0,
+    "points": {
+      "A": [
+        "-sqrt(3)",
+        0,
+        0
+      ],
+      "B": [
+        "sqrt(3)",
+        0,
+        0
+      ],
+      "F": [
+        "sqrt(5/2 - 7*sqrt(57)/38)",
+        0,
+        0
+      ],
+      "C": [
+        "sqrt(5/2 - 7*sqrt(57)/38)",
+        "sqrt(3 - 7*sqrt(57)/19)",
+        0
+      ],
+      "P": [
+        "sqrt(5/2 - 7*sqrt(57)/38)",
+        "sqrt(7*sqrt(57)/152 + 3/8)/2",
+        "sqrt(3)*sqrt(7*sqrt(57)/152 + 3/8)/2"
+      ]
+    },
+    "topo": {
+      "spheres": [
+        "A",
+        "B",
+        "C",
+        "P",
+        "F"
+      ],
+      "edges": [
+        {
+          "a": "A",
+          "b": "B"
+        },
+        {
+          "a": "B",
+          "b": "C"
+        },
+        {
+          "a": "C",
+          "b": "A"
+        },
+        {
+          "a": "P",
+          "b": "A"
+        },
+        {
+          "a": "P",
+          "b": "B"
+        },
+        {
+          "a": "P",
+          "b": "C"
+        }
+      ]
+    },
+    "lengths": {
+      "AB": [
+        "A",
+        "B"
+      ],
+      "PC": [
+        "P",
+        "C"
+      ]
+    },
+    "query": {
+      "type": "point_plane_distance",
+      "point": "P",
+      "plane": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "_note": "所求是 PC 最小值，不属于 5 类 query；index.html 由本脚本按精确最小值渲染，query 仅作存档。"
+  },
+  "lesson": {
+    "language": "zh-CN",
+    "meta": "交互解题 · 最短距离",
+    "title": "三棱锥 $P$-$ABC$ 满足 $AB=2\\sqrt{3}$，二面角 $P$-$AB$-$C=\\dfrac{\\pi}{3}$，已知 $PC\\perp AB$，$PA+PB=4$，$CA-CB=2$，求 $PC$ 长度的最小值",
+    "answerLabel": "$PC$ 长度的最小值",
+    "answerValue": "$\\dfrac{\\sqrt{54 - 6 \\sqrt{57}}}{4}$"
+  },
+  "steps": [
+    {
+      "title": "建系并把条件翻译成轨迹",
+      "content": "<p>把底面 $ABC$ 放在水平面 $z=0$，以 $AB$ 为 $x$ 轴、中点为原点：</p>$$A(- \\sqrt{3}, 0, 0),\\quad B(\\sqrt{3}, 0, 0),\\quad AB=2\\sqrt{3}.$$<p>$PC\\perp AB$，故 $P$、$C$ 横坐标同为 $s$。$C$ 在底面 $z=0$ 上，$P$ 在 $z>0$。$P$、$C$ 到 $AB$ 的垂足同为 $F(s,0,0)$。</p><p>$A$、$B$ 为焦点，$PA+PB=4$，故 $P$ 在以 $AB$ 为轴的旋转椭圆上：</p>$$\\dfrac{s^2}{4}+d_P^2=1\\quad(|s|<2).$$<p>$CA-CB=2$，故 $C$ 在以 $A$、$B$ 为焦点、靠近 $B$ 的双曲线上：</p>$$s^2-\\dfrac{d_C^2}{2}=1\\quad(s>1).$$<p>两轨迹同时成立要求 $s\\in(1,2]$。</p>",
+      "highlight": [
+        "Axis",
+        "Len_AB",
+        "Plane_ABC",
+        "Line_PC",
+        "Point_F",
+        "Point_P",
+        "Point_C"
+      ],
+      "cameraPos": {
+        "x": 9.43,
+        "y": 7.1,
+        "z": 9.89
+      }
+    },
+    {
+      "title": "二面角化为垂面内的夹角",
+      "content": "<p>垂直于棱 $AB$ 的平面上，二面角 $P$-$AB$-$C$ 等于 $\\angle PFC=\\dfrac{\\pi}{3}$。</p><p>在 $\\triangle PFC$ 中，$PF=d_P$，$CF=d_C$，$\\angle PFC=\\dfrac{\\pi}{3}$，余弦定理得</p>$$PC^2=d_P^2+d_C^2-d_P d_C.$$<p>把椭圆、双曲线代入：</p>$$d_P=\\sqrt{1-\\dfrac{s^2}{4}},\\qquad d_C=\\sqrt{2(s^2-1)},$$$$PC^2=\\dfrac{7}{4}s^2-1-\\dfrac{\\sqrt{2}}{2}\\sqrt{4-s^2}\\sqrt{s^2-1}.$$",
+      "highlight": [
+        "Plane_PAB",
+        "Plane_CAB",
+        "Plane_PFC",
+        "Line_PC",
+        "Point_F",
+        "Point_P",
+        "Point_C",
+        "Len_PF",
+        "Len_CF"
+      ],
+      "cameraPos": {
+        "x": 14.28,
+        "y": 5.18,
+        "z": 3.61
+      }
+    },
+    {
+      "title": "对参数 $s$ 求最小值",
+      "content": "<p>令 $f(s)=PC^2$，$s\\in(1,2]$。求导并令 $f'(s)=0$，得唯一驻点</p>$$s^2=\\dfrac{95-7\\sqrt{57}}{38}\\in(1,4).$$<p>该点满足 $7\\,d_P d_C=5-2s^2$。代回 $f(s)$ 并化简：</p>$$PC^2=\\dfrac{3(9-\\sqrt{57})}{8}.$$<p>端点处：$s\\to 1^+$ 时四面体退化；$s=2$ 时 $PC=\\sqrt{6}$ 更大。故驻点给出最小值。</p><p>因此 $PC_{\\min}=\\sqrt{\\dfrac{3(9-\\sqrt{57})}{8}}=\\dfrac{\\sqrt{54 - 6 \\sqrt{57}}}{4}$。</p>",
+      "highlight": [
+        "Line_PC",
+        "Point_P",
+        "Point_C",
+        "Point_F",
+        "Len_PF",
+        "Len_CF"
+      ],
+      "cameraPos": {
+        "x": 8.96,
+        "y": 9.53,
+        "z": 8.05
+      }
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {
+        "type": "axes",
+        "size": 3.2
+      },
+      "Point_F": {
+        "type": "point",
+        "center": "F"
+      },
+      "Point_P": {
+        "type": "point",
+        "center": "P"
+      },
+      "Point_C": {
+        "type": "point",
+        "center": "C"
+      },
+      "Line_PC": {
+        "type": "line",
+        "a": "P",
+        "b": "C",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Plane_ABC": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "Plane_PAB": {
+        "type": "plane",
+        "pts": [
+          "P",
+          "A",
+          "B"
+        ]
+      },
+      "Plane_CAB": {
+        "type": "plane",
+        "pts": [
+          "C",
+          "A",
+          "B"
+        ]
+      },
+      "Plane_PFC": {
+        "type": "plane",
+        "pts": [
+          "P",
+          "F",
+          "C"
+        ]
+      },
+      "Len_AB": {
+        "type": "measure",
+        "a": "A",
+        "b": "B",
+        "label": "2\\sqrt{3}"
+      },
+      "Len_PF": {
+        "type": "measure",
+        "a": "P",
+        "b": "F",
+        "label": "d_P"
+      },
+      "Len_CF": {
+        "type": "measure",
+        "a": "C",
+        "b": "F",
+        "label": "d_C"
+      }
+    }
+  },
+  "_answer": "\\dfrac{\\sqrt{54 - 6 \\sqrt{57}}}{4}"
+}

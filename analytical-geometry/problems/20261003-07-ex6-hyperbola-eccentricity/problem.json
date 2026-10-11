@@ -1,0 +1,95 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["hyperbola"],
+    "frame": {"xmin": -12, "xmax": 18, "ymin": -16, "ymax": 9},
+    "curves": {
+      "H1": {"type": "hyperbola", "a": 7, "b": "sqrt(60)", "center": [0, 0], "transverse": "x"},
+      "H2": {"type": "hyperbola", "a": 1, "b": "sqrt(12)", "center": [0, 0], "transverse": "x"},
+      "l1": {"type": "line", "points": ["A", "F"]},
+      "l2": {"type": "line", "points": ["A2", "F2"]}
+    },
+    "points": {
+      "O": [0, 0],
+      "A": ["91*sqrt(109)/109", "60*sqrt(109)/109"],
+      "A2": ["-5*sqrt(13)/13", "12*sqrt(13)/13"]
+    },
+    "givens": [
+      {"name": "F", "kind": "focus", "of": "H1", "which": "right"},
+      {"name": "F2", "kind": "focus", "of": "H2", "which": "right"},
+      {"name": "C", "kind": "ratio", "of": ["O", "A"], "t": "-1"},
+      {"name": "C2", "kind": "ratio", "of": ["O", "A2"], "t": "-1"},
+      {"name": "B", "kind": "intersection", "of": ["H1", "l1"], "which": "right"},
+      {"name": "B2", "kind": "intersection", "of": ["H2", "l2"], "which": "right"}
+    ],
+    "lengths": {
+      "CF": ["C", "F"],
+      "FB": ["F", "B"],
+      "C2F2": ["C2", "F2"],
+      "F2B2": ["F2", "B2"]
+    },
+    "query": {
+      "type": "custom",
+      "expr": "sqrt(109)/7",
+      "vals": {"e1": "sqrt(109)/7", "e2": "sqrt(13)"}
+    }
+  },
+  "lesson": {
+    "meta": "交互解题 · 双曲线离心率",
+    "title": "双曲线 $\\dfrac{x^{2}}{a^{2}}-\\dfrac{y^{2}}{b^{2}}=1$（$a,b>0$）的右焦点为 $F$。过 $F$ 的直线交双曲线于 $A,B$，点 $C$ 是 $A$ 关于原点的对称点。若 $CF\\perp AB$ 且 $|CF|=\\dfrac{4}{3}|FB|$，求离心率。",
+    "answerLabel": "两种情形的离心率",
+    "answers": [
+      {"label": "情形一：$A$ 在右支", "value": "${{vals.e1}}$"},
+      {"label": "情形二：$A$ 在左支", "value": "${{vals.e2}}$"}
+    ]
+  },
+  "steps": [
+    {
+      "title": "建立坐标系",
+      "content": "<p>以双曲线中心为原点、实轴为 $x$ 轴。设 $c^{2}=a^{2}+b^{2}$，离心率 $e=\\dfrac{c}{a}>1$，右焦点为 $F(c,0)$。$A$ 的纵坐标取相反数时，图形关于 $x$ 轴对称，离心率不变，下面只讨论 $y_1>0$。</p><p>满足条件的离心率有两个，分别对应 $A$ 在右支与 $A$ 在左支。</p>",
+      "highlight": ["Axis", "Curve_H1", "Curve_H2", "Point_F", "Point_F2"],
+      "boundingbox": [-12, 8, 16, -10]
+    },
+    {
+      "title": "由垂直定出两类交点",
+      "content": "<p>设 $A(x_1,y_1)$ 在双曲线上，则 $C(-x_1,-y_1)$。$\\overrightarrow{CF}=(c+x_1,\\,y_1)$，直线 $AB$ 的方向可取 $(x_1-c,\\,y_1)$。由 $CF\\perp AB$：</p><p>$$(c+x_1)(x_1-c)+y_1^{2}=0,$$</p><p>即 $x_1^{2}+y_1^{2}=c^{2}$。与双曲线方程联立，得</p><p>$$x_1^{2}=a^{2}\\dfrac{2e^{2}-1}{e^{2}},\\qquad y_1^{2}=a^{2}\\dfrac{(e^{2}-1)^{2}}{e^{2}}.$$</p><p>右支取 $x_1>0$，左支取 $x_1<0$。图中情形一的 $A{{mp.A}}$、$C{{mp.C}}$ 与 $F{{mp.F}}$ 满足 $CF\\perp AB$。</p>",
+      "highlight": ["Curve_H1", "Point_A", "Point_C", "Point_F", "Line_AB", "Line_CF"],
+      "boundingbox": [-12, 8, 18, -16]
+    },
+    {
+      "title": "情形一：$A$ 在右支",
+      "content": "<p>取 $x_1=a\\dfrac{\\sqrt{2e^{2}-1}}{e}$，$y_1=a\\dfrac{e^{2}-1}{e}$。记 $u=\\sqrt{2e^{2}-1}$，则 $|CF|^{2}=2a^{2}(e^{2}+u)$。直线 $AF$ 与双曲线的另一交点记为 $B$。化简距离比：</p><p>$$\\dfrac{|CF|^{2}}{|FB|^{2}}=\\dfrac{e^{2}-3u+4}{e^{2}-u}.$$</p><p>由 $|CF|=\\dfrac{4}{3}|FB|$ 得 $9(e^{2}-3u+4)=16(e^{2}-u)$，即 $7e^{2}+11u=36$。把 $e^{2}=\\dfrac{u^{2}+1}{2}$ 代入：</p><p>$$7u^{2}+22u-65=0,\\qquad u=\\dfrac{13}{7}$$</p><p>（取正根）。于是 $e^{2}=\\dfrac{109}{49}$，$e={{vals.e1}}$。</p>",
+      "highlight": ["Curve_H1", "Point_A", "Point_B", "Point_C", "Point_F", "Line_AB", "Line_CF", "Len_CF", "Len_FB"],
+      "boundingbox": [-12, 8, 18, -16]
+    },
+    {
+      "title": "情形二：$A$ 在左支",
+      "content": "<p>取 $x_1=-a\\dfrac{u}{e}$。同样有 $|CF|^{2}=2a^{2}(e^{2}-u)$，且</p><p>$$\\dfrac{|CF|^{2}}{|FB|^{2}}=\\dfrac{e^{2}+3u+4}{e^{2}+u}.$$</p><p>由 $|CF|=\\dfrac{4}{3}|FB|$ 得 $7e^{2}-11u=36$。再代入 $e^{2}=\\dfrac{u^{2}+1}{2}$：</p><p>$$7u^{2}-22u-65=0,\\qquad u=5,$$</p><p>故 $e^{2}=13$，$e={{vals.e2}}$。</p>",
+      "highlight": ["Curve_H2", "Point_A2", "Point_B2", "Point_C2", "Point_F2", "Line_A2B2", "Line_C2F2", "Len_C2F2", "Len_F2B2"],
+      "boundingbox": [-4, 5, 6, -5]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_H1": {"type": "hyperbola", "curve": "H1", "color": "curve"},
+      "Curve_H2": {"type": "hyperbola", "curve": "H2", "color": "curve"},
+      "Line_AB": {"type": "line", "a": "A", "b": "B", "color": "emphasis"},
+      "Line_CF": {"type": "segment", "a": "C", "b": "F", "color": "normal"},
+      "Line_A2B2": {"type": "line", "a": "A2", "b": "B2", "color": "emphasis"},
+      "Line_C2F2": {"type": "segment", "a": "C2", "b": "F2", "color": "normal"},
+      "Point_A": {"type": "point", "center": "A"},
+      "Point_B": {"type": "point", "center": "B"},
+      "Point_C": {"type": "point", "center": "C"},
+      "Point_F": {"type": "point", "center": "F"},
+      "Point_A2": {"type": "point", "center": "A2"},
+      "Point_B2": {"type": "point", "center": "B2"},
+      "Point_C2": {"type": "point", "center": "C2"},
+      "Point_F2": {"type": "point", "center": "F2"},
+      "Len_CF": {"type": "measure", "a": "C", "b": "F", "label": "{{vals.len_CF}}"},
+      "Len_FB": {"type": "measure", "a": "F", "b": "B", "label": "{{vals.len_FB}}"},
+      "Len_C2F2": {"type": "measure", "a": "C2", "b": "F2", "label": "{{vals.len_C2F2}}"},
+      "Len_F2B2": {"type": "measure", "a": "F2", "b": "B2", "label": "{{vals.len_F2B2}}"}
+    }
+  }
+}

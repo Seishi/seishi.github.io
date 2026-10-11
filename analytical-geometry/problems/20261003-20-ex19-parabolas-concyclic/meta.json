@@ -1,0 +1,12 @@
+{
+  "id": "20261003-20-ex19-parabolas-concyclic",
+  "slug": "ex19-parabolas-concyclic",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "parabola"
+  ],
+  "title": "平面上两条抛物线 $C_1,C_2$ 焦点重合，准线分别为 $l_1,l_2$。$l_1$ 与 $C_2$ 交于 $A,B$，$l_2$ 与 $C_1$ 交于 $C,D$。证明 $A,B,C,D$ 四点共圆。",
+  "answer": "$A,B,C,D$ 四点共圆"
+}

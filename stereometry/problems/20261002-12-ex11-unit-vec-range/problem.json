@@ -1,0 +1,322 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "body": "custom",
+    "scale": 2.2,
+    "points": {
+      "O": [
+        "0",
+        "0",
+        "0"
+      ],
+      "P1": [
+        "1",
+        "0",
+        "0"
+      ],
+      "P2": [
+        "1/2",
+        "sqrt(3)/2",
+        "0"
+      ],
+      "P3": [
+        "0",
+        "sqrt(3)/3",
+        "sqrt(6)/3"
+      ],
+      "P4": [
+        "1/2",
+        "-sqrt(3)/6",
+        "sqrt(6)/3"
+      ],
+      "Q1": [
+        "1",
+        "0",
+        "0"
+      ],
+      "Q2": [
+        "1/2",
+        "sqrt(3)/2",
+        "0"
+      ],
+      "Q3": [
+        "3/4",
+        "sqrt(3)/12",
+        "sqrt(15)/6"
+      ],
+      "Q4": [
+        "1/2",
+        "-19*sqrt(3)/42",
+        "2*sqrt(15)/21"
+      ]
+    },
+    "topo": {
+      "spheres": [
+        "O",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "edges": [
+        {
+          "a": "O",
+          "b": "P1"
+        },
+        {
+          "a": "O",
+          "b": "P2"
+        },
+        {
+          "a": "O",
+          "b": "P3"
+        },
+        {
+          "a": "O",
+          "b": "P4"
+        },
+        {
+          "a": "P1",
+          "b": "P2"
+        },
+        {
+          "a": "P2",
+          "b": "P3"
+        },
+        {
+          "a": "P3",
+          "b": "P4"
+        },
+        {
+          "a": "P4",
+          "b": "P1"
+        },
+        {
+          "a": "Q1",
+          "b": "Q2"
+        },
+        {
+          "a": "Q2",
+          "b": "Q3"
+        },
+        {
+          "a": "Q3",
+          "b": "Q4"
+        },
+        {
+          "a": "Q4",
+          "b": "Q1"
+        },
+        {
+          "a": "O",
+          "b": "Q1"
+        },
+        {
+          "a": "O",
+          "b": "Q2"
+        },
+        {
+          "a": "O",
+          "b": "Q3"
+        },
+        {
+          "a": "O",
+          "b": "Q4"
+        },
+        {
+          "a": "P1",
+          "b": "P3"
+        },
+        {
+          "a": "P2",
+          "b": "P4"
+        },
+        {
+          "a": "Q1",
+          "b": "Q3"
+        },
+        {
+          "a": "Q2",
+          "b": "Q4"
+        }
+      ]
+    },
+    "query": {
+      "type": "volume",
+      "kind": "tetra",
+      "pts": [
+        "O",
+        "P1",
+        "P2",
+        "P3"
+      ]
+    },
+    "_note": "所求不属于 5 类 query；index.html 由 _render.py 精确渲染。"
+  },
+  "lesson": {
+    "language": "zh-CN",
+    "meta": "交互解题 · 取值范围",
+    "title": "若互不相等的单位空间向量 $\\overrightarrow{OP_i}\\ (i=1,2,3,4)$ 满足 $|P_1P_2|=|P_2P_3|=|P_3P_4|=|P_4P_1|=1$，则 $|P_1P_3|^{2}+|P_2P_4|^{2}$ 的取值范围是",
+    "answerLabel": "$|P_1P_3|^{2}+|P_2P_4|^{2}$ 的取值范围",
+    "answerValue": "$(3,4]$"
+  },
+  "steps": [
+    {
+      "title": "化成单位向量的内积",
+      "content": "<p>$|\\overrightarrow{OP_i}|=1$，且相邻弦长为 $1$，故</p>$$|P_iP_{i+1}|^{2}=2-2\\,\\overrightarrow{OP_i}\\cdot\\overrightarrow{OP_{i+1}}=1\\implies \\overrightarrow{OP_i}\\cdot\\overrightarrow{OP_{i+1}}=\\dfrac{1}{2}.$$<p>记 $p=\\overrightarrow{OP_1}\\cdot\\overrightarrow{OP_3}$，$q=\\overrightarrow{OP_2}\\cdot\\overrightarrow{OP_4}$，则</p>$$|P_1P_3|^{2}+|P_2P_4|^{2}=4-2(p+q).$$",
+      "highlight": [
+        "Axis",
+        "Sphere_unit",
+        "Point_P1",
+        "Point_P2",
+        "Point_P3",
+        "Point_P4",
+        "Line_P1P2"
+      ],
+      "cameraPos": {
+        "x": 4.95,
+        "y": 3.8,
+        "z": 4.13
+      }
+    },
+    {
+      "title": "Gram 矩阵半正定且秩 $\\le 3$",
+      "content": "<p>四个单位向量的 Gram 矩阵主对角为 $1$，相邻为 $\\dfrac{1}{2}$，对角为 $p,q$。它必须半正定且行列式为 $0$（四向量在三维空间）。</p><p>$\\det G=0$ 给出 $(p-1)(q-1)(pq+p+q)=0$。向量互不相等排除 $p=1$ 或 $q=1$，故</p>$$q=-\\dfrac{p}{p+1}.$$",
+      "highlight": [
+        "Point_P1",
+        "Point_P2",
+        "Point_P3",
+        "Point_P4",
+        "Line_P1P3",
+        "Line_P2P4"
+      ],
+      "cameraPos": {
+        "x": 4.7,
+        "y": 4.9,
+        "z": 3.17
+      }
+    },
+    {
+      "title": "情形：取到上端 $4$",
+      "content": "<p>$3\\times 3$ 主子式非负推出 $p,q\\in\\left[-\\dfrac{1}{2},1\\right)$。再代 $q=-\\dfrac{p}{p+1}$，得 $p\\in\\left(-\\dfrac{1}{2},1\\right)$，从而</p>$$4-2(p+q)=4-\\dfrac{2p^{2}}{p+1}.$$<p>$p=q=0$ 时取到 $4$。图中实线球面菱形 $P_1P_2P_3P_4$ 对角互相垂直，就是这一款。</p>",
+      "highlight": [
+        "Line_P1P3",
+        "Line_P2P4",
+        "Point_P1",
+        "Point_P2",
+        "Point_P3",
+        "Point_P4",
+        "Sphere_unit"
+      ],
+      "cameraPos": {
+        "x": 5.41,
+        "y": 3.48,
+        "z": 3.88
+      }
+    },
+    {
+      "title": "情形：逼近下端 $3$",
+      "content": "<p>当 $p\\to 1^{-}$ 或 $p\\to-\\dfrac{1}{2}^{+}$ 时，$4-\\dfrac{2p^{2}}{p+1}\\to 3$，但取不到（向量互不相等）。图中虚线 $Q_1Q_2Q_3Q_4$ 取 $p=\\dfrac{3}{4}$，目标值为 $\\dfrac{47}{14}$，已经明显比实线菱形更扁。</p><p>因此 $|P_1P_3|^{2}+|P_2P_4|^{2}$ 的取值范围是 $(3,4]$。</p>",
+      "highlight": [
+        "Line_Q1Q3",
+        "Line_Q2Q4",
+        "Point_Q1",
+        "Point_Q2",
+        "Point_Q3",
+        "Point_Q4",
+        "Sphere_unit"
+      ],
+      "cameraPos": {
+        "x": 4.7,
+        "y": 4.9,
+        "z": 3.17
+      }
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {
+        "type": "axes",
+        "size": 2.2
+      },
+      "Point_P1": {
+        "type": "point",
+        "center": "P1"
+      },
+      "Point_P2": {
+        "type": "point",
+        "center": "P2"
+      },
+      "Point_P3": {
+        "type": "point",
+        "center": "P3"
+      },
+      "Point_P4": {
+        "type": "point",
+        "center": "P4"
+      },
+      "Point_Q1": {
+        "type": "point",
+        "center": "Q1"
+      },
+      "Point_Q2": {
+        "type": "point",
+        "center": "Q2"
+      },
+      "Point_Q3": {
+        "type": "point",
+        "center": "Q3"
+      },
+      "Point_Q4": {
+        "type": "point",
+        "center": "Q4"
+      },
+      "Line_P1P2": {
+        "type": "line",
+        "a": "P1",
+        "b": "P2",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_P1P3": {
+        "type": "line",
+        "a": "P1",
+        "b": "P3",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_P2P4": {
+        "type": "line",
+        "a": "P2",
+        "b": "P4",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_Q1Q3": {
+        "type": "line",
+        "a": "Q1",
+        "b": "Q3",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_Q2Q4": {
+        "type": "line",
+        "a": "Q2",
+        "b": "Q4",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Sphere_unit": {
+        "type": "sphere",
+        "center": "O",
+        "radius": 2.2,
+        "opacity": 0.1
+      }
+    }
+  },
+  "_answer": "(3,4]"
+}

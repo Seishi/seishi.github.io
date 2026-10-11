@@ -1,0 +1,316 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "body": "custom",
+    "scale": 1.3,
+    "points": {
+      "A1": [
+        "3",
+        "0",
+        "0"
+      ],
+      "A2": [
+        "-1",
+        "0",
+        "0"
+      ],
+      "A3": [
+        "0",
+        "0",
+        "0"
+      ],
+      "A4": [
+        "2",
+        "0",
+        "0"
+      ],
+      "B1": [
+        "4",
+        "3",
+        "0"
+      ],
+      "B2": [
+        "8",
+        "3",
+        "0"
+      ],
+      "B3": [
+        "0",
+        "3",
+        "0"
+      ],
+      "B4": [
+        "-2",
+        "3",
+        "0"
+      ]
+    },
+    "topo": {
+      "spheres": [
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "B1",
+        "B2",
+        "B3",
+        "B4"
+      ],
+      "edges": [
+        {
+          "a": "A1",
+          "b": "A2"
+        },
+        {
+          "a": "A1",
+          "b": "A3"
+        },
+        {
+          "a": "A3",
+          "b": "A4"
+        },
+        {
+          "a": "A2",
+          "b": "A4"
+        },
+        {
+          "a": "B1",
+          "b": "B2"
+        },
+        {
+          "a": "B1",
+          "b": "B3"
+        },
+        {
+          "a": "B3",
+          "b": "B4"
+        },
+        {
+          "a": "B2",
+          "b": "B4"
+        }
+      ]
+    },
+    "query": {
+      "type": "volume",
+      "kind": "tetra",
+      "pts": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ]
+    },
+    "_note": "所求不属于 5 类 query；index.html 由 _render.py 精确渲染。"
+  },
+  "lesson": {
+    "language": "zh-CN",
+    "meta": "交互解题 · 数量积范围",
+    "title": "若空间向量 $\\vec a_1,\\vec a_2,\\vec a_3,\\vec a_4$ 满足 $|\\vec a_1-\\vec a_3|\\le|\\vec a_1-\\vec a_2|=2|\\vec a_3-\\vec a_4|=4$，则 $(\\vec a_1-\\vec a_3)\\cdot(\\vec a_2-\\vec a_4)$ 的取值范围是",
+    "answerLabel": "$(\\vec a_1-\\vec a_3)\\cdot(\\vec a_2-\\vec a_4)$ 的取值范围",
+    "answerValue": "$[-9,40]$"
+  },
+  "steps": [
+    {
+      "title": "改写成三个独立向量",
+      "content": "<p>令 $\\vec u=\\vec a_1-\\vec a_3$，$\\vec p=\\vec a_2-\\vec a_1$，$\\vec q=\\vec a_4-\\vec a_3$，则 $|\\vec p|=4$，$|\\vec q|=2$，$|\\vec u|\\le 4$，且三点可以独立选取，故 $\\vec u,\\vec p,\\vec q$ 仅受长度约束。</p><p>所求 $\\vec v=\\vec a_2-\\vec a_4=\\vec p+\\vec u-\\vec q$，于是</p>$$\\vec u\\cdot\\vec v=|\\vec u|^{2}+\\vec u\\cdot\\vec p-\\vec u\\cdot\\vec q.$$",
+      "highlight": [
+        "Axis",
+        "Point_A1",
+        "Point_A2",
+        "Point_A3",
+        "Point_A4",
+        "Vec_u",
+        "Vec_p"
+      ],
+      "cameraPos": {
+        "x": 17.57,
+        "y": 12.75,
+        "z": 17.25
+      }
+    },
+    {
+      "title": "对固定 $|\\vec u|=r$ 取极值",
+      "content": "<p>$\\vec u\\cdot\\vec p\\in[-4r,4r]$，$\\vec u\\cdot\\vec q\\in[-2r,2r]$，互相独立，故</p>$$\\vec u\\cdot\\vec v\\in\\bigl[r^{2}-6r,\\ r^{2}+6r\\bigr],\\qquad r\\in[0,4].$$",
+      "highlight": [
+        "Vec_u",
+        "Vec_p",
+        "Vec_q",
+        "Point_A1",
+        "Point_A3"
+      ],
+      "cameraPos": {
+        "x": 21.8,
+        "y": 11.16,
+        "z": 13.11
+      }
+    },
+    {
+      "title": "情形：最小值 $-9$",
+      "content": "<p>下端 $r^{2}-6r=(r-3)^{2}-9$ 在 $r=3$ 取到 $-9$：$\\vec p$ 与 $\\vec u$ 反向、$\\vec q$ 与 $\\vec u$ 同向。图中实线四点 $A_i$ 就是这一款。</p>",
+      "highlight": [
+        "Vec_u",
+        "Vec_p",
+        "Vec_q",
+        "Vec_v",
+        "Point_A1",
+        "Point_A2",
+        "Point_A3",
+        "Point_A4"
+      ],
+      "cameraPos": {
+        "x": 20.28,
+        "y": 15.01,
+        "z": 10.95
+      }
+    },
+    {
+      "title": "情形：最大值 $40$",
+      "content": "<p>上端 $r^{2}+6r$ 在 $r=4$ 取到 $40$：$\\vec p$ 与 $\\vec u$ 同向、$\\vec q$ 与 $\\vec u$ 反向。图中虚线四点 $B_i$ 就是这一款。</p><p>因此 $(\\vec a_1-\\vec a_3)\\cdot(\\vec a_2-\\vec a_4)$ 的取值范围是 $[-9,40]$。</p>",
+      "highlight": [
+        "Vec_uB",
+        "Vec_pB",
+        "Vec_qB",
+        "Vec_vB",
+        "Point_B1",
+        "Point_B2",
+        "Point_B3",
+        "Point_B4"
+      ],
+      "cameraPos": {
+        "x": 20.24,
+        "y": 13.48,
+        "z": 13.18
+      }
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {
+        "type": "axes",
+        "size": 4
+      },
+      "Point_A1": {
+        "type": "point",
+        "center": "A1"
+      },
+      "Point_A2": {
+        "type": "point",
+        "center": "A2"
+      },
+      "Point_A3": {
+        "type": "point",
+        "center": "A3"
+      },
+      "Point_A4": {
+        "type": "point",
+        "center": "A4"
+      },
+      "Point_B1": {
+        "type": "point",
+        "center": "B1"
+      },
+      "Point_B2": {
+        "type": "point",
+        "center": "B2"
+      },
+      "Point_B3": {
+        "type": "point",
+        "center": "B3"
+      },
+      "Point_B4": {
+        "type": "point",
+        "center": "B4"
+      },
+      "Vec_u": {
+        "type": "arrow",
+        "origin": "A3",
+        "dir": [
+          1,
+          0,
+          0
+        ],
+        "length": 3.9000000000000004,
+        "color": "normal"
+      },
+      "Vec_p": {
+        "type": "arrow",
+        "origin": "A1",
+        "dir": [
+          -1,
+          0,
+          0
+        ],
+        "length": 5.2,
+        "color": "emphasis"
+      },
+      "Vec_q": {
+        "type": "arrow",
+        "origin": "A3",
+        "dir": [
+          1,
+          0,
+          0
+        ],
+        "length": 2.6,
+        "color": "emphasis"
+      },
+      "Vec_v": {
+        "type": "arrow",
+        "origin": "A4",
+        "dir": [
+          -1,
+          0,
+          0
+        ],
+        "length": 3.9000000000000004,
+        "color": "normal"
+      },
+      "Vec_uB": {
+        "type": "arrow",
+        "origin": "B3",
+        "dir": [
+          1,
+          0,
+          0
+        ],
+        "length": 5.2,
+        "color": "normal"
+      },
+      "Vec_pB": {
+        "type": "arrow",
+        "origin": "B1",
+        "dir": [
+          1,
+          0,
+          0
+        ],
+        "length": 5.2,
+        "color": "emphasis"
+      },
+      "Vec_qB": {
+        "type": "arrow",
+        "origin": "B3",
+        "dir": [
+          -1,
+          0,
+          0
+        ],
+        "length": 2.6,
+        "color": "emphasis"
+      },
+      "Vec_vB": {
+        "type": "arrow",
+        "origin": "B4",
+        "dir": [
+          1,
+          0,
+          0
+        ],
+        "length": 7.800000000000001,
+        "color": "normal"
+      }
+    }
+  },
+  "_answer": "[-9,40]"
+}

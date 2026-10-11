@@ -1,0 +1,12 @@
+{
+  "id": "20261003-18-ex17-ellipse-slope-ratio",
+  "slug": "ex17-ellipse-slope-ratio",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "ellipse"
+  ],
+  "title": "椭圆 $C:\\dfrac{x^{2}}{a^{2}}+\\dfrac{y^{2}}{b^{2}}=1$ 的左、右焦点为 $F_1,F_2$。点 $D(1,0)$ 是线段 $OF_2$ 的中点。直线 $MN$（不与 $x$ 轴重合）过 $F_1$，交椭圆于 $M,N$。延长 $MD$、$ND$ 再交椭圆于 $P,Q$。设 $MN$、$PQ$ 的斜率为 $k_1,k_2$，将 $\\dfrac{k_2}{k_1}$ 表示成关于 $a$ 的函数 $f(a)$，并求其极值。 (1) 把 $\\dfrac{k_2}{k_1}$ 表示成 $f(a)$； (2) 求 $f(a)$ 的极值。",
+  "answer": "$\\dfrac{a^{2} + 5}{a^{2} - 1}$；无极值，值域 $\\left(1,3\\right)$"
+}

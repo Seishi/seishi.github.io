@@ -1,0 +1,12 @@
+{
+  "id": "20261003-19-ex18-parabolas-integer-k",
+  "slug": "ex18-parabolas-integer-k",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "parabola"
+  ],
+  "title": "设 $S$ 是满足下列条件的正整数 $k$ 的集合：抛物线 $y=x^{2}-k$ 与 $x=2(y-20)^{2}-k$ 有四个不同的公共点，且这四点所在圆的半径不超过 $21$。求 $S$ 中最小元素与最大元素的和。",
+  "answer": "$285$"
+}

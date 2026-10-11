@@ -1,0 +1,91 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["ellipse"],
+    "frame": {"xmin": -4, "xmax": 4, "ymin": -3, "ymax": 3},
+    "curves": {
+      "C": {"type": "ellipse", "a": 3, "b": "sqrt(5)", "center": [0, 0], "axis": "x"},
+      "MN": {"type": "line", "a": 1, "b": -1, "c": 2},
+      "MD": {"type": "line", "points": ["M", "D"]},
+      "ND": {"type": "line", "points": ["N", "D"]},
+      "PQ": {"type": "line", "points": ["P", "Q"]}
+    },
+    "points": {
+      "O": [0, 0],
+      "D": [1, 0],
+      "M": ["-9/7+15*sqrt(2)/14", "5/7+15*sqrt(2)/14"],
+      "N": ["-3*(6+5*sqrt(2))/14", "-5*(-2+3*sqrt(2))/14"],
+      "P": ["(1197-240*sqrt(2))/521", "-(380+420*sqrt(2))/521"],
+      "Q": ["3*(399+80*sqrt(2))/521", "20*(-19+21*sqrt(2))/521"]
+    },
+    "givens": [
+      {"name": "F1", "kind": "focus", "of": "C", "which": "left"},
+      {"name": "F2", "kind": "focus", "of": "C", "which": "right"}
+    ],
+    "query": {
+      "type": "custom",
+      "vals": {
+        "f": "(a**2+5)/(a**2-1)",
+        "df": "-12*a/(a**2-1)**2",
+        "f3": "(3**2+5)/(3**2-1)",
+        "lo": "1",
+        "hi": "3"
+      }
+    }
+  },
+  "lesson": {
+    "meta": "交互解题 · 椭圆",
+    "title": "椭圆 $C:\\dfrac{x^{2}}{a^{2}}+\\dfrac{y^{2}}{b^{2}}=1$ 的左、右焦点为 $F_1,F_2$。点 $D(1,0)$ 是线段 $OF_2$ 的中点。直线 $MN$（不与 $x$ 轴重合）过 $F_1$，交椭圆于 $M,N$。延长 $MD$、$ND$ 再交椭圆于 $P,Q$。设 $MN$、$PQ$ 的斜率为 $k_1,k_2$，将 $\\dfrac{k_2}{k_1}$ 表示成关于 $a$ 的函数 $f(a)$，并求其极值。<br>(1) 把 $\\dfrac{k_2}{k_1}$ 表示成 $f(a)$；<br>(2) 求 $f(a)$ 的极值。",
+    "answerLabel": "斜率比与极值",
+    "answers": [
+      {"label": "(1) $f(a)$", "value": "${{vals.f}}$"},
+      {"label": "(2) 极值与值域", "value": "无极值，值域 $\\left({{vals.lo}},{{vals.hi}}\\right)$"}
+    ]
+  },
+  "steps": [
+    {
+      "title": "由中点定出焦点",
+      "content": "<p>$D(1,0)$ 是 $OF_2$ 的中点，故 $F_2=(2,0)$，$c=2$。椭圆要求 $a&gt;c$，所以 $a&gt;2$，$b^{2}=a^{2}-4$，$F_1=(-2,0)$，离心率 $e=\\dfrac{2}{a}$。原点 $O{{mp.O}}$，焦点 $F_1{{mp.F1}}$、$F_2{{mp.F2}}$，中点 $D{{mp.D}}$。</p>",
+      "highlight": ["Axis", "Curve_C", "Point_O", "Point_F1", "Point_F2", "Point_D", "Seg_OF2"]
+    },
+    {
+      "title": "过左焦点的弦 MN",
+      "content": "<p>设 $MN$ 的斜率为 $k\\ne 0$，方程 $y=k(x+2)$。它与椭圆联立得关于 $x$ 的二次方程，两根 $x_1,x_2$ 即 $M,N$ 的横坐标，$y_i=k(x_i+2)$。交点为 $M{{mp.M}}$，$N{{mp.N}}$。$k_1=k$。</p>",
+      "highlight": ["Curve_C", "Line_MN", "Point_M", "Point_N", "Point_F1"]
+    },
+    {
+      "title": "直线 MD、ND 的另一交点",
+      "content": "<p>设 $M(x_1,k(x_1+2))$。直线 $MD$ 过 $D(1,0)$，斜率为 $\\dfrac{k(x_1+2)}{x_1-1}$。代入椭圆 $b^{2}x^{2}+a^{2}y^{2}=a^{2}b^{2}$，并利用 $M$ 已在椭圆上，约去已知根 $x_1$，另一交点 $P$ 为</p><p>$$x_P=\\dfrac{(a^{2}+1)x_1-2a^{2}}{2x_1-(a^{2}+1)},\\quad y_P=\\dfrac{k(a^{2}-1)(x_1+2)}{2x_1-(a^{2}+1)}.$$</p><p>把 $x_1$ 换成 $x_2$ 即得 $Q$。图中 $P{{mp.P}}$，$Q{{mp.Q}}$。$D$ 在椭圆内部，所以 $P,Q$ 都是线段的延长线与椭圆的第二个交点。</p>",
+      "highlight": ["Curve_C", "Line_MD", "Line_ND", "Point_M", "Point_N", "Point_D", "Point_P", "Point_Q"]
+    },
+    {
+      "title": "斜率比与 k 无关",
+      "content": "<p>记 $d(x)=2x-(a^{2}+1)$。则</p><p>$$y_P-y_Q=\\dfrac{k(a^{2}-1)(a^{2}+5)(x_2-x_1)}{d(x_1)d(x_2)},\\quad x_P-x_Q=\\dfrac{(a^{2}-1)^{2}(x_2-x_1)}{d(x_1)d(x_2)}.$$</p><p>两式相除，$x_1-x_2$ 与分母约去，得</p><p>$$k_2=k\\cdot\\dfrac{a^{2}+5}{a^{2}-1}.$$</p><p>因此 $\\dfrac{k_2}{k_1}=f(a)={{vals.f}}$，与 $k$ 无关（铅直弦 $x=-2$ 是 $k\\to\\infty$ 的极限，比值相同）。</p>",
+      "highlight": ["Curve_C", "Line_MN", "Line_PQ", "Point_M", "Point_N", "Point_P", "Point_Q"]
+    },
+    {
+      "title": "单调性与值域",
+      "content": "<p>因为 $(a^{2}+5)-(a^{2}-1)=6$，</p><p>$$f(a)=1+\\dfrac{6}{a^{2}-1}.$$</p><p>求导得 $f'(a)={{vals.df}}$。当 $a&gt;2$ 时 $a&gt;0$、$a^{2}-1&gt;0$，故 $f'(a)&lt;0$，$f$ 在 $(2,+\\infty)$ 上严格递减，没有极值。又</p><p>$$\\lim_{a\\to 2^{+}}f(a)={{vals.hi}},\\qquad \\lim_{a\\to +\\infty}f(a)={{vals.lo}},$$</p><p>所以值域是开区间 $\\left({{vals.lo}},{{vals.hi}}\\right)$：既取不到最大值，也取不到最小值。</p>",
+      "highlight": ["Curve_C", "Line_MN", "Line_PQ", "Point_P", "Point_Q", "Point_M", "Point_N", "Point_D", "Point_F1"]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_C": {"type": "ellipse", "curve": "C", "color": "curve"},
+      "Line_MN": {"type": "line", "curve": "MN", "color": "emphasis"},
+      "Line_MD": {"type": "line", "curve": "MD", "color": "aux"},
+      "Line_ND": {"type": "line", "curve": "ND", "color": "aux"},
+      "Line_PQ": {"type": "line", "curve": "PQ", "color": "emphasis"},
+      "Seg_OF2": {"type": "segment", "a": "O", "b": "F2", "color": "normal"},
+      "Point_O": {"type": "point", "center": "O"},
+      "Point_D": {"type": "point", "center": "D"},
+      "Point_F1": {"type": "point", "center": "F1"},
+      "Point_F2": {"type": "point", "center": "F2"},
+      "Point_M": {"type": "point", "center": "M"},
+      "Point_N": {"type": "point", "center": "N"},
+      "Point_P": {"type": "point", "center": "P"},
+      "Point_Q": {"type": "point", "center": "Q"}
+    }
+  }
+}

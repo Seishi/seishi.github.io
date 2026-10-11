@@ -1,0 +1,90 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["parabola"],
+    "frame": {"xmin": -5, "xmax": 11, "ymin": -8, "ymax": 4},
+    "curves": {
+      "Gamma": {"type": "parabola", "p": 2, "vertex": [0, 0], "axis": "x", "direction": "+"},
+      "tA": {"type": "line", "a": 1, "b": -1, "c": 1},
+      "tB": {"type": "line", "a": 1, "b": 3, "c": 9},
+      "dir": {"type": "line", "a": 1, "b": 0, "c": 1},
+      "PF": {"type": "line", "points": ["P", "F"]},
+      "AK": {"type": "line", "points": ["A", "K"]},
+      "Circ": {"type": "circle", "center": [-2, 1], "radius": "sqrt(10)"}
+    },
+    "points": {
+      "W": [-2, 1]
+    },
+    "givens": [
+      {"name": "F", "kind": "focus", "of": "Gamma", "which": "right"},
+      {"name": "A", "kind": "on_curve", "curve": "Gamma", "t": 2},
+      {"name": "B", "kind": "on_curve", "curve": "Gamma", "t": -6},
+      {"name": "P", "kind": "intersection", "of": ["tA", "tB"]},
+      {"name": "M", "kind": "midpoint", "of": ["A", "P"]},
+      {"name": "K", "kind": "intersection", "of": ["PF", "dir"]},
+      {"name": "L", "kind": "intersection", "of": ["AK", "Circ"], "which": "lower"}
+    ],
+    "query": {"type": "custom", "expr": "90"}
+  },
+  "lesson": {
+    "meta": "交互解题 · 抛物线角度",
+    "title": "已知抛物线 $\\Gamma$ 的焦点是 $F$，准线是 $l$。点 $A,B$ 在 $\\Gamma$ 上，$\\Gamma$ 在点 $A,B$ 处的切线相交于点 $P$。准线 $l$ 与线段 $AP$ 的交点 $M$ 恰为其中点。设 $PF$ 与 $l$ 相交于点 $K$，直线 $AK$ 与 $\\odot(APF)$ 相交于另一点 $L$。证明：$\\angle AMB+\\angle ALM=90^{\\circ}$。",
+    "answerLabel": "结论",
+    "answers": [
+      {"label": "所证", "value": "$\\angle AMB+\\angle ALM={{answer}}^{\\circ}$"}
+    ]
+  },
+  "steps": [
+    {
+      "title": "建系并写出参数",
+      "content": "<p>取抛物线 $\\Gamma:{{eq.Gamma}}$，即 $y^{2}=4x$。焦点 $F{{mp.F}}$，准线 $l:x=-1$。</p><p>设 $A(t^{2},2t)$，$B(t_{2}^{2},2t_{2})$（$t\\neq 0$）。</p>",
+      "highlight": ["Axis", "Curve_G", "Focus_F", "Dir_l", "Point_F", "Point_A", "Point_B"]
+    },
+    {
+      "title": "中点条件确定另一切点",
+      "content": "<p>$A,B$ 处切线交于 $P(tt_{2},t+t_{2})$。$AP$ 中点的横坐标为 $\\dfrac{t^{2}+tt_{2}}{2}$。它落在准线 $x=-1$ 上，故 $t(t+t_{2})=-2$，</p><p>$$t_{2}=-t-\\dfrac{2}{t}.$$</p><p>因此 $P\\left(-t^{2}-2,-\\dfrac{2}{t}\\right)$，$M\\left(-1,t-\\dfrac{1}{t}\\right)$。$M$ 就是 $A$ 处切线与准线的交点，且为 $AP$ 中点。图中 $P{{mp.P}}$，$M{{mp.M}}$。</p>",
+      "highlight": ["Curve_G", "Line_tA", "Line_tB", "Dir_l", "Seg_AP", "Point_A", "Point_B", "Point_P", "Point_M", "Point_F"]
+    },
+    {
+      "title": "直线 PF 交准线于 K",
+      "content": "<p>$P\\left(-t^{2}-2,-\\dfrac{2}{t}\\right)$，$F(1,0)$。直线 $PF$ 写成</p><p>$$x=1+s(-t^{2}-3),\\qquad y=s\\left(-\\dfrac{2}{t}\\right).$$</p><p>令 $x=-1$，得 $s=\\dfrac{2}{t^{2}+3}$，故</p><p>$$K\\left(-1,-\\dfrac{4}{t(t^{2}+3)}\\right).$$</p><p>图中 $K{{mp.K}}$。$M,K$ 都在准线 $l$ 上。</p>",
+      "highlight": ["Line_PF", "Dir_l", "Point_P", "Point_F", "Point_K", "Point_M", "Focus_F"]
+    },
+    {
+      "title": "圆 APF 与另一交点 L",
+      "content": "<p>过 $A,P,F$ 的圆 $x^{2}+y^{2}+dx+ey+f=0$。代入三点，化简得</p><p>$$d=t^{2}+3,\\quad e=-\\dfrac{t^{4}+3t^{2}-2}{t},\\quad f=-t^{2}-4.$$</p><p>直线 $AK$ 与该圆已有交点 $A$，另一交点为</p><p>$$L\\left(-\\dfrac{3t^{4}+19t^{2}+24}{t^{4}+9t^{2}+16},-\\dfrac{4(t^{4}+5t^{2}+8)}{t(t^{4}+9t^{2}+16)}\\right).$$</p><p>图中圆心 $W{{mp.W}}$，半径为 $W$ 到 $F$ 的距离，$L{{mp.L}}$。</p>",
+      "highlight": ["Circ", "Line_AK", "Point_A", "Point_P", "Point_F", "Point_K", "Point_L", "Point_W"]
+    },
+    {
+      "title": "两角的正切之积为 -1",
+      "content": "<p>向量 $\\overrightarrow{MA}=(t^{2}+1)\\left(1,\\dfrac{1}{t}\\right)$，故 $k_{MA}=\\dfrac{1}{t}$。再把 $B$ 的参数代入，得 $k_{MB}=-\\dfrac{3t}{t^{2}+4}$。从 $\\overrightarrow{MA}$ 转到 $\\overrightarrow{MB}$ 的有向角 $\\alpha$ 满足</p><p>$$\\tan\\alpha=\\dfrac{k_{MB}-k_{MA}}{1+k_{MA}k_{MB}}=-\\dfrac{4}{t}.$$</p><p>把 $L$ 代入斜率，得 $k_{LA}=\\dfrac{2(t^{2}+2)}{t(t^{2}+3)}$，$k_{LM}=\\dfrac{t^{4}+11t^{2}+16}{2t(t^{2}+4)}$。从 $\\overrightarrow{LA}$ 转到 $\\overrightarrow{LM}$ 的有向角 $\\beta$ 满足 $\\tan\\beta=\\dfrac{t}{4}$。</p><p>于是 $\\tan\\alpha\\tan\\beta=-1$，即 $1+\\tan\\alpha\\tan\\beta=0$，$\\tan(\\alpha-\\beta)$ 无定义，故 $\\alpha-\\beta=\\pm 90^{\\circ}$。当 $t>0$ 时 $\\alpha<0$、$\\beta>0$，且两角都在 $(-180^{\\circ},180^{\\circ})$ 内，其绝对值之和为 $90^{\\circ}$：</p><p>$$\\angle AMB+\\angle ALM={{answer}}^{\\circ}.$$</p>",
+      "highlight": ["Seg_MA", "Seg_MB", "Seg_LA", "Seg_LM", "Point_A", "Point_M", "Point_B", "Point_L", "Line_tA", "Circ", "Dir_l"]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_G": {"type": "parabola", "curve": "Gamma", "color": "curve"},
+      "Focus_F": {"type": "focus", "of": "Gamma", "which": "right"},
+      "Dir_l": {"type": "directrix", "of": "Gamma", "which": "left"},
+      "Line_tA": {"type": "line", "curve": "tA", "color": "emphasis"},
+      "Line_tB": {"type": "line", "curve": "tB", "color": "emphasis"},
+      "Line_PF": {"type": "line", "curve": "PF", "color": "normal"},
+      "Line_AK": {"type": "line", "curve": "AK", "color": "emphasis"},
+      "Circ": {"type": "circle", "curve": "Circ", "color": "curve"},
+      "Seg_AP": {"type": "segment", "a": "A", "b": "P", "color": "emphasis"},
+      "Seg_MA": {"type": "segment", "a": "M", "b": "A", "color": "emphasis"},
+      "Seg_MB": {"type": "segment", "a": "M", "b": "B", "color": "emphasis"},
+      "Seg_LA": {"type": "segment", "a": "L", "b": "A", "color": "normal"},
+      "Seg_LM": {"type": "segment", "a": "L", "b": "M", "color": "normal"},
+      "Point_A": {"type": "point", "center": "A"},
+      "Point_B": {"type": "point", "center": "B"},
+      "Point_P": {"type": "point", "center": "P"},
+      "Point_M": {"type": "point", "center": "M"},
+      "Point_F": {"type": "point", "center": "F"},
+      "Point_K": {"type": "point", "center": "K"},
+      "Point_L": {"type": "point", "center": "L"},
+      "Point_W": {"type": "point", "center": "W"}
+    }
+  }
+}

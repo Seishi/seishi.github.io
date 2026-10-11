@@ -1,0 +1,84 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["ellipse"],
+    "frame": {"xmin": -3, "xmax": 3, "ymin": -7, "ymax": 2},
+    "curves": {
+      "E": {"type": "ellipse", "a": 2, "b": 1, "center": [0, 0], "axis": "x"},
+      "PF1": {"type": "line", "points": ["P", "F1"]},
+      "PF2": {"type": "line", "points": ["P", "F2"]},
+      "TA": {"type": "line", "points": ["A", "Q"]},
+      "TB": {"type": "line", "points": ["B", "Q"]},
+      "PQ": {"type": "line", "points": ["P", "Q"]},
+      "K": {"type": "circle", "center": [0, "-5*sqrt(3)/12"], "radius": "13*sqrt(3)/12"}
+    },
+    "points": {
+      "A": ["-(1+42*sqrt(3))/37", "-(-6+7*sqrt(3))/74"],
+      "B": ["(-1+42*sqrt(3))/37", "-(6+7*sqrt(3))/74"],
+      "Q": [-1, "-7*sqrt(3)/2"],
+      "W": [0, "-5*sqrt(3)/12"]
+    },
+    "givens": [
+      {"name": "F1", "kind": "focus", "of": "E", "which": "left"},
+      {"name": "F2", "kind": "focus", "of": "E", "which": "right"},
+      {"name": "P", "kind": "on_curve", "curve": "E", "t": "pi/3"},
+      {"name": "M", "kind": "midpoint", "of": ["P", "Q"]}
+    ],
+    "query": {"type": "custom", "expr": "0"}
+  },
+  "lesson": {
+    "meta": "交互解题 · 椭圆",
+    "title": "椭圆 $\\mathcal{E}$ 的焦点为 $F_1,F_2$，$P$ 在 $\\mathcal{E}$ 上。直线 $PF_1$、$PF_2$ 分别再交 $\\mathcal{E}$ 于 $A,B$，点 $A,B$ 处的切线交于 $Q$。证明 $PQ$ 的中点在 $\\triangle PF_1F_2$ 的外接圆上。",
+    "answerLabel": "$PQ$ 的中点在外接圆上",
+    "answers": [
+      {"label": "结论", "value": "中点 $M{{mp.M}}$ 在 $\\triangle PF_1F_2$ 的外接圆上"}
+    ]
+  },
+  "steps": [
+    {
+      "title": "建立平面直角坐标系",
+      "content": "<p>设椭圆 $\\mathcal{E}:\\dfrac{x^{2}}{a^{2}}+\\dfrac{y^{2}}{b^{2}}=1$（$a&gt;b&gt;0$），$c=\\sqrt{a^{2}-b^{2}}$。焦点 $F_1{{mp.F1}}$，$F_2{{mp.F2}}$。设 $P=(a\\cos t,\\, b\\sin t)$，其中 $\\sin t\\neq 0$，即 $P{{mp.P}}$。</p>",
+      "highlight": ["Axis", "Curve_E", "Point_P", "Point_F1", "Point_F2"]
+    },
+    {
+      "title": "焦半径的另一交点",
+      "content": "<p>直线 $PF_1$ 与椭圆已有交点 $P$，另一交点记为 $A$；直线 $PF_2$ 的另一交点记为 $B$。把直线写成 $F_1+s(P-F_1)$，代入 $\\dfrac{x^{2}}{a^{2}}+\\dfrac{y^{2}}{b^{2}}=1$，约去 $s=1$，得</p><p>$$A_x=\\dfrac{a(-2a^{2}\\cos t-2ac+b^{2}\\cos t)}{2a^{2}+2ac\\cos t-b^{2}},\\quad A_y=-\\dfrac{b^{3}\\sin t}{2a^{2}+2ac\\cos t-b^{2}},$$</p><p>$B$ 把式中的 $c$ 换成 $-c$。</p>",
+      "highlight": ["Curve_E", "Line_PF1", "Line_PF2", "Point_P", "Point_A", "Point_B", "Point_F1", "Point_F2"]
+    },
+    {
+      "title": "两条切线的交点 Q",
+      "content": "<p>椭圆在 $(x_0,y_0)$ 处的切线为 $\\dfrac{xx_0}{a^{2}}+\\dfrac{yy_0}{b^{2}}=1$。把 $A,B$ 的坐标代入并联立，解得</p><p>$$Q=\\left(-a\\cos t,\\ -\\dfrac{(2a^{2}-b^{2})\\sin t}{b}\\right).$$</p><p>也就是 $Q$ 与 $P$ 关于 $y$ 轴对称的横坐标，纵坐标则放大为 $-\\dfrac{2a^{2}-b^{2}}{b^{2}}$ 倍。两条切线就是 $AQ$ 与 $BQ$。</p>",
+      "highlight": ["Curve_E", "Line_TA", "Line_TB", "Point_A", "Point_B", "Point_Q", "Point_P"]
+    },
+    {
+      "title": "中点 M 落在 y 轴上",
+      "content": "<p>$P=(a\\cos t,\\, b\\sin t)$，$Q$ 的横坐标是 $-a\\cos t$，所以中点 $M$ 的横坐标为 $0$。纵坐标为</p><p>$$m=\\dfrac{1}{2}\\left(b\\sin t-\\dfrac{(2a^{2}-b^{2})\\sin t}{b}\\right)=-\\dfrac{c^{2}}{b}\\sin t,$$</p><p>其中 $c^{2}=a^{2}-b^{2}$。</p>",
+      "highlight": ["Seg_PQ", "Point_P", "Point_Q", "Point_M", "Line_TA", "Line_TB", "Curve_E"]
+    },
+    {
+      "title": "M 在外接圆上",
+      "content": "<p>$F_1(-c,0)$、$F_2(c,0)$ 的中垂线是 $y$ 轴，故 $\\triangle PF_1F_2$ 的外心 $W$ 在 $y$ 轴上。设 $W=(0,k)$，由 $|WF_2|=|WP|$ 得</p><p>$$k=\\dfrac{b^{2}-c^{2}\\sin^{2}t}{2b\\sin t}.$$</p><p>圆方程为 $x^{2}+y^{2}-2ky-c^{2}=0$。把 $M=(0,m)$ 代入：</p><p>$$m^{2}-2km-c^{2}=\\dfrac{c^{4}\\sin^{2}t}{b^{2}}+\\dfrac{c^{2}(b^{2}-c^{2}\\sin^{2}t)}{b^{2}}-c^{2}=0.$$</p><p>因此 $M$ 在外接圆上。所证即：$PQ$ 的中点在 $\\triangle PF_1F_2$ 的外接圆上。</p>",
+      "highlight": ["Curve_K", "Curve_E", "Seg_PQ", "Point_M", "Point_P", "Point_F1", "Point_F2", "Point_Q", "Point_W", "Point_A", "Point_B"]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_E": {"type": "ellipse", "curve": "E", "color": "curve"},
+      "Line_PF1": {"type": "line", "curve": "PF1", "color": "emphasis"},
+      "Line_PF2": {"type": "line", "curve": "PF2", "color": "emphasis"},
+      "Line_TA": {"type": "line", "curve": "TA", "color": "normal"},
+      "Line_TB": {"type": "line", "curve": "TB", "color": "normal"},
+      "Seg_PQ": {"type": "segment", "a": "P", "b": "Q", "color": "emphasis"},
+      "Curve_K": {"type": "circle", "curve": "K", "color": "emphasis"},
+      "Point_P": {"type": "point", "center": "P"},
+      "Point_F1": {"type": "point", "center": "F1"},
+      "Point_F2": {"type": "point", "center": "F2"},
+      "Point_A": {"type": "point", "center": "A"},
+      "Point_B": {"type": "point", "center": "B"},
+      "Point_Q": {"type": "point", "center": "Q"},
+      "Point_M": {"type": "point", "center": "M"},
+      "Point_W": {"type": "point", "center": "W"}
+    }
+  }
+}

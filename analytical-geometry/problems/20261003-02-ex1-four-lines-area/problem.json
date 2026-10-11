@@ -1,0 +1,87 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["line-circle"],
+    "frame": {"xmin": -6, "xmax": 13, "ymin": -8, "ymax": 6},
+    "curves": {
+      "l1": {"type": "line", "a": 1, "b": 3, "c": -8},
+      "l2": {"type": "line", "a": 1, "b": -2, "c": -12},
+      "l3": {"type": "line", "a": 2, "b": 1, "c": 1},
+      "l4": {"type": "line", "a": 2, "b": 1, "c": 3}
+    },
+    "points": {},
+    "givens": [
+      {"name": "A", "kind": "intersection", "of": ["l1", "l3"]},
+      {"name": "B", "kind": "intersection", "of": ["l1", "l4"]},
+      {"name": "C", "kind": "intersection", "of": ["l2", "l4"]},
+      {"name": "D", "kind": "intersection", "of": ["l2", "l3"]},
+      {"name": "P", "kind": "intersection", "of": ["l1", "l2"]}
+    ],
+    "lengths": {
+      "PD": ["P", "D"],
+      "PC": ["P", "C"]
+    },
+    "query": {
+      "type": "custom",
+      "expr": "44/5",
+      "vals": {
+        "k": "96",
+        "t": "6",
+        "theta": "pi/4",
+        "tanth": "1"
+      }
+    }
+  },
+  "lesson": {
+    "meta": "交互解题 · 四直线围成的面积",
+    "title": "设 $k,t\\in\\mathbb{R}$。已知方程 $x^{2}+xy-6y^{2}-20x-20y+k=0$ 与方程 $4x^{2}+4xy+y^{2}+(t+2)x+4y+3=0$ 各表示两条直线，则这四条直线围成的封闭图形的面积为______。",
+    "answerLabel": "四边形面积"
+  },
+  "steps": [
+    {
+      "title": "建立平面直角坐标系",
+      "content": "<p>在平面直角坐标系中，方程 (1) 分解成的两直线为 $l_1:{{eq.l1}}$，$l_2:{{eq.l2}}$；方程 (2) 分解成的两直线为 $l_3:{{eq.l3}}$，$l_4:{{eq.l4}}$。</p><p>$l_1$ 与 $l_3$、$l_4$ 分别交于 $A{{mp.A}}$、$B{{mp.B}}$，$l_2$ 与 $l_4$、$l_3$ 分别交于 $C{{mp.C}}$、$D{{mp.D}}$。四边形 $ABCD$ 即所求封闭图形，$l_1$ 与 $l_2$ 交于 $P{{mp.P}}$。</p>",
+      "highlight": ["Axis", "Line_l1", "Line_l2", "Line_l3", "Line_l4", "Point_A", "Point_B", "Point_C", "Point_D", "Point_P"]
+    },
+    {
+      "title": "分解方程 (1)，确定 k",
+      "content": "<p>二次齐次部分 $x^{2}+xy-6y^{2}=(x+3y)(x-2y)$。配上常数因子后，方程 (1) 表示直线 $l_1:{{eq.l1}}$ 与 $l_2:{{eq.l2}}$。</p><p>两直线方程相乘，与原式比较常数项，得 $k={{vals.k}}$。</p>",
+      "highlight": ["Line_l1", "Line_l2", "Point_P"]
+    },
+    {
+      "title": "分解方程 (2)，得到一对平行线",
+      "content": "<p>方程 (2) 的二次部分是完全平方 $(2x+y)^{2}$。它表示两条平行直线 $l_3:{{eq.l3}}$，$l_4:{{eq.l4}}$。</p><p>与原式的一次项比较，得 $t={{vals.t}}$。$l_3\\parallel l_4$，封闭图形是梯形 $ABCD$，两底分别在 $l_3$、$l_4$ 上。</p>",
+      "highlight": ["Line_l3", "Line_l4", "Seg_DA", "Seg_BC", "Point_A", "Point_D", "Point_B", "Point_C"]
+    },
+    {
+      "title": "垂直关系与夹角",
+      "content": "<p>$l_2$ 的方向与 $l_3$、$l_4$ 的法向相同，故 $l_2\\perp l_3$，$l_2\\perp l_4$。垂足就是 $D{{mp.D}}$ 与 $C{{mp.C}}$，从而 $|PD|={{vals.len_PD}}$，$|PC|={{vals.len_PC}}$。</p><p>$l_1$ 与 $l_2$ 的斜率差使夹角正切等于 ${{vals.tanth}}$，所以 $\\angle APB={{vals.theta}}$。于是 $\\triangle PAD$ 与 $\\triangle PBC$ 都是等腰直角三角形，$P$ 在梯形之外，两三角形相似。</p>",
+      "highlight": ["Line_l1", "Line_l2", "Line_l3", "Line_l4", "Seg_PD", "Seg_PC", "Point_P", "Point_A", "Point_D", "Point_B", "Point_C"]
+    },
+    {
+      "title": "用两直角三角形的面积差求梯形面积",
+      "content": "<p>等腰直角三角形的面积等于一条直角边平方的一半。大三角形 $\\triangle PBC$ 的直角边是 $|PC|$，小三角形 $\\triangle PAD$ 的直角边是 $|PD|$。梯形 $ABCD$ 的面积等于两者之差：</p><p>$$S=\\dfrac{1}{2}\\left({{vals.len_PC}}^{2}-{{vals.len_PD}}^{2}\\right)={{answer}}.$$</p>",
+      "highlight": ["Seg_AB", "Seg_BC", "Seg_CD", "Seg_DA", "Seg_PD", "Seg_PC", "Point_A", "Point_B", "Point_C", "Point_D", "Point_P", "Line_l1", "Line_l2"]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Line_l1": {"type": "line", "curve": "l1", "color": "emphasis"},
+      "Line_l2": {"type": "line", "curve": "l2", "color": "normal"},
+      "Line_l3": {"type": "line", "curve": "l3", "color": "curve"},
+      "Line_l4": {"type": "line", "curve": "l4", "color": "curve"},
+      "Seg_AB": {"type": "segment", "a": "A", "b": "B", "color": "emphasis"},
+      "Seg_BC": {"type": "segment", "a": "B", "b": "C", "color": "emphasis"},
+      "Seg_CD": {"type": "segment", "a": "C", "b": "D", "color": "emphasis"},
+      "Seg_DA": {"type": "segment", "a": "D", "b": "A", "color": "emphasis"},
+      "Seg_PD": {"type": "segment", "a": "P", "b": "D", "color": "aux", "dashed": true},
+      "Seg_PC": {"type": "segment", "a": "P", "b": "C", "color": "aux", "dashed": true},
+      "Point_A": {"type": "point", "center": "A"},
+      "Point_B": {"type": "point", "center": "B"},
+      "Point_C": {"type": "point", "center": "C"},
+      "Point_D": {"type": "point", "center": "D"},
+      "Point_P": {"type": "point", "center": "P"}
+    }
+  }
+}

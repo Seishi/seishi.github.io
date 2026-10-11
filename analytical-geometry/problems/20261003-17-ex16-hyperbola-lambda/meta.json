@@ -1,0 +1,12 @@
+{
+  "id": "20261003-17-ex16-hyperbola-lambda",
+  "slug": "ex16-hyperbola-lambda",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "hyperbola"
+  ],
+  "title": "双曲线 $\\Gamma:x^{2}-y^{2}=1$ 上三点 $A,B,C$ 满足 $AB\\perp AC$，且 $B,C$ 不在同一支。过 $A$ 的切线交 $BC$ 于 $H$。若 $|BH|\\ge|CH|$，求最大的实数 $\\lambda$，使 $|BH|\\cdot|BC|\\ge\\lambda$ 恒成立。",
+  "answer": "$4$"
+}

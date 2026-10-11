@@ -1,0 +1,238 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "body": "custom",
+    "scale": 2.4,
+    "points": {
+      "O": [
+        "0",
+        "0",
+        "0"
+      ],
+      "A": [
+        "1",
+        "0",
+        "0"
+      ],
+      "B": [
+        "0",
+        "1",
+        "0"
+      ],
+      "C": [
+        "-1",
+        "0",
+        "0"
+      ],
+      "D": [
+        "0",
+        "-1",
+        "0"
+      ],
+      "Z": [
+        "0",
+        "0",
+        "1"
+      ],
+      "K1": [
+        "4/7",
+        "0",
+        "2*sqrt(3)/7"
+      ],
+      "K2": [
+        "-2/7",
+        "2*sqrt(3)/7",
+        "2*sqrt(3)/7"
+      ],
+      "K3": [
+        "-2/7",
+        "-2*sqrt(3)/7",
+        "2*sqrt(3)/7"
+      ]
+    },
+    "topo": {
+      "spheres": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "O",
+        "Z",
+        "K1",
+        "K2",
+        "K3"
+      ],
+      "edges": [
+        {
+          "a": "O",
+          "b": "Z"
+        },
+        {
+          "a": "K1",
+          "b": "K2"
+        },
+        {
+          "a": "K2",
+          "b": "K3"
+        },
+        {
+          "a": "K3",
+          "b": "K1"
+        }
+      ]
+    },
+    "query": {
+      "type": "volume",
+      "kind": "tetra",
+      "pts": [
+        "O",
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "_note": "所求不属于 5 类 query；index.html 由 _render.py 精确渲染。"
+  },
+  "lesson": {
+    "language": "zh-CN",
+    "meta": "交互解题 · 截面圆半径",
+    "title": "有一个半径为 $1$ 的半球。若 $3$ 个半径为 $r$ 的截面圆两两相切，且均与该半球的底面圆周相切，则 $r=$",
+    "answerLabel": "$r$",
+    "answerValue": "$\\dfrac{\\sqrt{21}}{7}$"
+  },
+  "steps": [
+    {
+      "title": "半球与截面圆",
+      "content": "<p>半球半径 $1$，底面为 $z=0$ 的单位圆。截面圆半径 $r$，其平面到球心距离 $d=\\sqrt{1-r^{2}}$，球心角半径 $\\alpha=\\arcsin r$。</p>",
+      "highlight": [
+        "Axis",
+        "Sphere_hemi",
+        "Plane_base",
+        "Point_O",
+        "Point_Z"
+      ],
+      "cameraPos": {
+        "x": 4.56,
+        "y": 4.46,
+        "z": 4.56
+      }
+    },
+    {
+      "title": "与底面圆周相切",
+      "content": "<p>底面圆周是大圆。小圆与它相切，则小圆极点与 $z$ 轴夹角为 $\\dfrac{\\pi}{2}-\\alpha$，极点高度分量 $u_z=\\sin\\alpha=r$。</p><p>三个小圆两两外切，极点之间的球心角为 $2\\alpha$，三极点在同一纬度上成正三角形。</p>",
+      "highlight": [
+        "Point_K1",
+        "Point_K2",
+        "Point_K3",
+        "Circle1",
+        "Circle2",
+        "Circle3",
+        "Plane_base"
+      ],
+      "cameraPos": {
+        "x": 4.26,
+        "y": 5.78,
+        "z": 3.41
+      }
+    },
+    {
+      "title": "正三角形边长条件",
+      "content": "<p>与赤道相切推出小圆极点的余纬为 $\\dfrac{\\pi}{2}-\\alpha$，即 $u_z=\\sin\\alpha=r$。三极点在同一纬度、方位角相差 $120^{\\circ}$，两两相切要求球心角 $2\\alpha$，于是</p>$$1-2r^{2}=r^{2}-\\dfrac{1-r^{2}}{2}\\implies r^{2}=\\dfrac{3}{7}.$$<p>因此 $r=\\sqrt{\\dfrac{3}{7}}=\\dfrac{\\sqrt{21}}{7}$。</p>",
+      "highlight": [
+        "Point_K1",
+        "Point_K2",
+        "Point_K3",
+        "Line_K1K2",
+        "Line_K2K3",
+        "Line_K3K1"
+      ],
+      "cameraPos": {
+        "x": 5.12,
+        "y": 4.07,
+        "z": 4.26
+      }
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {
+        "type": "axes",
+        "size": 2.2
+      },
+      "Point_O": {
+        "type": "point",
+        "center": "O"
+      },
+      "Point_Z": {
+        "type": "point",
+        "center": "Z"
+      },
+      "Point_K1": {
+        "type": "point",
+        "center": "K1"
+      },
+      "Point_K2": {
+        "type": "point",
+        "center": "K2"
+      },
+      "Point_K3": {
+        "type": "point",
+        "center": "K3"
+      },
+      "Line_K1K2": {
+        "type": "line",
+        "a": "K1",
+        "b": "K2",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_K2K3": {
+        "type": "line",
+        "a": "K2",
+        "b": "K3",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_K3K1": {
+        "type": "line",
+        "a": "K3",
+        "b": "K1",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Plane_base": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "Sphere_hemi": {
+        "type": "sphere",
+        "center": "O",
+        "radius": 2.4,
+        "opacity": 0.08
+      },
+      "Circle1": {
+        "type": "sphere",
+        "center": "K1",
+        "radius": 1.571168809699145,
+        "opacity": 0.15
+      },
+      "Circle2": {
+        "type": "sphere",
+        "center": "K2",
+        "radius": 1.571168809699145,
+        "opacity": 0.15
+      },
+      "Circle3": {
+        "type": "sphere",
+        "center": "K3",
+        "radius": 1.571168809699145,
+        "opacity": 0.15
+      }
+    }
+  },
+  "_answer": "\\dfrac{\\sqrt{21}}{7}"
+}

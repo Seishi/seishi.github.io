@@ -1,0 +1,180 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "body": "custom",
+    "scale": 0.85,
+    "points": {
+      "A": [
+        "sqrt(59)/4",
+        "sqrt(59)/4",
+        "sqrt(59)/4"
+      ],
+      "B": [
+        "sqrt(59)/4",
+        "-sqrt(59)/4",
+        "-sqrt(59)/4"
+      ],
+      "C": [
+        "-sqrt(59)/4",
+        "sqrt(59)/4",
+        "-sqrt(59)/4"
+      ],
+      "D": [
+        "-sqrt(59)/4",
+        "-sqrt(59)/4",
+        "sqrt(59)/4"
+      ]
+    },
+    "topo": {
+      "spheres": [
+        "D",
+        "A",
+        "B",
+        "C"
+      ],
+      "edges": [
+        {
+          "a": "A",
+          "b": "B"
+        },
+        {
+          "a": "B",
+          "b": "C"
+        },
+        {
+          "a": "C",
+          "b": "A"
+        },
+        {
+          "a": "A",
+          "b": "D"
+        },
+        {
+          "a": "B",
+          "b": "D"
+        },
+        {
+          "a": "C",
+          "b": "D"
+        }
+      ]
+    },
+    "query": {
+      "type": "volume",
+      "kind": "tetra",
+      "pts": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    "_note": "所求不属于 5 类 query；index.html 由 _render.py 精确渲染。"
+  },
+  "lesson": {
+    "language": "zh-CN",
+    "meta": "交互解题 · 体积",
+    "title": "在空间直角坐标系 $O$-$xyz$ 中，一个正四面体的顶点 $A,B,C,D$ 的横坐标分别为 $2,3,5,7$，则该正四面体的体积是",
+    "answerLabel": "正四面体的体积",
+    "answerValue": "$\\dfrac{59 \\sqrt{59}}{24}$"
+  },
+  "steps": [
+    {
+      "title": "横坐标的方差与棱长",
+      "content": "<p>四个横坐标 $2,3,5,7$，均值 $\\dfrac{17}{4}$，</p>$$\\sum(x_i-\\bar x)^{2}=\\dfrac{59}{4}.$$<p>正四面体顶点相对重心各向同性：$\\sum_i (\\vec v_i\\cdot\\vec e_x)^{2}=\\dfrac{a^{2}}{2}$，其中 $a$ 为棱长。因此 $a^{2}=\\dfrac{59}{2}$。</p>",
+      "highlight": [
+        "Axis",
+        "Point_A",
+        "Point_B",
+        "Point_C",
+        "Point_D",
+        "Len_AB"
+      ],
+      "cameraPos": {
+        "x": 5.18,
+        "y": 4.31,
+        "z": 5.18
+      }
+    },
+    {
+      "title": "用棱长写体积",
+      "content": "<p>正四面体体积公式 $V=\\dfrac{a^{3}\\sqrt{2}}{12}$。$a^{3}=\\left(\\dfrac{59}{2}\\right)^{3/2}=\\dfrac{59\\sqrt{59}}{2\\sqrt{2}}$，代入得</p>$$V=\\dfrac{59\\sqrt{59}}{24}.$$",
+      "highlight": [
+        "Point_A",
+        "Point_B",
+        "Point_C",
+        "Point_D",
+        "Plane_ABC",
+        "Len_AB"
+      ],
+      "cameraPos": {
+        "x": 4.84,
+        "y": 5.81,
+        "z": 3.87
+      }
+    },
+    {
+      "title": "与外接半径核对",
+      "content": "<p>正四面体外接半径 $R=\\dfrac{\\sqrt{6}}{4}a$，代入体积公式 $V=\\dfrac{8\\sqrt{3}}{27}R^{3}$ 得到同一结果。图中是棱长 $\\sqrt{59/2}$ 的正四面体，体积为 $\\dfrac{59 \\sqrt{59}}{24}$。</p>",
+      "highlight": [
+        "Point_A",
+        "Point_B",
+        "Point_C",
+        "Point_D",
+        "Plane_BCD"
+      ],
+      "cameraPos": {
+        "x": 5.81,
+        "y": 3.87,
+        "z": 4.84
+      }
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {
+        "type": "axes",
+        "size": 4
+      },
+      "Point_A": {
+        "type": "point",
+        "center": "A"
+      },
+      "Point_B": {
+        "type": "point",
+        "center": "B"
+      },
+      "Point_C": {
+        "type": "point",
+        "center": "C"
+      },
+      "Point_D": {
+        "type": "point",
+        "center": "D"
+      },
+      "Len_AB": {
+        "type": "measure",
+        "a": "A",
+        "b": "B",
+        "label": "\\sqrt{59/2}"
+      },
+      "Plane_ABC": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "Plane_BCD": {
+        "type": "plane",
+        "pts": [
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    }
+  },
+  "_answer": "\\dfrac{59 \\sqrt{59}}{24}"
+}

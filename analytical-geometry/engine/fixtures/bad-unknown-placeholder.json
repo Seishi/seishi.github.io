@@ -1,0 +1,22 @@
+{
+  "lesson": {
+    "meta": "t",
+    "title": "椭圆 $C$",
+    "answerLabel": "弦长",
+    "answerValue": "$\\sqrt{10}$"
+  },
+  "steps": [
+    {
+      "title": "建系",
+      "content": "<p>{{vals.nope}}</p>",
+      "highlight": ["Axis"]
+    }
+  ],
+  "model": {
+    "points": {"O": [0, 0]},
+    "frame": {"xmin": -4, "xmax": 4, "ymin": -3, "ymax": 3},
+    "elements": {"Axis": {"type": "axes"}},
+    "plot_curves": {}
+  },
+  "spec_tags": ["ellipse"]
+}

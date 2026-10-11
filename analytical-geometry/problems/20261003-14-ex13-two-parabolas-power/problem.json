@@ -1,0 +1,78 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["parabola"],
+    "frame": {"xmin": -3, "xmax": 4, "ymin": -3, "ymax": 4},
+    "curves": {
+      "C1": {"type": "parabola", "p": 1, "vertex": [0, "-1/2"], "axis": "y", "direction": "+"},
+      "C2": {"type": "parabola", "p": 1, "vertex": ["-1/2", 0], "axis": "x", "direction": "+"},
+      "l": {"type": "line", "a": 1, "b": 1, "c": 1},
+      "AB": {"type": "line", "a": 1, "b": -1, "c": 0}
+    },
+    "points": {},
+    "givens": [
+      {"name": "O", "kind": "focus", "of": "C1", "which": "upper"},
+      {"name": "A", "kind": "intersection", "of": ["C1", "AB"], "which": "upper"},
+      {"name": "B", "kind": "intersection", "of": ["C1", "AB"], "which": "lower"},
+      {"name": "C", "kind": "intersection", "of": ["AB", "l"]}
+    ],
+    "query": {"type": "custom", "expr": "0"}
+  },
+  "lesson": {
+    "meta": "交互解题 · 公切线与幂",
+    "title": "平面上两个抛物线，它们有相互垂直的对称轴且有公共焦点 $O$。设两个抛物线相交于 $A,B$ 两点。一条公切线 $l$ 与直线 $AB$ 相交于点 $C$。证明：$|OC|^{2}=|AC|\\cdot|BC|$。",
+    "answerLabel": "结论",
+    "answers": [
+      {"label": "所证", "value": "$|OC|^{2}=|AC|\\cdot|BC|$"}
+    ]
+  },
+  "steps": [
+    {
+      "title": "把公共焦点放在原点",
+      "content": "<p>两抛物线的对称轴互相垂直，公共焦点为 $O$。把 $O$ 放在原点，轴分别平行于坐标轴，可写成</p><p>$$C_1:y=ax^{2}-\\dfrac{1}{4a},\\qquad C_2:x=by^{2}-\\dfrac{1}{4b}\\quad(a,b>0).$$</p><p>公共焦点 $O{{mp.O}}$，交点 $A{{mp.A}}$，$B{{mp.B}}$。</p>",
+      "highlight": ["Axis", "Curve_C1", "Curve_C2", "Point_O", "Point_A", "Point_B", "Focus_O"]
+    },
+    {
+      "title": "求出一条公切线",
+      "content": "<p>$C_1$ 上斜率为 $m$ 的切线是 $y=mx-\\dfrac{m^{2}+1}{4a}$，记纵截距为 $n=-\\dfrac{m^{2}+1}{4a}$。</p><p>同一直线与 $C_2$ 相切时，$n=\\dfrac{m^{2}+1}{4bm}$。两式相等得 $m=-\\dfrac{a}{b}$，从而</p><p>$$n=-\\dfrac{a^{2}+b^{2}}{4ab^{2}}.$$</p><p>整理得公切线</p><p>$$l:4a^{2}bx+4ab^{2}y+(a^{2}+b^{2})=0.$$</p>",
+      "highlight": ["Curve_C1", "Curve_C2", "Line_l", "Point_O", "Point_A", "Point_B"]
+    },
+    {
+      "title": "交点与公弦的参数",
+      "content": "<p>令 $s=\\dfrac{\\sqrt{2}}{2\\sqrt{ab}}$，则 $s^{2}=\\dfrac{1}{2ab}$。直接代入两条方程可验证</p><p>$$A\\left(\\dfrac{1}{2a}+s,\\dfrac{1}{2b}+s\\right),\\qquad B\\left(\\dfrac{1}{2a}-s,\\dfrac{1}{2b}-s\\right)$$</p><p>是两抛物线的交点。因此直线 $AB$ 可写成</p><p>$$\\left(\\dfrac{1}{2a}+\\lambda,\\dfrac{1}{2b}+\\lambda\\right),$$</p><p>$A,B$ 分别对应 $\\lambda=s$ 与 $\\lambda=-s$。</p>",
+      "highlight": ["Curve_C1", "Curve_C2", "Line_AB", "Point_A", "Point_B", "Point_O"]
+    },
+    {
+      "title": "公切线与公弦的交点 C",
+      "content": "<p>把 $AB$ 的参数式代入 $l$：</p><p>$$4a^{2}b\\left(\\dfrac{1}{2a}+\\lambda\\right)+4ab^{2}\\left(\\dfrac{1}{2b}+\\lambda\\right)+(a^{2}+b^{2})=0.$$</p><p>化简为 $4ab(a+b)\\lambda+(a^{2}+4ab+b^{2})=0$，故</p><p>$$\\lambda_C=-\\dfrac{a^{2}+4ab+b^{2}}{4ab(a+b)}.$$</p><p>对应点即 $C$。图中 $C{{mp.C}}$。$|\\lambda_C|>s$，所以 $C$ 在线段 $AB$ 的外侧。</p>",
+      "highlight": ["Line_l", "Line_AB", "Point_A", "Point_B", "Point_C", "Point_O"]
+    },
+    {
+      "title": "计算 |OC| 的平方",
+      "content": "<p>由参数式，</p><p>$$C_x=\\dfrac{1}{2a}+\\lambda_C,\\qquad C_y=\\dfrac{1}{2b}+\\lambda_C.$$</p><p>两式相加、相减得 $C_x+C_y=-\\dfrac{1}{a+b}$，$C_x-C_y=\\dfrac{b-a}{2ab}$。于是</p><p>$$|OC|^{2}=\\dfrac{(C_x+C_y)^{2}+(C_x-C_y)^{2}}{2}=\\dfrac{(a^{2}+b^{2})^{2}}{8a^{2}b^{2}(a+b)^{2}}.$$</p>",
+      "highlight": ["Line_l", "Seg_OC", "Point_O", "Point_C", "Point_A", "Point_B"]
+    },
+    {
+      "title": "比较 |AC|·|BC| 与 |OC|²",
+      "content": "<p>沿方向 $(1,1)$，参数差为 $\\Delta\\lambda$ 的两点距离是 $\\sqrt{2}\\,|\\Delta\\lambda|$。因此</p><p>$$|AC|\\cdot|BC|=2\\,|\\lambda_C^{2}-s^{2}|=2(\\lambda_C^{2}-s^{2}).$$</p><p>把 $\\lambda_C$ 与 $s^{2}=\\dfrac{1}{2ab}$ 代入，</p><p>$$\\lambda_C^{2}-s^{2}=\\dfrac{(a^{2}+4ab+b^{2})^{2}-8ab(a+b)^{2}}{16a^{2}b^{2}(a+b)^{2}}=\\dfrac{(a^{2}+b^{2})^{2}}{16a^{2}b^{2}(a+b)^{2}},$$</p><p>故 $|AC|\\cdot|BC|=\\dfrac{(a^{2}+b^{2})^{2}}{8a^{2}b^{2}(a+b)^{2}}$。它与 $|OC|^{2}$ 的差为 ${{answer}}$，所以</p><p>$$|OC|^{2}=|AC|\\cdot|BC|.$$</p>",
+      "highlight": ["Line_AB", "Line_l", "Seg_AC", "Seg_BC", "Seg_OC", "Point_O", "Point_A", "Point_B", "Point_C"]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_C1": {"type": "parabola", "curve": "C1", "color": "curve"},
+      "Curve_C2": {"type": "parabola", "curve": "C2", "color": "curve"},
+      "Focus_O": {"type": "focus", "of": "C1", "which": "upper"},
+      "Line_l": {"type": "line", "curve": "l", "color": "emphasis"},
+      "Line_AB": {"type": "line", "curve": "AB", "color": "emphasis"},
+      "Seg_OC": {"type": "segment", "a": "O", "b": "C", "color": "normal"},
+      "Seg_AC": {"type": "segment", "a": "A", "b": "C", "color": "emphasis"},
+      "Seg_BC": {"type": "segment", "a": "B", "b": "C", "color": "emphasis"},
+      "Point_O": {"type": "point", "center": "O"},
+      "Point_A": {"type": "point", "center": "A"},
+      "Point_B": {"type": "point", "center": "B"},
+      "Point_C": {"type": "point", "center": "C"}
+    }
+  }
+}

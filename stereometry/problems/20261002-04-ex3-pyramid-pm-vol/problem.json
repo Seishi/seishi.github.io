@@ -1,0 +1,298 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "body": "custom",
+    "scale": 1.15,
+    "points": {
+      "A": [
+        "0",
+        "0",
+        "0"
+      ],
+      "B": [
+        "sqrt(10)",
+        "0",
+        "0"
+      ],
+      "C": [
+        "3*sqrt(10)/2",
+        "3*sqrt(10)/2",
+        "0"
+      ],
+      "D": [
+        "0",
+        "sqrt(10)",
+        "0"
+      ],
+      "P": [
+        "33*sqrt(10)/25",
+        "24*sqrt(10)/25",
+        "12/5"
+      ],
+      "M": [
+        "4*sqrt(30)/25 + 21*sqrt(10)/25",
+        "-12*sqrt(10)/25 + 12*sqrt(30)/25",
+        "-6/5 + 6*sqrt(3)/5"
+      ],
+      "Q": [
+        "-sqrt(30)/10 + 36*sqrt(10)/25",
+        "-3*sqrt(30)/10 + 33*sqrt(10)/25",
+        "-21/5 + 3*sqrt(3)"
+      ],
+      "N": [
+        "-9*sqrt(30)/25 + 51*sqrt(10)/25",
+        "-27*sqrt(30)/25 + 78*sqrt(10)/25",
+        "-36/5 + 24*sqrt(3)/5"
+      ]
+    },
+    "topo": {
+      "spheres": [
+        "P",
+        "A",
+        "B",
+        "C",
+        "D",
+        "M",
+        "Q",
+        "N"
+      ],
+      "edges": [
+        {
+          "a": "A",
+          "b": "B"
+        },
+        {
+          "a": "B",
+          "b": "C"
+        },
+        {
+          "a": "C",
+          "b": "D"
+        },
+        {
+          "a": "D",
+          "b": "A"
+        },
+        {
+          "a": "P",
+          "b": "A"
+        },
+        {
+          "a": "P",
+          "b": "B"
+        },
+        {
+          "a": "P",
+          "b": "C"
+        },
+        {
+          "a": "P",
+          "b": "D"
+        },
+        {
+          "a": "P",
+          "b": "M"
+        },
+        {
+          "a": "M",
+          "b": "Q"
+        },
+        {
+          "a": "Q",
+          "b": "N"
+        }
+      ]
+    },
+    "query": {
+      "type": "volume",
+      "kind": "tetra",
+      "pts": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    "_note": "所求不属于 5 类 query；index.html 由 _render.py 精确渲染。"
+  },
+  "lesson": {
+    "language": "zh-CN",
+    "meta": "交互解题 · 体积比与线段比",
+    "title": "四棱锥 $P$-$ABCD$ 中，$AB=AD=\\sqrt{10}$，$CB=CD=5$，$\\angle BAD=90^{\\circ}$，$PB=4$，$PC=3$。点 $Q$ 为 $\\triangle PBC$ 内部任一点，平面 $QAD$ 与 $PB$ 交于 $M$。记四面体 $ACDQ$、$ADPQ$ 的体积分别为 $V_1$、$V_2$，求 $\\dfrac{|PM|}{|BM|}+\\dfrac{2V_1}{V_2}$ 的最小值",
+    "answerLabel": "$\\dfrac{|PM|}{|BM|}+\\dfrac{2V_1}{V_2}$ 的最小值",
+    "answerValue": "$2 \\sqrt{3}$"
+  },
+  "steps": [
+    {
+      "title": "建系并写出底面坐标",
+      "content": "<p>底面 $ABCD$ 放在 $z=0$：$A$ 为原点，$AB$ 沿 $x$ 轴，$AD$ 沿 $y$ 轴。</p>$$A(0, 0, 0),\\quad B(\\sqrt{10}, 0, 0),\\quad D(0, \\sqrt{10}, 0).$$<p>由 $CB=CD=5$ 且 $\\angle BAD=90^{\\circ}$，得 $C$ 在第一象限：</p>$$C(\\dfrac{3 \\sqrt{10}}{2}, \\dfrac{3 \\sqrt{10}}{2}, 0).$$<p>$P$ 满足 $PB=4$、$PC=3$、$z>0$，落在两球面交线（圆）上。下面的最值与 $P$ 在该圆上的具体位置无关，图中取最高点 $(\\dfrac{33 \\sqrt{10}}{25}, \\dfrac{24 \\sqrt{10}}{25}, \\dfrac{12}{5})$。</p>",
+      "highlight": [
+        "Axis",
+        "Plane_ABCD",
+        "Len_AB",
+        "Len_AD",
+        "Len_PB",
+        "Len_PC",
+        "Point_P",
+        "Point_C"
+      ],
+      "cameraPos": {
+        "x": 12.37,
+        "y": 7.13,
+        "z": 10.29
+      }
+    },
+    {
+      "title": "过 $AD$ 的平面束",
+      "content": "<p>$AD$ 是 $y$ 轴，过 $AD$ 的平面可写成 $z=kx$（$k>0$）。它与 $PB$ 交于 $M$，与平面 $PBC$ 交于过 $M$ 的直线；$Q$ 就在这条直线落在 $\\triangle PBC$ 内的开线段上。</p><p>因此 $\\dfrac{|PM|}{|BM|}$ 只由平面参数 $k$ 决定。体积 $V_1=\\mathrm{vol}(ACDQ)$、$V_2=\\mathrm{vol}(ADPQ)$ 对 $Q$ 的比值同样只依赖该平面：以 $A$ 为原点，</p>$$\\dfrac{V_1}{V_2}=\\dfrac{15|k|}{\\sqrt{10}\\,|P_z-k P_x|}.$$",
+      "highlight": [
+        "Plane_QAD",
+        "Plane_PBC",
+        "Line_PB",
+        "Point_M",
+        "Point_Q",
+        "Point_P",
+        "Point_A",
+        "Point_D"
+      ],
+      "cameraPos": {
+        "x": 14.77,
+        "y": 6.43,
+        "z": 6.91
+      }
+    },
+    {
+      "title": "目标函数对 $k$ 求最小值",
+      "content": "<p>令 $\\lambda$ 为 $M$ 分 $PB$ 的比例，$M=(1-\\lambda)P+\\lambda B$，则 $\\dfrac{|PM|}{|BM|}=\\dfrac{\\lambda}{1-\\lambda}$。在使平面穿过 $\\triangle PBC$ 内部的 $k$ 范围内，</p>$$f(k)=\\dfrac{\\lambda(k)}{1-\\lambda(k)}+\\dfrac{30k}{\\sqrt{10}\\,(P_z-k P_x)}.$$<p>求导并令 $f'(k)=0$，得唯一驻点，且 $f=2\\sqrt{3}$。端点处平面退化为底面或面 $PAC$，函数值更大。换该圆上其它 $P$，驻点值不变。最小值为 $2 \\sqrt{3}$。</p>",
+      "highlight": [
+        "Line_PB",
+        "Point_M",
+        "Point_Q",
+        "Point_P",
+        "Point_B",
+        "Plane_QAD",
+        "Len_PM"
+      ],
+      "cameraPos": {
+        "x": 10.66,
+        "y": 9.4,
+        "z": 9.86
+      }
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {
+        "type": "axes",
+        "size": 3.2
+      },
+      "Point_P": {
+        "type": "point",
+        "center": "P"
+      },
+      "Point_C": {
+        "type": "point",
+        "center": "C"
+      },
+      "Point_A": {
+        "type": "point",
+        "center": "A"
+      },
+      "Point_D": {
+        "type": "point",
+        "center": "D"
+      },
+      "Point_B": {
+        "type": "point",
+        "center": "B"
+      },
+      "Point_M": {
+        "type": "point",
+        "center": "M"
+      },
+      "Point_Q": {
+        "type": "point",
+        "center": "Q"
+      },
+      "Line_PB": {
+        "type": "line",
+        "a": "P",
+        "b": "B",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Len_AB": {
+        "type": "measure",
+        "a": "A",
+        "b": "B",
+        "label": "\\sqrt{10}"
+      },
+      "Len_AD": {
+        "type": "measure",
+        "a": "A",
+        "b": "D",
+        "label": "\\sqrt{10}"
+      },
+      "Len_PB": {
+        "type": "measure",
+        "a": "P",
+        "b": "B",
+        "label": "4"
+      },
+      "Len_PC": {
+        "type": "measure",
+        "a": "P",
+        "b": "C",
+        "label": "3"
+      },
+      "Len_PM": {
+        "type": "measure",
+        "a": "P",
+        "b": "M",
+        "label": "PM"
+      },
+      "Plane_ABCD": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      "Plane_PBC": {
+        "type": "plane",
+        "pts": [
+          "P",
+          "B",
+          "C"
+        ]
+      },
+      "Plane_QAD": {
+        "type": "plane",
+        "pts": [
+          "Q",
+          "A",
+          "D"
+        ]
+      },
+      "Plane_ACDQ": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "C",
+          "D"
+        ]
+      },
+      "Plane_ADPQ": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "D",
+          "P"
+        ]
+      }
+    }
+  },
+  "_answer": "2 \\sqrt{3}"
+}

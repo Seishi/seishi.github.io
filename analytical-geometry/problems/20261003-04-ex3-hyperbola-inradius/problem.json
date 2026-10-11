@@ -1,0 +1,82 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["hyperbola"],
+    "frame": {"xmin": -8, "xmax": 6, "ymin": -5, "ymax": 4},
+    "curves": {
+      "E": {"type": "hyperbola", "a": 2, "b": 1, "center": [0, 0], "transverse": "x"},
+      "U": {"type": "circle", "center": "O", "radius": 1},
+      "L": {"type": "line", "a": 1, "b": -4, "c": "-sqrt(17)"}
+    },
+    "points": {
+      "O": [0, 0]
+    },
+    "givens": [
+      {"name": "F", "kind": "focus", "of": "E", "which": "right"},
+      {"name": "T", "kind": "foot", "point": "O", "line": "L"},
+      {"name": "A", "kind": "intersection", "of": ["E", "L"], "which": "right"},
+      {"name": "B", "kind": "intersection", "of": ["E", "L"], "which": "left"}
+    ],
+    "query": {
+      "type": "custom",
+      "expr": "2*sqrt(5)-4",
+      "vals": {
+        "hi": "2*sqrt(5)-4",
+        "semiA": "2",
+        "semiC": "sqrt(5)",
+        "kmax": "1/2"
+      }
+    }
+  },
+  "lesson": {
+    "meta": "交互解题 · 双曲线三角形的内切圆半径",
+    "title": "双曲线 $E:\\dfrac{x^{2}}{4}-y^{2}=1$ 的右焦点为 $F$，圆 $x^{2}+y^{2}=1$ 的一条切线与双曲线的右支、左支分别交于 $A,B$，切点 $T$ 在第四象限。若 $\\triangle ABF$ 的内切圆半径为 $r$，求 $r$ 的取值范围。",
+    "answerLabel": "内切圆半径的取值范围",
+    "answers": [
+      {"label": "取值范围", "value": "$(0,{{vals.hi}})$"}
+    ]
+  },
+  "steps": [
+    {
+      "title": "建立平面直角坐标系",
+      "content": "<p>双曲线 $E:{{eq.E}}$，右焦点 $F{{mp.F}}$。单位圆 ${{eq.U}}$，圆心 $O{{mp.O}}$。</p><p>取切点在第四象限的切线 $l:{{eq.L}}$，切点 $T{{mp.T}}$，它交右支于 $A{{mp.A}}$、交左支于 $B{{mp.B}}$。下面让斜率 $k$ 变化，求内切圆半径 $r$ 的范围。</p>",
+      "highlight": ["Axis", "Curve_E", "Curve_U", "Line_L", "Point_F", "Point_T", "Point_A", "Point_B", "Point_O"]
+    },
+    {
+      "title": "写出第四象限切线",
+      "content": "<p>设切线 $y=kx+m$。切点在第四象限，则斜率 $k>0$、纵截距 $m<0$。</p><p>与单位圆相切，圆心到直线的距离为 $1$，故 $m=-\\sqrt{1+k^{2}}$。直线可写成 $kx-y-\\sqrt{1+k^{2}}=0$。切点为 $T{{mp.T}}$。</p>",
+      "highlight": ["Curve_U", "Line_L", "Point_T", "Point_O"]
+    },
+    {
+      "title": "与左右两支都相交",
+      "content": "<p>双曲线的渐近线斜率为 $\\pm{{vals.kmax}}$。把 $y=kx-\\sqrt{1+k^{2}}$ 代入 ${{eq.E}}$，当 $0<k<{{vals.kmax}}$ 时，两交点分居左右两支：右支为 $A$，左支为 $B$。</p><p>$k\\to{{vals.kmax}}^{-}$ 时直线与渐近线平行，并且经过焦点 $F$，三角形退化。故斜率范围是 $0<k<{{vals.kmax}}$。</p>",
+      "highlight": ["Curve_E", "Line_L", "Point_A", "Point_B", "Point_F"]
+    },
+    {
+      "title": "内切圆半径关于 k 的表达式",
+      "content": "<p>半长轴 $a={{vals.semiA}}$，半焦距 $c={{vals.semiC}}$（即 $F$ 的横坐标）。$F$ 到切线的距离为</p><p>$$h=\\dfrac{\\sqrt{1+k^{2}}-{{vals.semiC}}\\,k}{\\sqrt{1+k^{2}}}.$$</p><p>用焦半径表示 $|AF|$、$|BF|$，再由 $r=\\dfrac{S}{s}$（$S$ 为 $\\triangle ABF$ 的面积，$s$ 为半周长）化简，得</p><p>$$r=\\dfrac{\\sqrt{1+k^{2}}-{{vals.semiC}}\\,k}{\\sqrt{1+k^{2}}+\\dfrac{{{vals.semiC}}}{{{vals.semiA}}}}.$$</p>",
+      "highlight": ["Curve_E", "Line_L", "Seg_AB", "Seg_AF", "Seg_BF", "Point_A", "Point_B", "Point_F"]
+    },
+    {
+      "title": "两端极限得到取值范围",
+      "content": "<p>$r(k)$ 在 $\\left(0,{{vals.kmax}}\\right)$ 上严格递减。</p><p>$k\\to 0^{+}$ 时，</p><p>$$r\\to\\dfrac{1}{1+\\dfrac{{{vals.semiC}}}{{{vals.semiA}}}}={{answer}}.$$</p><p>$k\\to{{vals.kmax}}^{-}$ 时分子趋于 $0$，故 $r\\to 0$。因此</p><p>$$r\\in(0,{{vals.hi}}).$$</p>",
+      "highlight": ["Curve_E", "Curve_U", "Line_L", "Seg_AB", "Seg_AF", "Seg_BF", "Point_A", "Point_B", "Point_F", "Point_T"]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_E": {"type": "hyperbola", "curve": "E", "color": "curve"},
+      "Curve_U": {"type": "circle", "curve": "U", "color": "normal"},
+      "Line_L": {"type": "line", "curve": "L", "color": "emphasis"},
+      "Point_O": {"type": "point", "center": "O"},
+      "Point_F": {"type": "point", "center": "F"},
+      "Point_T": {"type": "point", "center": "T"},
+      "Point_A": {"type": "point", "center": "A"},
+      "Point_B": {"type": "point", "center": "B"},
+      "Seg_AB": {"type": "segment", "a": "A", "b": "B", "color": "emphasis"},
+      "Seg_AF": {"type": "segment", "a": "A", "b": "F", "color": "aux"},
+      "Seg_BF": {"type": "segment", "a": "B", "b": "F", "color": "aux"}
+    }
+  }
+}

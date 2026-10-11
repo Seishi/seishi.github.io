@@ -1,0 +1,243 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "body": "custom",
+    "scale": 0.7,
+    "points": {
+      "A": [
+        "4*sqrt(3)/3",
+        "0",
+        "0"
+      ],
+      "B": [
+        "-2*sqrt(3)/3",
+        "2",
+        "0"
+      ],
+      "C": [
+        "-2*sqrt(3)/3",
+        "-2",
+        "0"
+      ],
+      "S": [
+        "0",
+        "0",
+        "2*sqrt(33)/3"
+      ],
+      "Ap": [
+        "2*sqrt(3)/3",
+        "0",
+        "sqrt(33)/3"
+      ],
+      "Bp": [
+        "-sqrt(3)/3",
+        "1",
+        "sqrt(33)/3"
+      ],
+      "Cp": [
+        "-sqrt(3)/3",
+        "-1",
+        "sqrt(33)/3"
+      ],
+      "D": [
+        "sqrt(3)/6",
+        "1/2",
+        "sqrt(33)/3"
+      ],
+      "O": [
+        "5*sqrt(3)/12",
+        "5/4",
+        "19*sqrt(33)/66"
+      ]
+    },
+    "topo": {
+      "spheres": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "Ap",
+        "Bp",
+        "Cp",
+        "D",
+        "O"
+      ],
+      "edges": [
+        {
+          "a": "A",
+          "b": "B"
+        },
+        {
+          "a": "B",
+          "b": "C"
+        },
+        {
+          "a": "C",
+          "b": "A"
+        },
+        {
+          "a": "S",
+          "b": "A"
+        },
+        {
+          "a": "S",
+          "b": "B"
+        },
+        {
+          "a": "S",
+          "b": "C"
+        },
+        {
+          "a": "Ap",
+          "b": "Bp"
+        },
+        {
+          "a": "O",
+          "b": "C"
+        },
+        {
+          "a": "O",
+          "b": "D"
+        }
+      ]
+    },
+    "query": {
+      "type": "volume",
+      "kind": "tetra",
+      "pts": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ]
+    },
+    "_note": "所求不属于 5 类 query；index.html 由 _render.py 精确渲染。"
+  },
+  "lesson": {
+    "language": "zh-CN",
+    "meta": "交互解题 · 体积",
+    "title": "正三棱锥 $S$-$ABC$ 中，底边长为 $4$，$SA$、$SB$、$SC$ 的中点分别为 $A'、B'、C'$，$A'B'$ 的中点为 $D$。若三棱锥 $S$-$ABC'$ 的外接球球心为 $O$，满足 $OC^{2}-OD^{2}=AB^{2}$，则三棱锥 $S$-$ABC$ 的体积为",
+    "answerLabel": "三棱锥 $S$-$ABC$ 的体积",
+    "answerValue": "$\\dfrac{8 \\sqrt{11}}{3}$"
+  },
+  "steps": [
+    {
+      "title": "正三棱锥建系",
+      "content": "<p>底面 $ABC$ 在 $z=0$，中心为原点，边长 $4$，外接半径 $\\dfrac{4\\sqrt{3}}{3}$，顶点 $S=(0,0,h)$，$h>0$。</p><p>$A'、B'、C'$ 分别为 $SA、SB、SC$ 中点，$D$ 为 $A'B'$ 中点。</p>",
+      "highlight": [
+        "Axis",
+        "Plane_ABC",
+        "Point_S",
+        "Len_AB",
+        "Point_Ap",
+        "Point_Bp",
+        "Point_Cp",
+        "Point_D"
+      ],
+      "cameraPos": {
+        "x": 4.18,
+        "y": 4.54,
+        "z": 3.07
+      }
+    },
+    {
+      "title": "$S$-$ABC'$ 的外接球心",
+      "content": "<p>$O$ 到 $S$、$A$、$B$、$C'$ 等距。以 $S$ 为基点解线性方程组，得 $O$ 的坐标（含参数 $h$）。再写 $OC^{2}-OD^{2}=16$。</p>",
+      "highlight": [
+        "Point_O",
+        "Sphere_circ",
+        "Point_S",
+        "Point_A",
+        "Point_B",
+        "Point_Cp",
+        "Point_C",
+        "Point_D"
+      ],
+      "cameraPos": {
+        "x": 3.58,
+        "y": 5.23,
+        "z": 2.94
+      }
+    },
+    {
+      "title": "解出高并求体积",
+      "content": "<p>化简后方程成为 $\\dfrac{3}{4}h^{2}-11=0$，正根</p>$$h=\\dfrac{2\\sqrt{33}}{3}.$$<p>底面积 $4\\sqrt{3}$，体积 $V=\\dfrac{1}{3}\\cdot 4\\sqrt{3}\\cdot h=\\dfrac{8 \\sqrt{11}}{3}$。</p>",
+      "highlight": [
+        "Point_S",
+        "Plane_ABC",
+        "Len_AB",
+        "Point_O"
+      ],
+      "cameraPos": {
+        "x": 4.06,
+        "y": 4.34,
+        "z": 3.45
+      }
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {
+        "type": "axes",
+        "size": 4
+      },
+      "Point_S": {
+        "type": "point",
+        "center": "S"
+      },
+      "Point_A": {
+        "type": "point",
+        "center": "A"
+      },
+      "Point_B": {
+        "type": "point",
+        "center": "B"
+      },
+      "Point_C": {
+        "type": "point",
+        "center": "C"
+      },
+      "Point_Ap": {
+        "type": "point",
+        "center": "Ap"
+      },
+      "Point_Bp": {
+        "type": "point",
+        "center": "Bp"
+      },
+      "Point_Cp": {
+        "type": "point",
+        "center": "Cp"
+      },
+      "Point_D": {
+        "type": "point",
+        "center": "D"
+      },
+      "Point_O": {
+        "type": "point",
+        "center": "O"
+      },
+      "Len_AB": {
+        "type": "measure",
+        "a": "A",
+        "b": "B",
+        "label": "4"
+      },
+      "Plane_ABC": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "Sphere_circ": {
+        "type": "sphere",
+        "center": "O",
+        "radius": 1.8278153875348273,
+        "opacity": 0.1
+      }
+    }
+  },
+  "_answer": "\\dfrac{8 \\sqrt{11}}{3}"
+}

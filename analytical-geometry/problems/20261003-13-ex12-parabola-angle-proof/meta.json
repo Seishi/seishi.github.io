@@ -1,0 +1,12 @@
+{
+  "id": "20261003-13-ex12-parabola-angle-proof",
+  "slug": "ex12-parabola-angle-proof",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "parabola"
+  ],
+  "title": "已知抛物线 $\\Gamma$ 的焦点是 $F$，准线是 $l$。点 $A,B$ 在 $\\Gamma$ 上，$\\Gamma$ 在点 $A,B$ 处的切线相交于点 $P$。准线 $l$ 与线段 $AP$ 的交点 $M$ 恰为其中点。设 $PF$ 与 $l$ 相交于点 $K$，直线 $AK$ 与 $\\odot(APF)$ 相交于另一点 $L$。证明：$\\angle AMB+\\angle ALM=90^{\\circ}$。",
+  "answer": "$\\angle AMB+\\angle ALM=90^{\\circ}$"
+}

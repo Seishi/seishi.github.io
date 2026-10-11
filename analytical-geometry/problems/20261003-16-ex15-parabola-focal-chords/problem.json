@@ -1,0 +1,93 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["parabola"],
+    "frame": {"xmin": -5, "xmax": 6, "ymin": -8, "ymax": 6},
+    "curves": {
+      "Gamma": {"type": "parabola", "p": 2, "vertex": [0, 0], "axis": "x", "direction": "+"},
+      "lAB": {"type": "line", "a": 1, "b": 0, "c": -1},
+      "lCD": {"type": "line", "a": 4, "b": -3, "c": -4},
+      "lAC": {"type": "line", "a": 2, "b": -3, "c": 4},
+      "lBD": {"type": "line", "a": 4, "b": 3, "c": 2},
+      "lAD": {"type": "line", "a": 4, "b": -1, "c": -2},
+      "lBC": {"type": "line", "a": 2, "b": -1, "c": -4},
+      "xaxis": {"type": "line", "a": 0, "b": 1, "c": 0},
+      "Circ": {"type": "circle", "center": "W", "radius": "10/3"}
+    },
+    "points": {
+      "G": [-3, 0]
+    },
+    "givens": [
+      {"name": "F", "kind": "focus", "of": "Gamma", "which": "right"},
+      {"name": "A", "kind": "on_curve", "curve": "Gamma", "t": 2},
+      {"name": "B", "kind": "on_curve", "curve": "Gamma", "t": -2},
+      {"name": "C", "kind": "on_curve", "curve": "Gamma", "t": 4},
+      {"name": "D", "kind": "on_curve", "curve": "Gamma", "t": -1},
+      {"name": "M", "kind": "intersection", "of": ["lAC", "lBD"]},
+      {"name": "N", "kind": "intersection", "of": ["lAD", "lBC"]},
+      {"name": "W", "kind": "midpoint", "of": ["M", "N"]}
+    ],
+    "query": {"type": "custom", "expr": "-3"}
+  },
+  "lesson": {
+    "meta": "交互解题 · 焦弦与外接圆",
+    "title": "在平面直角坐标系 $xOy$ 中，已知抛物线 $\\Gamma:y^{2}=4x$ 的焦点为 $F(1,0)$。过 $F$ 作 $\\Gamma$ 的两条弦 $AB,CD$。设直线 $AC,BD$ 交于点 $M$，直线 $AD,BC$ 交于点 $N$。证明：$\\triangle MNF$ 的外接圆总是经过不同于 $F$ 的一个定点 $G$，并求点 $G$ 的坐标。",
+    "answerLabel": "定点",
+    "answers": [
+      {"label": "定点", "value": "$G{{mp.G}}$"}
+    ]
+  },
+  "steps": [
+    {
+      "title": "建系并写出焦弦条件",
+      "content": "<p>抛物线 $\\Gamma:{{eq.Gamma}}$，焦点 $F{{mp.F}}$。用参数 $t$ 表示点 $(t^{2},2t)$。弦 $t_i t_j$ 的方程为</p><p>$$2x-(t_i+t_j)y+2t_i t_j=0.$$</p><p>该弦过焦点 $(1,0)$ 当且仅当 $t_i t_j=-1$。</p>",
+      "highlight": ["Axis", "Curve_G", "Focus_F", "Point_F"]
+    },
+    {
+      "title": "取两条焦弦",
+      "content": "<p>设 $AB$ 的参数为 $t_1,t_2$，且 $t_2=-\\dfrac{1}{t_1}$；$CD$ 的参数为 $t_3,t_4$，且 $t_4=-\\dfrac{1}{t_3}$。两条弦都经过 $F$，端点为 $A{{mp.A}}$，$B{{mp.B}}$，$C{{mp.C}}$，$D{{mp.D}}$。</p>",
+      "highlight": ["Curve_G", "Line_AB", "Line_CD", "Point_A", "Point_B", "Point_C", "Point_D", "Point_F", "Focus_F"]
+    },
+    {
+      "title": "交点 M 与 N 都在直线 x=-1 上",
+      "content": "<p>弦 $AC$：$2x-(t_1+t_3)y+2t_1 t_3=0$。弦 $BD$ 的参数为 $-\\dfrac{1}{t_1},-\\dfrac{1}{t_3}$，方程为 $2t_1 t_3\\,x+(t_1+t_3)y+2=0$。两式相加得 $x=-1$（只要 $t_1 t_3\\neq -1$），再代回得</p><p>$$M\\left(-1,\\dfrac{2(t_1 t_3-1)}{t_1+t_3}\\right).$$</p><p>同样，$AD$ 与 $BC$ 的交点为</p><p>$$N\\left(-1,-\\dfrac{2(t_1+t_3)}{t_1 t_3-1}\\right).$$</p><p>于是 $y_M y_N=-4$。图中 $M{{mp.M}}$，$N{{mp.N}}$。</p>",
+      "highlight": ["Line_AC", "Line_BD", "Line_AD", "Line_BC", "Point_M", "Point_N", "Point_A", "Point_B", "Point_C", "Point_D"]
+    },
+    {
+      "title": "角 MFN 为直角",
+      "content": "<p>$\\overrightarrow{FM}=(-2,y_M)$，$\\overrightarrow{FN}=(-2,y_N)$，数量积</p><p>$$\\overrightarrow{FM}\\cdot\\overrightarrow{FN}=4+y_M y_N=4+(-4)=0.$$</p><p>故 $\\angle MFN=90^{\\circ}$，$\\triangle MNF$ 的外接圆以 $MN$ 为直径。图中圆心是 $MN$ 的中点 $W{{mp.W}}$。</p>",
+      "highlight": ["Seg_FM", "Seg_FN", "Seg_MN", "Circ", "Point_M", "Point_N", "Point_F", "Point_W"]
+    },
+    {
+      "title": "外接圆与 x 轴的另一交点",
+      "content": "<p>以 $MN$ 为直径的圆上的点 $X$ 满足 $\\overrightarrow{XM}\\cdot\\overrightarrow{XN}=0$。$M,N$ 的横坐标都是 $-1$，故对 $X=(x,0)$，</p><p>$$(x+1)^{2}+y_M y_N=(x+1)^{2}-4=0.$$</p><p>解得 $x=1$ 或 $x=-3$。$x=1$ 就是焦点 $F$，另一交点为定点 $G{{mp.G}}$，与两条焦弦的取法无关。</p>",
+      "highlight": ["Circ", "Curve_G", "Point_G", "Point_F", "Point_M", "Point_N", "Point_W", "Seg_MN", "Focus_F"]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_G": {"type": "parabola", "curve": "Gamma", "color": "curve"},
+      "Focus_F": {"type": "focus", "of": "Gamma", "which": "right"},
+      "Line_AB": {"type": "line", "curve": "lAB", "color": "emphasis"},
+      "Line_CD": {"type": "line", "curve": "lCD", "color": "emphasis"},
+      "Line_AC": {"type": "line", "curve": "lAC", "color": "normal"},
+      "Line_BD": {"type": "line", "curve": "lBD", "color": "normal"},
+      "Line_AD": {"type": "line", "curve": "lAD", "color": "aux"},
+      "Line_BC": {"type": "line", "curve": "lBC", "color": "aux"},
+      "Circ": {"type": "circle", "curve": "Circ", "color": "curve"},
+      "Seg_FM": {"type": "segment", "a": "F", "b": "M", "color": "emphasis"},
+      "Seg_FN": {"type": "segment", "a": "F", "b": "N", "color": "emphasis"},
+      "Seg_MN": {"type": "segment", "a": "M", "b": "N", "color": "emphasis"},
+      "Point_A": {"type": "point", "center": "A"},
+      "Point_B": {"type": "point", "center": "B"},
+      "Point_C": {"type": "point", "center": "C"},
+      "Point_D": {"type": "point", "center": "D"},
+      "Point_M": {"type": "point", "center": "M"},
+      "Point_N": {"type": "point", "center": "N"},
+      "Point_F": {"type": "point", "center": "F"},
+      "Point_G": {"type": "point", "center": "G"},
+      "Point_W": {"type": "point", "center": "W"}
+    }
+  }
+}

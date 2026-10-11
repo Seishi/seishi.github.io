@@ -1,0 +1,12 @@
+{
+  "id": "20261003-16-ex15-parabola-focal-chords",
+  "slug": "ex15-parabola-focal-chords",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "parabola"
+  ],
+  "title": "在平面直角坐标系 $xOy$ 中，已知抛物线 $\\Gamma:y^{2}=4x$ 的焦点为 $F(1,0)$。过 $F$ 作 $\\Gamma$ 的两条弦 $AB,CD$。设直线 $AC,BD$ 交于点 $M$，直线 $AD,BC$ 交于点 $N$。证明：$\\triangle MNF$ 的外接圆总是经过不同于 $F$ 的一个定点 $G$，并求点 $G$ 的坐标。",
+  "answer": "$G\\left(-3, 0\\right)$"
+}

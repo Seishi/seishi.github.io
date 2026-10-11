@@ -1,0 +1,12 @@
+{
+  "id": "20261003-02-ex1-four-lines-area",
+  "slug": "ex1-four-lines-area",
+  "created": "2026-10-03T22:08:32+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "line-circle"
+  ],
+  "title": "设 $k,t\\in\\mathbb{R}$。已知方程 $x^{2}+xy-6y^{2}-20x-20y+k=0$ 与方程 $4x^{2}+4xy+y^{2}+(t+2)x+4y+3=0$ 各表示两条直线，则这四条直线围成的封闭图形的面积为______。",
+  "answer": "$\\dfrac{44}{5}$"
+}

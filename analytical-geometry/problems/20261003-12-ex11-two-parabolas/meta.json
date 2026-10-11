@@ -1,0 +1,12 @@
+{
+  "id": "20261003-12-ex11-two-parabolas",
+  "slug": "ex11-two-parabolas",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "parabola"
+  ],
+  "title": "已知抛物线 $C_1:y^{2}=2px$，$C_2:x^{2}=2py$（$p>0$）。$C_1$ 第一象限内一点 $P$ 处的切线 $l$ 交 $C_2$ 于 $A,B$ 两点，交 $x$ 轴于点 $M$，$C_2$ 在 $A,B$ 处的切线交于点 $D$。 (1) 证明：当 $\\triangle ABD$ 面积最小时，$P$ 为 $AB$ 中点； (2) 过 $P$ 作 $l$ 的垂线交 $C_1$ 于另一点 $Q$，连接 $MQ$ 交 $C_1$ 于另一点 $R$，当 $\\triangle PQR$ 面积最小时，求点 $M$ 的坐标。",
+  "answer": "证得 $P$ 为 $AB$ 中点；$M\\left(\\left(\\dfrac{5}{4} - \\dfrac{\\sqrt{33}}{4}\\right)p,0\\right)$"
+}

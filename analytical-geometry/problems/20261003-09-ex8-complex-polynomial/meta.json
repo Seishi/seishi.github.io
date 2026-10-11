@@ -1,0 +1,12 @@
+{
+  "id": "20261003-09-ex8-complex-polynomial",
+  "slug": "ex8-complex-polynomial",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "line-circle"
+  ],
+  "title": "实系数多项式 $P(x)=x^{4}+ux^{3}+vx+w$ 的四个不同复根为 $p,q,r,s$，它们都不是纯虚数，但 $pq+rs$ 是纯虚数。 (1) 证明 $w\\lt 0$。 (2) 当 $u=1$ 时，求所有使 $\\big(|p+q-z|-|r+s-z|\\big)^{2}$ 为定值的复数 $z$。",
+  "answer": "$w\\lt 0$；$- \\dfrac{1}{2}$，$- \\dfrac{1}{2} + \\dfrac{\\sqrt{2}}{2}$，$- \\dfrac{\\sqrt{2}}{2} - \\dfrac{1}{2}$"
+}

@@ -1,0 +1,82 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["line-circle"],
+    "frame": {"xmin": -2.6, "xmax": 2.2, "ymin": -2, "ymax": 2},
+    "curves": {
+      "G": {"type": "implicit", "expr": "(x+1/2)**2 - y**2 - 1/4"}
+    },
+    "points": {
+      "p": [1, 0],
+      "q": ["-1/2", "sqrt(3)/2"],
+      "r": [-1, 0],
+      "s": ["-1/2", "-sqrt(3)/2"],
+      "u": ["1/2", "sqrt(3)/2"],
+      "v": ["-3/2", "-sqrt(3)/2"],
+      "z0": ["-1/2", 0],
+      "z1": ["-1/2+sqrt(2)/2", 0],
+      "z2": ["-1/2-sqrt(2)/2", 0]
+    },
+    "givens": [],
+    "query": {
+      "type": "custom",
+      "expr": "-1/2",
+      "vals": {
+        "z0": "-1/2",
+        "z1": "-1/2+sqrt(2)/2",
+        "z2": "-1/2-sqrt(2)/2"
+      }
+    }
+  },
+  "lesson": {
+    "meta": "交互解题 · 复平面上的根",
+    "title": "实系数多项式 $P(x)=x^{4}+ux^{3}+vx+w$ 的四个不同复根为 $p,q,r,s$，它们都不是纯虚数，但 $pq+rs$ 是纯虚数。<br>(1) 证明 $w\\lt 0$。<br>(2) 当 $u=1$ 时，求所有使 $\\big(|p+q-z|-|r+s-z|\\big)^{2}$ 为定值的复数 $z$。",
+    "answerLabel": "两问结论",
+    "answers": [
+      {"label": "(1)", "value": "$w\\lt 0$"},
+      {"label": "(2) 复数 $z$", "value": "${{vals.z0}}$，${{vals.z1}}$，${{vals.z2}}$"}
+    ]
+  },
+  "steps": [
+    {
+      "title": "复平面与韦达定理",
+      "content": "<p>把复根画在复平面上，实轴、虚轴为坐标轴。由实系数与缺 $x^{2}$ 项：</p><p>$$p+q+r+s=-u,\\qquad \\sum_{i<j}(\\text{两两之积})=0,\\qquad pqrs=w.$$</p><p>纯虚数指实部为 $0$ 且虚部不为 $0$ 的数，因此 $0$ 不是纯虚数。非实根成共轭对出现。</p>",
+      "highlight": ["Axis", "Point_p", "Point_q", "Point_r", "Point_s"]
+    },
+    {
+      "title": "四个实根不可能",
+      "content": "<p>若 $p,q,r,s$ 全为实数，则 $pq+rs$ 为实数。实数里只有 $0$ 的虚部为 $0$，但它不是纯虚数，与 $pq+rs$ 是纯虚数矛盾。所以四个根不能全是实数。</p>",
+      "highlight": ["Axis"]
+    },
+    {
+      "title": "两对共轭也不可能",
+      "content": "<p>若根为两对共轭 $a\\pm bi$、$c\\pm di$（$b,d\\neq 0$），把四个根分成两对后，$pq+rs$ 只可能是下面三种实数：</p><p>$$|a+bi|^{2}+|c+di|^{2},\\qquad 2\\operatorname{Re}\\big((a+bi)(c+di)\\big),\\qquad 2\\operatorname{Re}\\big((a+bi)(c-di)\\big).$$</p><p>它们都是实数，不能是非零纯虚数。这一构型被排除。</p>",
+      "highlight": ["Axis"]
+    },
+    {
+      "title": "唯一构型，证明 $w\\lt 0$",
+      "content": "<p>只剩两个实根 $\\alpha,\\beta$ 与一对共轭 $a\\pm bi$，其中 $b\\neq 0$，且 $a\\neq 0$（否则这对共轭是纯虚数）。使 $pq+rs$ 为纯虚数的分对方式，是把每个实根各配一个共轭。此时</p><p>$$pq+rs=(\\alpha+\\beta)a+(\\alpha-\\beta)bi.$$</p><p>实部为 $0$ 且虚部不为 $0$，得 $\\alpha+\\beta=0$ 且 $\\alpha\\neq\\beta$，故 $\\beta=-\\alpha$，$\\alpha\\neq 0$。再由两两积之和为 $0$：</p><p>$$-\\alpha^{2}+a^{2}+b^{2}=0\\implies a^{2}+b^{2}=\\alpha^{2}.$$</p><p>因此 $w=\\alpha\\cdot(-\\alpha)\\cdot(a^{2}+b^{2})=-\\alpha^{4}\\lt 0$。</p>",
+      "highlight": ["Axis", "Point_p", "Point_q", "Point_r", "Point_s"]
+    },
+    {
+      "title": "$u=1$ 时的定值点",
+      "content": "<p>$u=1$ 时四根之和为 $-1$。由 $\\alpha+(-\\alpha)+2a=-1$ 得 $a=-\\dfrac{1}{2}$。记 $X=p+q$，$Y=r+s$，则 $Y=-1-X$。令 $X=x+yi$，由 $a^{2}+b^{2}=\\alpha^{2}$ 且 $b\\neq 0$，得 $X$ 在双曲线</p><p>$$\\left(x+\\dfrac{1}{2}\\right)^{2}-y^{2}=\\dfrac{1}{4}$$</p><p>上（去掉两个顶点）。它的中心是 $-\\dfrac{1}{2}$，半实轴、半虚轴都是 $\\dfrac{1}{2}$，焦距 $c=\\dfrac{\\sqrt{2}}{2}$，焦点为 $-\\dfrac{1}{2}\\pm\\dfrac{\\sqrt{2}}{2}$。</p><p>所求表达式等于 $\\big(|X-z|-|X-z'|\\big)^{2}$，其中 $z'$ 是 $z$ 关于 $-\\dfrac{1}{2}$ 的点对称。它在整条双曲线上为常数，当且仅当：$z=z'$，即 $z={{vals.z0}}$（常数为 $0$）；或 $\\{z,z'\\}$ 就是这对焦点，即 $z={{vals.z1}}$ 与 $z={{vals.z2}}$（常数为 $1$）。其它位置的等值线是另一条双曲线，与本题轨迹只能交于有限个点。</p><p>图中 $u=p+q{{mp.u}}$，$v=r+s{{mp.v}}$ 落在轨迹 ${{eq.G}}$ 上，三个定值点为 $z_0{{mp.z0}}$，$z_1{{mp.z1}}$，$z_2{{mp.z2}}$。</p>",
+      "highlight": ["Axis", "Curve_G", "Point_u", "Point_v", "Point_z0", "Point_z1", "Point_z2", "Point_p", "Point_q", "Point_r", "Point_s"]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_G": {"type": "implicit", "curve": "G", "color": "curve"},
+      "Point_p": {"type": "point", "center": "p"},
+      "Point_q": {"type": "point", "center": "q"},
+      "Point_r": {"type": "point", "center": "r"},
+      "Point_s": {"type": "point", "center": "s"},
+      "Point_u": {"type": "point", "center": "u"},
+      "Point_v": {"type": "point", "center": "v"},
+      "Point_z0": {"type": "point", "center": "z0"},
+      "Point_z1": {"type": "point", "center": "z1"},
+      "Point_z2": {"type": "point", "center": "z2"}
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "20261003-01-ellipse-chord",
+  "slug": "ellipse-chord",
+  "created": "2026-10-03T20:42:17+08:00",
+  "source_type": "text",
+  "source_file": null,
+  "tags": [
+    "ellipse"
+  ],
+  "title": "椭圆 $\\dfrac{x^{2}}{4}+y^{2}=1$ 与直线 $x-2y=0$ 交于 $A$、$B$，求弦 $AB$ 的长",
+  "answer": "$\\sqrt{10}$"
+}

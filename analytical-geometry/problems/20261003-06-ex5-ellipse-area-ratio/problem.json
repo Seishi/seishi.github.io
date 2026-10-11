@@ -1,0 +1,86 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["ellipse"],
+    "frame": {"xmin": -4, "xmax": 4, "ymin": -3, "ymax": 3},
+    "curves": {
+      "C": {"type": "ellipse", "a": 2, "b": "sqrt(3)", "center": [0, 0], "axis": "x"}
+    },
+    "points": {
+      "I": ["sqrt(2)/2", "sqrt(6)/6"]
+    },
+    "givens": [
+      {"name": "F1", "kind": "focus", "of": "C", "which": "left"},
+      {"name": "F2", "kind": "focus", "of": "C", "which": "right"},
+      {"name": "P", "kind": "on_curve", "curve": "C", "t": "pi/4"},
+      {"name": "O", "kind": "midpoint", "of": ["F1", "F2"]},
+      {"name": "G", "kind": "ratio", "of": ["P", "O"], "t": "2/3"}
+    ],
+    "query": {
+      "type": "custom",
+      "expr": "sqrt(2)/18",
+      "vals": {
+        "ecc": "1/2",
+        "axisA": "2",
+        "axisB2": "3",
+        "focusC": "1",
+        "x2": "2",
+        "xp": "sqrt(2)",
+        "den": "18",
+        "ratio": "sqrt(3)/2",
+        "ycoef": "3/4"
+      }
+    }
+  },
+  "lesson": {
+    "meta": "交互解题 · 椭圆重心与内心的面积比",
+    "title": "已知椭圆 $C$ 的离心率为 $\\dfrac{1}{2}$，左、右焦点分别为 $F_1,F_2$。设 $P$ 为 $C$ 上不与椭圆顶点重合的一点，记 $\\triangle PF_1F_2$ 的重心、内心分别为 $G,I$。若 $\\dfrac{|PI|}{|PG|}=\\dfrac{\\sqrt{3}}{2}$，求 $\\triangle PGI$ 与 $\\triangle PF_1F_2$ 的面积之比。",
+    "answerLabel": "面积比"
+  },
+  "steps": [
+    {
+      "title": "建立平面直角坐标系",
+      "content": "<p>离心率 $e={{vals.ecc}}$，故 $c=\\dfrac{a}{2}$，$b^{2}=\\dfrac{3}{4}a^{2}$。椭圆为 ${{eq.C}}$。左焦点 $F_1{{mp.F1}}$，右焦点 $F_2{{mp.F2}}$。设 $P$ 为椭圆上不与顶点重合的一点，$P{{mp.P}}$。</p>",
+      "highlight": ["Axis", "Curve_C", "Point_F1", "Point_F2", "Point_P"]
+    },
+    {
+      "title": "求重心 G",
+      "content": "<p>$F_1F_2$ 的中点为 $O{{mp.O}}$。重心 $G$ 在中线 $PO$ 上，且 $PG:GO=2:1$，故</p><p>$$G{{mp.G}}=\\left(\\dfrac{x_P}{3},\\dfrac{y_P}{3}\\right).$$</p>",
+      "highlight": ["Curve_C", "Seg_F1F2", "Seg_PO", "Point_F1", "Point_F2", "Point_P", "Point_O", "Point_G"]
+    },
+    {
+      "title": "求内心 I，得到 GI 平行于焦点轴",
+      "content": "<p>椭圆上 $|PF_1|=a+ex_P$，$|PF_2|=a-ex_P$，周长为 $2a+2c$。按对边加权，并代入 $a={{vals.axisA}}$、$c={{vals.focusC}}$，得</p><p>$$I{{mp.I}}=\\left(\\dfrac{x_P}{2},\\dfrac{y_P}{3}\\right).$$</p><p>$G$ 与 $I$ 的纵坐标相同，所以 $GI\\parallel F_1F_2$。</p>",
+      "highlight": ["Curve_C", "Seg_F1F2", "Point_P", "Point_G", "Point_I", "Point_F1", "Point_F2", "Seg_GI"]
+    },
+    {
+      "title": "用比值条件求 x_P",
+      "content": "<p>由 $G,I$ 的坐标，</p><p>$$|PI|^{2}=\\dfrac{x_P^{2}}{4}+\\dfrac{4y_P^{2}}{9},\\qquad |PG|^{2}=\\dfrac{4}{9}\\left(x_P^{2}+y_P^{2}\\right).$$</p><p>题设 $\\dfrac{|PI|}{|PG|}={{vals.ratio}}$。两边平方并化简，得 $y_P^{2}={{vals.ycoef}}\\,x_P^{2}$。</p><p>代入椭圆 ${{eq.C}}$：$\\dfrac{x_P^{2}}{4}+\\dfrac{y_P^{2}}{3}=1$ 变为 $\\dfrac{x_P^{2}}{2}=1$，故 $x_P^{2}={{vals.x2}}$。$P$ 不是顶点。</p>",
+      "highlight": ["Curve_C", "Seg_PI", "Seg_PG", "Seg_GI", "Point_P", "Point_G", "Point_I"]
+    },
+    {
+      "title": "求两个三角形的面积比",
+      "content": "<p>$GI$ 与 $F_1F_2$ 都水平。$|GI|=\\dfrac{|x_P|}{6}$，$P$ 到直线 $GI$ 的距离为 $\\dfrac{2|y_P|}{3}$，于是</p><p>$$S_{\\triangle PGI}=\\dfrac{|x_P y_P|}{{{vals.den}}},\\qquad S_{\\triangle PF_1F_2}=|y_P|.$$</p><p>$y_P\\neq 0$，比值等于 $\\dfrac{|x_P|}{{{vals.den}}}$。由 $x_P^{2}={{vals.x2}}$ 得 $|x_P|={{vals.xp}}$，所以</p><p>$$\\dfrac{S_{\\triangle PGI}}{S_{\\triangle PF_1F_2}}=\\dfrac{{{vals.xp}}}{{{vals.den}}}={{answer}}.$$</p>",
+      "highlight": ["Curve_C", "Seg_PF1", "Seg_PF2", "Seg_F1F2", "Seg_PG", "Seg_PI", "Seg_GI", "Point_P", "Point_G", "Point_I", "Point_F1", "Point_F2"]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_C": {"type": "ellipse", "curve": "C", "color": "curve"},
+      "Point_F1": {"type": "point", "center": "F1"},
+      "Point_F2": {"type": "point", "center": "F2"},
+      "Point_P": {"type": "point", "center": "P"},
+      "Point_O": {"type": "point", "center": "O"},
+      "Point_G": {"type": "point", "center": "G"},
+      "Point_I": {"type": "point", "center": "I"},
+      "Seg_PF1": {"type": "segment", "a": "P", "b": "F1", "color": "aux"},
+      "Seg_PF2": {"type": "segment", "a": "P", "b": "F2", "color": "aux"},
+      "Seg_F1F2": {"type": "segment", "a": "F1", "b": "F2", "color": "normal"},
+      "Seg_PO": {"type": "segment", "a": "P", "b": "O", "color": "aux", "dashed": true},
+      "Seg_PG": {"type": "segment", "a": "P", "b": "G", "color": "emphasis"},
+      "Seg_PI": {"type": "segment", "a": "P", "b": "I", "color": "emphasis"},
+      "Seg_GI": {"type": "segment", "a": "G", "b": "I", "color": "emphasis"}
+    }
+  }
+}

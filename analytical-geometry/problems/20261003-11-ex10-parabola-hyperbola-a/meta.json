@@ -1,0 +1,13 @@
+{
+  "id": "20261003-11-ex10-parabola-hyperbola-a",
+  "slug": "ex10-parabola-hyperbola-a",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "parabola",
+    "hyperbola"
+  ],
+  "title": "已知抛物线 $C_1:y^{2}=4x-4$ 与双曲线 $C_2:\\dfrac{x^{2}}{a^{2}}-\\dfrac{y^{2}}{4-a^{2}}=1$（$a>0$）相交于两点 $A,B$，$F$ 是 $C_2$ 的右焦点。直线 $AF$ 分别交 $C_1,C_2$ 于 $C,D$ 两点（不同于 $A,B$ 点），直线 $BC,BD$ 分别交 $x$ 轴于 $P,Q$ 两点。记 $\\triangle AFQ$ 的面积为 $S_1$，$\\triangle CPQ$ 的面积为 $S_2$，当 $S_1=3S_2$ 时，求 $a$ 的值。",
+  "answer": "$2^{\\dfrac{2}{3}}$"
+}

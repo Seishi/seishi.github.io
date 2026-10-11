@@ -1,0 +1,13 @@
+{
+  "id": "20261003-08-ex7-hyperbola-ellipse-e",
+  "slug": "ex7-hyperbola-ellipse-e",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "hyperbola",
+    "ellipse"
+  ],
+  "title": "双曲线 $C:\\dfrac{x^{2}}{a^{2}}-\\dfrac{y^{2}}{b^{2}}=1$（$a,b>0$）的左、右焦点为 $F_1,F_2$，左、右顶点为 $A_1,A_2$。过 $F_2$ 的直线分别交左支和 $y$ 轴于 $M,N$。已知 $MF_1\\parallel NA_1$ 且 $MA_1\\parallel NA_2$。若 $M$ 还在以 $F_1,F_2$ 为焦点的椭圆上，求该椭圆的离心率。",
+  "answer": "$\\dfrac{3}{2} - \\dfrac{\\sqrt{5}}{2}$"
+}

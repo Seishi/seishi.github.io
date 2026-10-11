@@ -1,0 +1,331 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "body": "custom",
+    "scale": 1.4,
+    "points": {
+      "O": [
+        "0",
+        "0",
+        "0"
+      ],
+      "A": [
+        "1",
+        "-sqrt(3)",
+        "0"
+      ],
+      "B": [
+        "-1",
+        "-sqrt(3)",
+        "0"
+      ],
+      "P": [
+        "0",
+        "-2*sqrt(3)/3",
+        "-2*sqrt(6)/3"
+      ],
+      "M": [
+        "0",
+        "-sqrt(3)",
+        "0"
+      ],
+      "G": [
+        "0",
+        "-2*sqrt(3)/3",
+        "-sqrt(6)/6"
+      ],
+      "A2": [
+        "-2*sqrt(3)/3 + sqrt(6)/3",
+        "-2*sqrt(3)/3 - sqrt(6)/3",
+        "0"
+      ],
+      "B2": [
+        "sqrt(6)/3 + 2*sqrt(3)/3",
+        "-2*sqrt(3)/3 + sqrt(6)/3",
+        "0"
+      ],
+      "P2": [
+        "2*sqrt(6)/3",
+        "-4*sqrt(3)/3",
+        "0"
+      ],
+      "M2": [
+        "sqrt(6)/3",
+        "-2*sqrt(3)/3",
+        "0"
+      ],
+      "G2": [
+        "sqrt(6)/3",
+        "-2*sqrt(3)/3",
+        "0"
+      ]
+    },
+    "topo": {
+      "spheres": [
+        "P",
+        "A",
+        "B",
+        "O",
+        "M",
+        "G",
+        "A2",
+        "B2",
+        "P2",
+        "M2",
+        "G2"
+      ],
+      "edges": [
+        {
+          "a": "A",
+          "b": "B"
+        },
+        {
+          "a": "B",
+          "b": "O"
+        },
+        {
+          "a": "O",
+          "b": "A"
+        },
+        {
+          "a": "P",
+          "b": "A"
+        },
+        {
+          "a": "P",
+          "b": "B"
+        },
+        {
+          "a": "P",
+          "b": "O"
+        },
+        {
+          "a": "O",
+          "b": "M"
+        },
+        {
+          "a": "P",
+          "b": "M"
+        },
+        {
+          "a": "A2",
+          "b": "B2"
+        },
+        {
+          "a": "O",
+          "b": "A2"
+        },
+        {
+          "a": "O",
+          "b": "B2"
+        },
+        {
+          "a": "P2",
+          "b": "A2"
+        },
+        {
+          "a": "P2",
+          "b": "B2"
+        },
+        {
+          "a": "P2",
+          "b": "O"
+        },
+        {
+          "a": "O",
+          "b": "M2"
+        }
+      ]
+    },
+    "query": {
+      "type": "volume",
+      "kind": "tetra",
+      "pts": [
+        "O",
+        "A",
+        "B",
+        "P"
+      ]
+    },
+    "_note": "所求不属于 5 类 query；index.html 由 _render.py 精确渲染。"
+  },
+  "lesson": {
+    "language": "zh-CN",
+    "meta": "交互解题 · 外接球半径",
+    "title": "四面体中，取其异面的两条棱的中点连线称为该四面体的一条「内棱」，三条内棱两两垂直的四面体称为「垂棱四面体」。空间直角坐标系中，$xOy$ 平面内有圆 $O:x^{2}+y^{2}=4$，直线 $y=kx-\\sqrt{3}$ 与圆 $O$ 交于 $A$、$B$ 两点，$P$ 为 $xOy$ 平面下方一点。若 $P$-$ABO$ 为垂棱四面体，则其外接球表面积 $S(k)$ 的取值范围是",
+    "answerLabel": "$S(k)$ 的取值范围",
+    "answerValue": "$[6\\pi,8\\pi]$"
+  },
+  "steps": [
+    {
+      "title": "垂棱四面体即对棱相等",
+      "content": "<p>三条内棱两两垂直，等价于三组对棱分别相等（等面四面体 / 垂心四面体的特例）：</p>$$PA=BO,\\quad PB=AO,\\quad PO=AB.$$<p>$A$、$B$ 在圆 $x^{2}+y^{2}=4$ 上，故 $AO=BO=2$，从而 $PA=PB=2$，且 $PO=AB$。</p>",
+      "highlight": [
+        "Axis",
+        "Plane_xOy",
+        "Point_A",
+        "Point_B",
+        "Point_O",
+        "Point_P",
+        "Line_AB"
+      ],
+      "cameraPos": {
+        "x": 5.29,
+        "y": 3.63,
+        "z": 2.83
+      }
+    },
+    {
+      "title": "情形 $k=0$",
+      "content": "<p>圆心到直线距离 $d=\\dfrac{\\sqrt{3}}{\\sqrt{k^{2}+1}}$。$PO=AB=2\\sqrt{4-d^{2}}$ 要求 $d^{2}\\in[2,3]$，即 $k^{2}\\le\\dfrac{1}{2}$。</p><p>$k=0$ 时 $d=\\sqrt{3}$ 取到上端：$A(1,-\\sqrt{3},0)$、$B(-1,-\\sqrt{3},0)$，$P$ 在 $xOy$ 下方。此时外接半径 $R=\\sqrt{\\dfrac{3}{2}}$，表面积 $S=6\\pi$。</p>",
+      "highlight": [
+        "Plane_xOy",
+        "Line_AB",
+        "Point_M",
+        "Point_P",
+        "Point_A",
+        "Point_B",
+        "Point_O",
+        "Len_OA",
+        "Line_PO",
+        "Sphere_R"
+      ],
+      "cameraPos": {
+        "x": 6.51,
+        "y": 2.26,
+        "z": 2.36
+      }
+    },
+    {
+      "title": "情形 $|k|=\\dfrac{1}{\\sqrt{2}}$",
+      "content": "<p>三组对棱为 $2,2,c$，其中 $c=2\\sqrt{4-d^{2}}$。外接半径 $R=\\sqrt{\\dfrac{6-d^{2}}{2}}$，表面积 $S=2\\pi(6-d^{2})$。</p><p>$|k|=\\dfrac{1}{\\sqrt{2}}$ 时 $d^{2}=2$ 取到下端：$P$ 落到 $xOy$ 内（四面体退化），$S=8\\pi$。图中虚线为这一款的 $A',B',P'$。</p><p>$d^{2}$ 从 $2$ 连续变到 $3$，故 $S(k)$ 的取值范围是 $[6\\pi,8\\pi]$。</p>",
+      "highlight": [
+        "Line_A2B2",
+        "Point_A2",
+        "Point_B2",
+        "Point_P2",
+        "Point_M2",
+        "Point_O",
+        "Line_P2O",
+        "Sphere_R2",
+        "Plane_xOy"
+      ],
+      "cameraPos": {
+        "x": 5.49,
+        "y": 1.36,
+        "z": 3.84
+      }
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {
+        "type": "axes",
+        "size": 3
+      },
+      "Point_A": {
+        "type": "point",
+        "center": "A"
+      },
+      "Point_B": {
+        "type": "point",
+        "center": "B"
+      },
+      "Point_O": {
+        "type": "point",
+        "center": "O"
+      },
+      "Point_P": {
+        "type": "point",
+        "center": "P"
+      },
+      "Point_M": {
+        "type": "point",
+        "center": "M"
+      },
+      "Point_G": {
+        "type": "point",
+        "center": "G"
+      },
+      "Point_A2": {
+        "type": "point",
+        "center": "A2"
+      },
+      "Point_B2": {
+        "type": "point",
+        "center": "B2"
+      },
+      "Point_P2": {
+        "type": "point",
+        "center": "P2"
+      },
+      "Point_M2": {
+        "type": "point",
+        "center": "M2"
+      },
+      "Line_AB": {
+        "type": "line",
+        "a": "A",
+        "b": "B",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_PO": {
+        "type": "line",
+        "a": "P",
+        "b": "O",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_A2B2": {
+        "type": "line",
+        "a": "A2",
+        "b": "B2",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_P2O": {
+        "type": "line",
+        "a": "P2",
+        "b": "O",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Len_OA": {
+        "type": "measure",
+        "a": "O",
+        "b": "A",
+        "label": "2"
+      },
+      "Plane_xOy": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "B",
+          "O"
+        ]
+      },
+      "Sphere_R": {
+        "type": "sphere",
+        "center": "G",
+        "radius": 1.7146428199482244,
+        "opacity": 0.1
+      },
+      "Sphere_R2": {
+        "type": "sphere",
+        "center": "G2",
+        "radius": 1.9798989873223332,
+        "opacity": 0.08
+      },
+      "Plane_ABO": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "B",
+          "O"
+        ]
+      }
+    }
+  },
+  "_answer": "[6\\pi,8\\pi]"
+}

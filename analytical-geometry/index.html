@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('analytical-geometry-theme');
+        document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <title>题目列表 · 解析几何</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #F3F5F8;
+      --panel: #FFFFFF;
+      --inset: #F7F8FA;
+      --line: #E2E7EE;
+      --line-2: #D3DAE3;
+      --text: #1A2330;
+      --text-2: #3D4A5C;
+      --muted: #6B7787;
+      --faint: #98A2AE;
+      --accent: #2563EB;
+      --accent-dark: #1D4ED8;
+      --accent-soft: rgba(37, 99, 235, 0.12);
+      --on-accent: #FFFFFF;
+      --shadow: 0 1px 2px rgba(26, 35, 48, 0.06), 0 8px 24px rgba(26, 35, 48, 0.04);
+      --font-body: 'Instrument Sans', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0A0D12;
+      --panel: #0E131A;
+      --inset: #0B1016;
+      --line: #1F2731;
+      --line-2: #243040;
+      --text: #E7ECF2;
+      --text-2: #B8C1CC;
+      --muted: #8B96A5;
+      --faint: #4E5A69;
+      --accent: #60A5FA;
+      --accent-dark: #3B82F6;
+      --accent-soft: rgba(96, 165, 250, 0.16);
+      --on-accent: #0A1628;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-body); }
+    body { min-height: 100vh; }
+    a { color: inherit; }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--bg) 86%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .bar {
+      max-width: 980px; margin: 0 auto; padding: 16px 20px 14px;
+      display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center;
+    }
+    .brand { flex: 1 1 180px; min-width: 0; }
+    .brand h1 {
+      margin: 0; font-size: 18px; font-weight: 600; letter-spacing: 0.02em;
+    }
+    .brand p {
+      margin: 4px 0 0; color: var(--muted); font-size: 12px;
+      font-family: var(--font-mono);
+    }
+    .search {
+      flex: 2 1 240px;
+      position: relative;
+    }
+    .search input {
+      width: 100%; height: 38px; padding: 0 12px 0 34px;
+      border: 1px solid var(--line-2); border-radius: 8px;
+      background: var(--panel); color: var(--text);
+      font: 14px/1 var(--font-body); outline: none;
+    }
+    .search input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .search svg {
+      position: absolute; left: 10px; top: 10px; width: 16px; height: 16px;
+      color: var(--faint);
+    }
+    .theme {
+      width: 38px; height: 38px; border-radius: 8px;
+      border: 1px solid var(--line-2); background: var(--panel); color: var(--text-2);
+      cursor: pointer; display: grid; place-items: center;
+    }
+    .theme:hover { border-color: var(--accent); color: var(--accent); }
+    .filters {
+      max-width: 980px; margin: 0 auto; padding: 0 20px 14px;
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .chip {
+      border: 1px solid var(--line-2); background: var(--panel); color: var(--text-2);
+      border-radius: 999px; padding: 5px 12px; font-size: 13px; cursor: pointer;
+    }
+    .chip.is-on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+    main { max-width: 980px; margin: 0 auto; padding: 18px 20px 48px; }
+    .grid { display: grid; gap: 12px; }
+    .card {
+      display: grid; grid-template-columns: auto 1fr auto; gap: 12px 16px;
+      align-items: start;
+      background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+      padding: 16px 18px; text-decoration: none; box-shadow: var(--shadow);
+      transition: border-color .15s ease, transform .15s ease;
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .badge {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      padding: 4px 8px; border-radius: 999px; background: var(--accent-soft);
+      color: var(--accent-dark); white-space: nowrap;
+    }
+    html[data-theme="dark"] .badge { color: var(--accent); }
+    .body { min-width: 0; }
+    .kicker {
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+      color: var(--muted); font-size: 12px; font-family: var(--font-mono);
+      margin-bottom: 6px;
+    }
+    .title {
+      margin: 0; font-size: 15px; font-weight: 500; line-height: 1.55; color: var(--text);
+    }
+    .go {
+      align-self: center; color: var(--faint); font-size: 13px; white-space: nowrap;
+      font-family: var(--font-mono);
+    }
+    .card:hover .go { color: var(--accent); }
+    .empty { text-align: center; color: var(--muted); padding: 48px 12px; }
+    @media (max-width: 640px) {
+      .card { grid-template-columns: auto 1fr; }
+      .go { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <div class="brand">
+        <h1>解析几何题目</h1>
+        <p><a href="../index.html">几何</a> · <span id="count">0</span> 题</p>
+      </div>
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+        </svg>
+        <input id="q" type="search" placeholder="搜索题号或题面" autocomplete="off">
+      </label>
+      <button class="theme" id="theme" type="button" title="切换亮/暗色" aria-label="切换主题">◐</button>
+    </div>
+    <div class="filters" id="filters"></div>
+  </header>
+  <main>
+    <div class="grid" id="list"></div>
+    <p class="empty" id="empty" hidden>没有匹配的题目</p>
+  </main>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']], processEscapes: true },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    const PROBLEMS = [{"id": "20261003-01-ellipse-chord", "href": "problems/20261003-01-ellipse-chord/index.html", "slug": "ellipse-chord", "label": "演示", "tags": ["ellipse"], "title": "椭圆 $\\dfrac{x^{2}}{4}+y^{2}=1$ 与直线 $x-2y=0$ 交于 $A$、$B$，求弦 $AB$ 的长", "created": "2026-10-03T20:42:17+08:00", "date": "2026-10-03", "source": false, "seq": 1, "day": "20261003"}, {"id": "20261003-02-ex1-four-lines-area", "href": "problems/20261003-02-ex1-four-lines-area/index.html", "slug": "ex1-four-lines-area", "label": "例题 1", "tags": ["line-circle"], "title": "设 $k,t\\in\\mathbb{R}$。已知方程 $x^{2}+xy-6y^{2}-20x-20y+k=0$ 与方程 $4x^{2}+4xy+y^{2}+(t+2)x+4y+3=0$ 各表示两条直线，则这四条直线围成的封闭图形的面积为______。", "created": "2026-10-03T22:08:32+08:00", "date": "2026-10-03", "source": true, "seq": 2, "day": "20261003"}, {"id": "20261003-03-ex2-circle-max-value", "href": "problems/20261003-03-ex2-circle-max-value/index.html", "slug": "ex2-circle-max-value", "label": "例题 2", "tags": ["line-circle"], "title": "已知实数 $x,y$ 满足 $x^{2}+y^{2}-8x+13=0$，则 $\\dfrac{x+\\sqrt{3}y-1}{\\sqrt{x^{2}+y^{2}-2x+1}}$ 的最大值为______。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 3, "day": "20261003"}, {"id": "20261003-04-ex3-hyperbola-inradius", "href": "problems/20261003-04-ex3-hyperbola-inradius/index.html", "slug": "ex3-hyperbola-inradius", "label": "例题 3", "tags": ["hyperbola"], "title": "双曲线 $E:\\dfrac{x^{2}}{4}-y^{2}=1$ 的右焦点为 $F$，圆 $x^{2}+y^{2}=1$ 的一条切线与双曲线的右支、左支分别交于 $A,B$，切点 $T$ 在第四象限。若 $\\triangle ABF$ 的内切圆半径为 $r$，求 $r$ 的取值范围。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 4, "day": "20261003"}, {"id": "20261003-05-ex4-ellipse-eq-locus", "href": "problems/20261003-05-ex4-ellipse-eq-locus/index.html", "slug": "ex4-ellipse-eq-locus", "label": "例题 4", "tags": ["ellipse"], "title": "设椭圆 $C:\\dfrac{x^{2}}{a^{2}}+\\dfrac{y^{2}}{b^{2}}=1\\ (a>b>0)$ 的左、右焦点分别为 $F_1,F_2$。过点 $F_1$ 且倾斜角为 $\\alpha$ 的直线 $l$ 与椭圆交于 $A,B$ 两点。若 $\\cos\\alpha=\\dfrac{5}{13}$，$5\\overrightarrow{F_1A}=8\\overrightarrow{BF_1}$，且点 $F_2$ 到直线 $AB$ 的距离为 $\\dfrac{72}{13}$。 (1) 求椭圆 $C$ 的方程； (2) 若 $P,Q$ 为椭圆 $C$ 的右准线上的两点，且 $|PQ|=3$，求 $\\triangle F_1PQ$ 内切圆圆心 $M$ 的轨迹。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 5, "day": "20261003"}, {"id": "20261003-06-ex5-ellipse-area-ratio", "href": "problems/20261003-06-ex5-ellipse-area-ratio/index.html", "slug": "ex5-ellipse-area-ratio", "label": "例题 5", "tags": ["ellipse"], "title": "已知椭圆 $C$ 的离心率为 $\\dfrac{1}{2}$，左、右焦点分别为 $F_1,F_2$。设 $P$ 为 $C$ 上不与椭圆顶点重合的一点，记 $\\triangle PF_1F_2$ 的重心、内心分别为 $G,I$。若 $\\dfrac{|PI|}{|PG|}=\\dfrac{\\sqrt{3}}{2}$，求 $\\triangle PGI$ 与 $\\triangle PF_1F_2$ 的面积之比。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 6, "day": "20261003"}, {"id": "20261003-07-ex6-hyperbola-eccentricity", "href": "problems/20261003-07-ex6-hyperbola-eccentricity/index.html", "slug": "ex6-hyperbola-eccentricity", "label": "例题 6", "tags": ["hyperbola"], "title": "双曲线 $\\dfrac{x^{2}}{a^{2}}-\\dfrac{y^{2}}{b^{2}}=1$（$a,b>0$）的右焦点为 $F$。过 $F$ 的直线交双曲线于 $A,B$，点 $C$ 是 $A$ 关于原点的对称点。若 $CF\\perp AB$ 且 $|CF|=\\dfrac{4}{3}|FB|$，求离心率。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 7, "day": "20261003"}, {"id": "20261003-08-ex7-hyperbola-ellipse-e", "href": "problems/20261003-08-ex7-hyperbola-ellipse-e/index.html", "slug": "ex7-hyperbola-ellipse-e", "label": "例题 7", "tags": ["hyperbola", "ellipse"], "title": "双曲线 $C:\\dfrac{x^{2}}{a^{2}}-\\dfrac{y^{2}}{b^{2}}=1$（$a,b>0$）的左、右焦点为 $F_1,F_2$，左、右顶点为 $A_1,A_2$。过 $F_2$ 的直线分别交左支和 $y$ 轴于 $M,N$。已知 $MF_1\\parallel NA_1$ 且 $MA_1\\parallel NA_2$。若 $M$ 还在以 $F_1,F_2$ 为焦点的椭圆上，求该椭圆的离心率。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 8, "day": "20261003"}, {"id": "20261003-09-ex8-complex-polynomial", "href": "problems/20261003-09-ex8-complex-polynomial/index.html", "slug": "ex8-complex-polynomial", "label": "例题 8", "tags": ["line-circle"], "title": "实系数多项式 $P(x)=x^{4}+ux^{3}+vx+w$ 的四个不同复根为 $p,q,r,s$，它们都不是纯虚数，但 $pq+rs$ 是纯虚数。 (1) 证明 $w\\lt 0$。 (2) 当 $u=1$ 时，求所有使 $\\big(|p+q-z|-|r+s-z|\\big)^{2}$ 为定值的复数 $z$。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 9, "day": "20261003"}, {"id": "20261003-10-ex9-hyperbola-standard", "href": "problems/20261003-10-ex9-hyperbola-standard/index.html", "slug": "ex9-hyperbola-standard", "label": "例题 9", "tags": ["hyperbola"], "title": "双曲线 $\\Gamma:\\dfrac{x^{2}}{a^{2}}-\\dfrac{y^{2}}{b^{2}}=1$（$a,b>0$）。斜率为 $-\\dfrac{1}{3}$ 的直线 $l$ 交左、右支于 $A,B$，其中 $A\\left(-\\dfrac{21}{4},-\\dfrac{1}{2}\\right)$。点 $Q(-3,4)$ 不在 $l$ 上，$AQ,BQ$ 再交 $\\Gamma$ 于 $C,D$。若 $CD\\parallel l$，求 $\\Gamma$ 的标准方程。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 10, "day": "20261003"}, {"id": "20261003-11-ex10-parabola-hyperbola-a", "href": "problems/20261003-11-ex10-parabola-hyperbola-a/index.html", "slug": "ex10-parabola-hyperbola-a", "label": "例题 10", "tags": ["parabola", "hyperbola"], "title": "已知抛物线 $C_1:y^{2}=4x-4$ 与双曲线 $C_2:\\dfrac{x^{2}}{a^{2}}-\\dfrac{y^{2}}{4-a^{2}}=1$（$a>0$）相交于两点 $A,B$，$F$ 是 $C_2$ 的右焦点。直线 $AF$ 分别交 $C_1,C_2$ 于 $C,D$ 两点（不同于 $A,B$ 点），直线 $BC,BD$ 分别交 $x$ 轴于 $P,Q$ 两点。记 $\\triangle AFQ$ 的面积为 $S_1$，$\\triangle CPQ$ 的面积为 $S_2$，当 $S_1=3S_2$ 时，求 $a$ 的值。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 11, "day": "20261003"}, {"id": "20261003-12-ex11-two-parabolas", "href": "problems/20261003-12-ex11-two-parabolas/index.html", "slug": "ex11-two-parabolas", "label": "例题 11", "tags": ["parabola"], "title": "已知抛物线 $C_1:y^{2}=2px$，$C_2:x^{2}=2py$（$p>0$）。$C_1$ 第一象限内一点 $P$ 处的切线 $l$ 交 $C_2$ 于 $A,B$ 两点，交 $x$ 轴于点 $M$，$C_2$ 在 $A,B$ 处的切线交于点 $D$。 (1) 证明：当 $\\triangle ABD$ 面积最小时，$P$ 为 $AB$ 中点； (2) 过 $P$ 作 $l$ 的垂线交 $C_1$ 于另一点 $Q$，连接 $MQ$ 交 $C_1$ 于另一点 $R$，当 $\\triangle PQR$ 面积最小时，求点 $M$ 的坐标。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 12, "day": "20261003"}, {"id": "20261003-13-ex12-parabola-angle-proof", "href": "problems/20261003-13-ex12-parabola-angle-proof/index.html", "slug": "ex12-parabola-angle-proof", "label": "例题 12", "tags": ["parabola"], "title": "已知抛物线 $\\Gamma$ 的焦点是 $F$，准线是 $l$。点 $A,B$ 在 $\\Gamma$ 上，$\\Gamma$ 在点 $A,B$ 处的切线相交于点 $P$。准线 $l$ 与线段 $AP$ 的交点 $M$ 恰为其中点。设 $PF$ 与 $l$ 相交于点 $K$，直线 $AK$ 与 $\\odot(APF)$ 相交于另一点 $L$。证明：$\\angle AMB+\\angle ALM=90^{\\circ}$。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 13, "day": "20261003"}, {"id": "20261003-14-ex13-two-parabolas-power", "href": "problems/20261003-14-ex13-two-parabolas-power/index.html", "slug": "ex13-two-parabolas-power", "label": "例题 13", "tags": ["parabola"], "title": "平面上两个抛物线，它们有相互垂直的对称轴且有公共焦点 $O$。设两个抛物线相交于 $A,B$ 两点。一条公切线 $l$ 与直线 $AB$ 相交于点 $C$。证明：$|OC|^{2}=|AC|\\cdot|BC|$。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 14, "day": "20261003"}, {"id": "20261003-15-ex14-ellipse-120-min", "href": "problems/20261003-15-ex14-ellipse-120-min/index.html", "slug": "ex14-ellipse-120-min", "label": "例题 14", "tags": ["ellipse"], "title": "椭圆 $\\dfrac{x^{2}}{5}+\\dfrac{y^{2}}{4}=1$ 上有三个点 $A,B,C$，满足 $\\angle AOB=\\angle BOC=\\angle COA$。则 $|OA|^{2}-\\dfrac{2}{|OB|^{2}}-\\dfrac{2}{|OC|^{2}}$ 的最小值为多少？", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 15, "day": "20261003"}, {"id": "20261003-16-ex15-parabola-focal-chords", "href": "problems/20261003-16-ex15-parabola-focal-chords/index.html", "slug": "ex15-parabola-focal-chords", "label": "例题 15", "tags": ["parabola"], "title": "在平面直角坐标系 $xOy$ 中，已知抛物线 $\\Gamma:y^{2}=4x$ 的焦点为 $F(1,0)$。过 $F$ 作 $\\Gamma$ 的两条弦 $AB,CD$。设直线 $AC,BD$ 交于点 $M$，直线 $AD,BC$ 交于点 $N$。证明：$\\triangle MNF$ 的外接圆总是经过不同于 $F$ 的一个定点 $G$，并求点 $G$ 的坐标。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 16, "day": "20261003"}, {"id": "20261003-17-ex16-hyperbola-lambda", "href": "problems/20261003-17-ex16-hyperbola-lambda/index.html", "slug": "ex16-hyperbola-lambda", "label": "例题 16", "tags": ["hyperbola"], "title": "双曲线 $\\Gamma:x^{2}-y^{2}=1$ 上三点 $A,B,C$ 满足 $AB\\perp AC$，且 $B,C$ 不在同一支。过 $A$ 的切线交 $BC$ 于 $H$。若 $|BH|\\ge|CH|$，求最大的实数 $\\lambda$，使 $|BH|\\cdot|BC|\\ge\\lambda$ 恒成立。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 17, "day": "20261003"}, {"id": "20261003-18-ex17-ellipse-slope-ratio", "href": "problems/20261003-18-ex17-ellipse-slope-ratio/index.html", "slug": "ex17-ellipse-slope-ratio", "label": "例题 17", "tags": ["ellipse"], "title": "椭圆 $C:\\dfrac{x^{2}}{a^{2}}+\\dfrac{y^{2}}{b^{2}}=1$ 的左、右焦点为 $F_1,F_2$。点 $D(1,0)$ 是线段 $OF_2$ 的中点。直线 $MN$（不与 $x$ 轴重合）过 $F_1$，交椭圆于 $M,N$。延长 $MD$、$ND$ 再交椭圆于 $P,Q$。设 $MN$、$PQ$ 的斜率为 $k_1,k_2$，将 $\\dfrac{k_2}{k_1}$ 表示成关于 $a$ 的函数 $f(a)$，并求其极值。 (1) 把 $\\dfrac{k_2}{k_1}$ 表示成 $f(a)$； (2) 求 $f(a)$ 的极值。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 18, "day": "20261003"}, {"id": "20261003-19-ex18-parabolas-integer-k", "href": "problems/20261003-19-ex18-parabolas-integer-k/index.html", "slug": "ex18-parabolas-integer-k", "label": "例题 18", "tags": ["parabola"], "title": "设 $S$ 是满足下列条件的正整数 $k$ 的集合：抛物线 $y=x^{2}-k$ 与 $x=2(y-20)^{2}-k$ 有四个不同的公共点，且这四点所在圆的半径不超过 $21$。求 $S$ 中最小元素与最大元素的和。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 19, "day": "20261003"}, {"id": "20261003-20-ex19-parabolas-concyclic", "href": "problems/20261003-20-ex19-parabolas-concyclic/index.html", "slug": "ex19-parabolas-concyclic", "label": "例题 19", "tags": ["parabola"], "title": "平面上两条抛物线 $C_1,C_2$ 焦点重合，准线分别为 $l_1,l_2$。$l_1$ 与 $C_2$ 交于 $A,B$，$l_2$ 与 $C_1$ 交于 $C,D$。证明 $A,B,C,D$ 四点共圆。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 20, "day": "20261003"}, {"id": "20261003-21-ex20-ellipse-midpoint-circle", "href": "problems/20261003-21-ex20-ellipse-midpoint-circle/index.html", "slug": "ex20-ellipse-midpoint-circle", "label": "例题 20", "tags": ["ellipse"], "title": "椭圆 $\\mathcal{E}$ 的焦点为 $F_1,F_2$，$P$ 在 $\\mathcal{E}$ 上。直线 $PF_1$、$PF_2$ 分别再交 $\\mathcal{E}$ 于 $A,B$，点 $A,B$ 处的切线交于 $Q$。证明 $PQ$ 的中点在 $\\triangle PF_1F_2$ 的外接圆上。", "created": "2026-10-03T22:08:33+08:00", "date": "2026-10-03", "source": true, "seq": 21, "day": "20261003"}];
+    const KINDS = [
+      { id: 'all', label: '全部' },
+      { id: 'line-circle', label: '直线与圆' },
+      { id: 'ellipse', label: '椭圆' },
+      { id: 'hyperbola', label: '双曲线' },
+      { id: 'parabola', label: '抛物线' },
+      { id: 'parametric-polar', label: '参数与极坐标' }
+    ];
+    const TAG_LABELS = {
+      'line-circle': '直线与圆',
+      'ellipse': '椭圆',
+      'hyperbola': '双曲线',
+      'parabola': '抛物线',
+      'parametric-polar': '参数与极坐标'
+    };
+    let kind = 'all';
+    const list = document.getElementById('list');
+    const empty = document.getElementById('empty');
+    const q = document.getElementById('q');
+    const filters = document.getElementById('filters');
+    const countEl = document.getElementById('count');
+
+    KINDS.forEach((k) => {
+      const n = k.id === 'all'
+        ? PROBLEMS.length
+        : PROBLEMS.filter((p) => (p.tags || []).includes(k.id)).length;
+      if (k.id !== 'all' && n === 0) return;
+      const b = document.createElement('button');
+      b.className = 'chip' + (k.id === 'all' ? ' is-on' : '');
+      b.type = 'button';
+      b.dataset.kind = k.id;
+      b.textContent = k.label + ' ' + n;
+      b.addEventListener('click', () => {
+        kind = k.id;
+        filters.querySelectorAll('.chip').forEach((c) => c.classList.toggle('is-on', c.dataset.kind === kind));
+        render();
+      });
+      filters.appendChild(b);
+    });
+
+    function hay(p) {
+      return [p.title, p.slug, p.label].join(' ').toLowerCase();
+    }
+    function visible() {
+      const s = (q.value || '').trim().toLowerCase();
+      return PROBLEMS.filter((p) =>
+        (kind === 'all' || (p.tags || []).includes(kind)) && (!s || hay(p).includes(s)));
+    }
+    function tagText(p) {
+      return (p.tags || []).map((t) => TAG_LABELS[t] || t).join(' · ');
+    }
+    function render() {
+      const rows = visible();
+      list.innerHTML = '';
+      empty.hidden = rows.length > 0;
+      countEl.textContent = String(rows.length);
+      rows.forEach((p) => {
+        const a = document.createElement('a');
+        a.className = 'card';
+        a.href = p.href;
+        const tags = tagText(p);
+        a.innerHTML =
+          '<span class="badge">' + (p.label || '') + '</span>' +
+          '<div class="body">' +
+            '<div class="kicker">' +
+              (tags ? '<span>' + tags + '</span>' : '') +
+              (p.date ? '<span>' + p.date + '</span>' : '') +
+              (p.source ? '<span>原图</span>' : '') +
+            '</div>' +
+            '<p class="title">' + (p.title || p.slug || '') + '</p>' +
+          '</div>' +
+          '<span class="go">打开 →</span>';
+        list.appendChild(a);
+      });
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([list]).catch(() => {});
+      }
+    }
+    q.addEventListener('input', render);
+    document.getElementById('theme').addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('analytical-geometry-theme', next); } catch (e) {}
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== q) {
+        e.preventDefault();
+        q.focus();
+      }
+    });
+    render();
+    const wait = setInterval(() => {
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        clearInterval(wait);
+        MathJax.typesetPromise([list]).catch(() => {});
+      }
+    }, 80);
+  </script>
+</body>
+</html>

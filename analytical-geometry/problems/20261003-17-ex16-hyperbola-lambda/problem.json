@@ -1,0 +1,83 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["hyperbola"],
+    "frame": {"xmin": -5, "xmax": 4, "ymin": -4, "ymax": 5},
+    "curves": {
+      "G": {"type": "hyperbola", "a": 1, "b": 1, "center": [0, 0], "transverse": "x"},
+      "AB": {"type": "line", "a": 1, "b": 2, "c": "-2-sqrt(2)"},
+      "AC": {"type": "line", "a": 2, "b": -1, "c": "1-2*sqrt(2)"},
+      "TA": {"type": "line", "a": "sqrt(2)", "b": -1, "c": -1}
+    },
+    "points": {
+      "H": ["4/9+sqrt(2)/3", "-1/3+4*sqrt(2)/9"]
+    },
+    "givens": [
+      {"name": "A", "kind": "on_curve", "curve": "G", "t": "asinh(1)", "which": "right"},
+      {"name": "B", "kind": "intersection", "of": ["G", "AB"], "which": "left"},
+      {"name": "C", "kind": "intersection", "of": ["G", "AC"], "which": "left"}
+    ],
+    "lengths": {
+      "BA": ["B", "A"],
+      "BC": ["B", "C"],
+      "BH": ["B", "H"],
+      "CH": ["C", "H"]
+    },
+    "query": {"type": "custom", "expr": "4"}
+  },
+  "lesson": {
+    "meta": "交互解题 · 双曲线",
+    "title": "双曲线 $\\Gamma:x^{2}-y^{2}=1$ 上三点 $A,B,C$ 满足 $AB\\perp AC$，且 $B,C$ 不在同一支。过 $A$ 的切线交 $BC$ 于 $H$。若 $|BH|\\ge|CH|$，求最大的实数 $\\lambda$，使 $|BH|\\cdot|BC|\\ge\\lambda$ 恒成立。",
+    "answerLabel": "最大的实数 $\\lambda$"
+  },
+  "steps": [
+    {
+      "title": "建立平面直角坐标系",
+      "content": "<p>双曲线 $\\Gamma:{{eq.G}}$。在右支取点 $A{{mp.A}}$，作互相垂直的弦 $AB$、$AC$，且 $B$、$C$ 不同支。图中 $B{{mp.B}}$ 在左支，$C{{mp.C}}$ 在右支，并约定 $|BH|\\ge|CH|$。过 $A$ 的切线交直线 $BC$ 于 $H{{mp.H}}$。</p>",
+      "highlight": ["Axis", "Curve_G", "Point_A", "Point_B", "Point_C", "Point_H"]
+    },
+    {
+      "title": "切线垂直于 BC",
+      "content": "<p>设 $A(x_0,y_0)$ 在 $\\Gamma$ 上，$AB$、$AC$ 的斜率分别为 $m$ 与 $-\\dfrac{1}{m}$（$m^{2}\\ne 1$，否则直线平行于渐近线，不能再交出另一个点）。与 $x^{2}-y^{2}=1$ 联立，另一交点为</p><p>$$B\\left(\\dfrac{(m^{2}+1)x_0-2my_0}{m^{2}-1},\\ -\\dfrac{(m^{2}+1)y_0-2mx_0}{m^{2}-1}\\right),$$</p><p>$C$ 由把 $m$ 换成 $-\\dfrac{1}{m}$ 得到。两式相减：</p><p>$$y_C-y_B=\\dfrac{2(m^{2}+1)y_0}{m^{2}-1},\\quad x_C-x_B=-\\dfrac{2(m^{2}+1)x_0}{m^{2}-1},$$</p><p>故 $k_{BC}=-\\dfrac{y_0}{x_0}$。切线 $xx_0-yy_0=1$ 的斜率为 $\\dfrac{x_0}{y_0}$，乘积为 $-1$。因此切线 $\\perp BC$，$H$ 是 $A$ 在 $BC$ 上的垂足。图中切线为 ${{eq.TA}}$。</p>",
+      "highlight": ["Curve_G", "Line_AB", "Line_AC", "Line_TA", "Line_BC", "Point_A", "Point_B", "Point_C", "Point_H"]
+    },
+    {
+      "title": "射影定理",
+      "content": "<p>$\\angle BAC=90^{\\circ}$，且 $AH\\perp BC$，所以 $AH$ 是直角三角形 $ABC$ 斜边 $BC$ 上的高，垂足 $H$ 落在线段 $BC$ 上。射影定理给出</p><p>$$|BA|^{2}=|BH|\\cdot|BC|,\\qquad |CA|^{2}=|CH|\\cdot|BC|.$$</p><p>条件 $|BH|\\ge|CH|$ 就是 $|BA|\\ge|CA|$，于是所求乘积等于较长那条直角边的平方。由横坐标的符号：$|m|&lt;1$ 时 $B$ 在左支、$C$ 在右支，$|m|&gt;1$ 时相反。因此 $B$、$C$ 总是分居两支，$AB$ 与 $AC$ 中恰有一条跨支。</p>",
+      "highlight": ["Seg_AB", "Seg_AC", "Seg_BC", "Line_TA", "Point_A", "Point_B", "Point_C", "Point_H"]
+    },
+    {
+      "title": "跨支弦长不小于 4",
+      "content": "<p>右支上的点可写成参数 $t&gt;0$：</p><p>$$\\left(\\dfrac{t+\\dfrac{1}{t}}{2},\\ \\dfrac{\\dfrac{1}{t}-t}{2}\\right),$$</p><p>左支把参数取成负数。参数为 $t,p,q$ 的三点中，从 $t$ 出发的两条弦垂直，当且仅当 $pq=-\\dfrac{1}{t^{2}}$。把跨支的那一端记为 $-s$（$s&gt;0$），右端仍为 $t&gt;0$，弦长平方为</p><p>$$|BA|^{2}=\\dfrac{(s+t)^{2}(s^{2}t^{2}+1)}{2s^{2}t^{2}}=\\dfrac{(s+t)^{2}}{4st}\\cdot 2\\left(st+\\dfrac{1}{st}\\right).$$</p><p>均值不等式给出 $\\dfrac{(s+t)^{2}}{4st}\\ge 1$ 与 $st+\\dfrac{1}{st}\\ge 2$，故 $|BA|^{2}\\ge 4$。等号需要 $s=t$ 且 $st=1$，即 $s=t=1$，此时另一交点与 $A$ 重合，不再构成三角形。所以真正的图形里跨支弦长的平方严格大于 $4$，但可任意接近 $4$：让 $A$ 趋于顶点 $(1,0)$，一条弦趋于 $x$ 轴，另一条趋于切线 $x=1$。</p>",
+      "highlight": ["Curve_G", "Seg_AB", "Point_A", "Point_B", "Line_AB"]
+    },
+    {
+      "title": "最大的 λ 是 4",
+      "content": "<p>$|BH|\\cdot|BC|$ 等于较长直角边的平方。跨支的那条已经不小于 $4$，若同支的那条更长，乘积只更大。因此对一切满足条件的 $A,B,C$，</p><p>$$|BH|\\cdot|BC|\\ge 4,$$</p><p>而 $4$ 是下确界，不能再加大。$A$ 改到左支只是左右对称，结论相同。最大的实数 $\\lambda$ 为 ${{answer}}$。</p>",
+      "highlight": ["Curve_G", "Seg_BA", "Seg_BH", "Seg_CH", "Seg_BC", "Line_TA", "Point_A", "Point_B", "Point_C", "Point_H", "Len_BA", "Len_BH", "Len_BC"]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_G": {"type": "hyperbola", "curve": "G", "color": "curve"},
+      "Line_AB": {"type": "line", "curve": "AB", "color": "emphasis"},
+      "Line_AC": {"type": "line", "curve": "AC", "color": "emphasis"},
+      "Line_TA": {"type": "line", "curve": "TA", "color": "normal"},
+      "Line_BC": {"type": "line", "a": "B", "b": "C", "color": "emphasis"},
+      "Seg_AB": {"type": "segment", "a": "A", "b": "B", "color": "emphasis"},
+      "Seg_AC": {"type": "segment", "a": "A", "b": "C", "color": "emphasis"},
+      "Seg_BC": {"type": "segment", "a": "B", "b": "C", "color": "emphasis"},
+      "Seg_BA": {"type": "segment", "a": "B", "b": "A", "color": "emphasis"},
+      "Seg_BH": {"type": "segment", "a": "B", "b": "H", "color": "normal"},
+      "Seg_CH": {"type": "segment", "a": "C", "b": "H", "color": "aux"},
+      "Point_A": {"type": "point", "center": "A"},
+      "Point_B": {"type": "point", "center": "B"},
+      "Point_C": {"type": "point", "center": "C"},
+      "Point_H": {"type": "point", "center": "H"},
+      "Len_BA": {"type": "measure", "a": "B", "b": "A", "label": "{{vals.len_BA}}"},
+      "Len_BH": {"type": "measure", "a": "B", "b": "H", "label": "{{vals.len_BH}}"},
+      "Len_BC": {"type": "measure", "a": "B", "b": "C", "label": "{{vals.len_BC}}"}
+    }
+  }
+}

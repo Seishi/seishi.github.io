@@ -1,0 +1,90 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["line-circle"],
+    "frame": {"xmin": -1, "xmax": 8, "ymin": -3, "ymax": 4},
+    "curves": {
+      "O": {"type": "circle", "center": "C", "radius": "sqrt(3)"},
+      "L": {"type": "line", "a": 1, "b": "sqrt(3)", "c": -1}
+    },
+    "points": {
+      "C": [4, 0],
+      "B": [1, 0],
+      "H": [3, "sqrt(2)"]
+    },
+    "givens": [
+      {"name": "A", "kind": "on_curve", "curve": "O", "t": "pi/3"}
+    ],
+    "lengths": {"BC": ["B", "C"]},
+    "query": {
+      "type": "custom",
+      "expr": "(3+sqrt(6))/3",
+      "vals": {
+        "rad": "sqrt(3)",
+        "norm": "2",
+        "sinb": "sqrt(3)/3",
+        "cosb": "sqrt(6)/3",
+        "half": "(3+sqrt(6))/6",
+        "ang": "pi/6",
+        "c6": "sqrt(3)/2",
+        "s6": "1/2"
+      }
+    }
+  },
+  "lesson": {
+    "meta": "交互解题 · 圆上式子的最大值",
+    "title": "已知实数 $x,y$ 满足 $x^{2}+y^{2}-8x+13=0$，则 $\\dfrac{x+\\sqrt{3}y-1}{\\sqrt{x^{2}+y^{2}-2x+1}}$ 的最大值为______。",
+    "answerLabel": "最大值"
+  },
+  "steps": [
+    {
+      "title": "建立平面直角坐标系",
+      "content": "<p>配方后，约束方程即圆 ${{eq.O}}$，圆心 $C{{mp.C}}$，半径 ${{vals.rad}}$。</p><p>分母里出现的定点是 $B{{mp.B}}$，分子对应直线 $l:{{eq.L}}$。圆上一点 $A{{mp.A}}$ 用来表示动点；最大值在切点 $H{{mp.H}}$ 取到。</p>",
+      "highlight": ["Axis", "Curve_O", "Line_L", "Point_C", "Point_B", "Point_A", "Point_H"]
+    },
+    {
+      "title": "分母是到点 B 的距离",
+      "content": "<p>对圆上的点 $A(x,y)$，</p><p>$$\\sqrt{x^{2}+y^{2}-2x+1}=\\sqrt{(x-1)^{2}+y^{2}}=|AB|.$$</p><p>分母就是 $A$ 到定点 $B{{mp.B}}$ 的距离。</p>",
+      "highlight": ["Curve_O", "Point_A", "Point_B", "Seg_AB"]
+    },
+    {
+      "title": "分子化为到直线的距离",
+      "content": "<p>直线 $l:{{eq.L}}$ 的法向量长为 ${{vals.norm}}$，所以</p><p>$$x+\\sqrt{3}y-1={{vals.norm}}\\,d(A,l).$$</p><p>把 $B{{mp.B}}$ 代入直线方程，左边为 $0$，故 $B$ 在 $l$ 上。设 $\\theta$ 为向量 $\\overrightarrow{BA}$ 与直线 $l$ 的夹角，则 $d(A,l)=|AB|\\sin\\theta$，原式等于 ${{vals.norm}}\\sin\\theta$。</p>",
+      "highlight": ["Line_L", "Curve_O", "Point_A", "Point_B", "Seg_AB"]
+    },
+    {
+      "title": "从 B 看圆的最大张角",
+      "content": "<p>$|BC|={{vals.len_BC}}$，半径 ${{vals.rad}}$。自 $B$ 作切线，切线与 $BC$ 的夹角 $\\beta$ 满足</p><p>$$\\sin\\beta=\\dfrac{{{vals.rad}}}{{{vals.len_BC}}}={{vals.sinb}},\\qquad \\cos\\beta={{vals.cosb}}.$$</p><p>$BC$ 沿 $x$ 轴正方向。直线 $l$ 的斜率为负，与 $x$ 轴的夹角为 ${{vals.ang}}$，且在 $x$ 轴下方。因此上侧切线与 $l$ 的夹角为 $\\beta+{{vals.ang}}$，这是圆上点所能取到的最大 $\\theta$。</p>",
+      "highlight": ["Curve_O", "Line_L", "Seg_BC", "Seg_BH", "Seg_CH", "Point_B", "Point_C", "Point_H"]
+    },
+    {
+      "title": "计算最大值",
+      "content": "<p>在 $\\theta\\in\\left(0,\\beta+{{vals.ang}}\\right]$ 上正弦递增，最大正弦为</p><p>$$\\sin\\left(\\beta+{{vals.ang}}\\right)={{vals.sinb}}\\cdot{{vals.c6}}+{{vals.cosb}}\\cdot{{vals.s6}}={{vals.half}}.$$</p><p>原式的最大值为 ${{vals.norm}}\\cdot{{vals.half}}={{answer}}$，在切点 $H{{mp.H}}$ 处取到。半径 $CH$ 垂直于切线 $BH$。</p>",
+      "highlight": ["Curve_O", "Line_L", "Seg_BH", "Seg_CH", "Point_H", "Point_B", "Point_C"]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_O": {"type": "circle", "curve": "O", "color": "curve"},
+      "Line_L": {"type": "line", "curve": "L", "color": "emphasis"},
+      "Point_C": {"type": "point", "center": "C"},
+      "Point_B": {"type": "point", "center": "B"},
+      "Point_A": {"type": "point", "center": "A"},
+      "Point_H": {"type": "point", "center": "H"},
+      "Seg_AB": {"type": "segment", "a": "A", "b": "B", "color": "aux"},
+      "Seg_BC": {"type": "segment", "a": "B", "b": "C", "color": "aux", "dashed": true},
+      "Seg_BH": {"type": "segment", "a": "B", "b": "H", "color": "emphasis"},
+      "Seg_CH": {"type": "segment", "a": "C", "b": "H", "color": "normal"}
+    },
+    "draggable": {
+      "point": "A",
+      "on": "O",
+      "t": "pi/3",
+      "standardLabel": "标准位 t=π/3",
+      "readouts": [
+        {"label": "|AB|", "type": "length", "pts": ["A", "B"]}
+      ]
+    }
+  }
+}

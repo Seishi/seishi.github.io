@@ -1,0 +1,1672 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('analytical-geometry-theme');
+                document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <title>解析几何交互教学</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsxgraph@1.10.1/distrib/jsxgraph.css">
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #F3F5F8;
+            --panel: #FFFFFF;
+            --viewport: #EEF2F6;
+            --inset: #F7F8FA;
+            --line: #E2E7EE;
+            --line-2: #D3DAE3;
+            --text: #1A2330;
+            --text-2: #3D4A5C;
+            --muted: #6B7787;
+            --faint: #98A2AE;
+            --accent: #2563EB;
+            --accent-dark: #1D4ED8;
+            --info: #3B82F6;
+            --ring: rgba(37, 99, 235, 0.32);
+            --accent-soft: rgba(37, 99, 235, 0.45);
+            --accent-glow: rgba(37, 99, 235, 0.16);
+            --on-accent: #FFFFFF;
+            --overlay: rgba(255, 255, 255, 0.92);
+            --label-halo: #EEF2F6;
+            --radius: 6px;
+            --font-body: 'Instrument Sans', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+            --font-cn: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        html[data-theme="dark"] {
+            color-scheme: dark;
+            --bg: #0A0D12;
+            --panel: #0E131A;
+            --viewport: #0C1117;
+            --inset: #0B1016;
+            --line: #1F2731;
+            --line-2: #243040;
+            --text: #E7ECF2;
+            --text-2: #B8C1CC;
+            --muted: #8B96A5;
+            --faint: #4E5A69;
+            --accent: #60A5FA;
+            --accent-dark: #3B82F6;
+            --info: #93C5FD;
+            --ring: rgba(96, 165, 250, 0.35);
+            --accent-soft: rgba(96, 165, 250, 0.45);
+            --accent-glow: rgba(96, 165, 250, 0.16);
+            --on-accent: #0A1628;
+            --overlay: rgba(11, 16, 22, 0.92);
+            --label-halo: #0C1117;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: grid;
+            grid-template-rows: 56px minmax(0, 1fr);
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        button { font: inherit; cursor: pointer; }
+
+        .skip-link {
+            position: fixed;
+            left: 16px;
+            top: 16px;
+            z-index: 999;
+            padding: 10px 14px;
+            border-radius: var(--radius);
+            background: var(--accent);
+            color: var(--on-accent);
+            font-weight: 600;
+            text-decoration: none;
+            transform: translateY(-160%);
+            transition: transform 0.2s ease;
+        }
+        .skip-link:focus { transform: translateY(0); outline: 3px solid var(--ring); }
+
+        /* ---------- 顶栏 ---------- */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 0 24px;
+            border-bottom: 1px solid var(--line);
+        }
+        .crumbs {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+        }
+        .crumbs .sep { color: var(--faint); }
+        .crumbs .back-link {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+        }
+        .crumbs .back-link:hover { color: var(--accent); }
+        .crumbs .back-link:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+        .crumbs #lesson-meta {
+            color: var(--accent);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .topbar-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+        .theme-toggle {
+            height: 32px;
+            padding: 0 12px;
+            border: 1px solid var(--line-2);
+            border-radius: 4px;
+            background: transparent;
+            color: var(--text-2);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.08em;
+        }
+        .theme-toggle:hover { border-color: var(--muted); color: var(--text); }
+        .theme-toggle:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+        mjx-container { color: var(--text); }
+        .progress { display: flex; gap: 4px; max-width: 34vw; }
+        .progress i {
+            display: block;
+            flex: 0 1 40px;
+            min-width: 12px;
+            height: 3px;
+            background: var(--line-2);
+            transition: background 0.25s ease;
+        }
+        .progress i.is-done { background: var(--accent-soft); }
+        .progress i.is-current { background: var(--accent); }
+        .topbar-step {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        /* ---------- 主体：左画板，右讲解 ---------- */
+        .main {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 480px;
+            min-height: 0;
+        }
+
+        #board-wrap {
+            position: relative;
+            min-width: 0;
+            min-height: 0;
+            overflow: hidden;
+            background: var(--viewport);
+        }
+        #jxgbox, .jxgbox {
+            width: 100%;
+            height: 100%;
+            background: var(--viewport) !important;
+            touch-action: none;
+        }
+        .bracket {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            z-index: 90;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+        .bracket.tl { left: 20px; top: 20px; border-left: 2px solid var(--accent); border-top: 2px solid var(--accent); }
+        .bracket.tr { right: 20px; top: 20px; border-right: 2px solid var(--accent); border-top: 2px solid var(--accent); }
+        .bracket.bl { left: 20px; bottom: 20px; border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent); }
+        .bracket.br { right: 20px; bottom: 20px; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); }
+
+        #scene-label {
+            position: absolute;
+            left: 48px;
+            top: 24px;
+            z-index: 100;
+            max-width: calc(100% - 340px);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            pointer-events: none;
+        }
+        #grid-hint {
+            position: absolute;
+            right: 48px;
+            bottom: 48px;
+            z-index: 100;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            color: var(--faint);
+            pointer-events: none;
+        }
+        .tip-bubble {
+            position: absolute;
+            left: 48px;
+            bottom: 28px;
+            z-index: 100;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            color: var(--faint);
+            pointer-events: none;
+        }
+
+        #measure-toggle, #reset-view {
+            position: absolute;
+            z-index: 100;
+            height: 32px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--line-2);
+            border-radius: 4px;
+            background: var(--overlay);
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            transition: border-color 0.18s ease, color 0.18s ease;
+        }
+        #measure-toggle { right: 48px; top: 18px; }
+        #reset-view { left: 48px; bottom: 52px; }
+        #measure-toggle::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--faint);
+            transition: background 0.18s ease;
+        }
+        #measure-toggle.is-on { border-color: var(--accent); }
+        #measure-toggle.is-on::before { background: var(--accent); }
+        #measure-toggle:hover, #reset-view:hover { border-color: var(--muted); }
+        #measure-toggle:focus-visible, #reset-view:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+
+        #board-error {
+            position: absolute;
+            inset: 0;
+            z-index: 80;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            font-family: var(--font-cn);
+            font-size: 14px;
+            color: var(--muted);
+            background: var(--viewport);
+        }
+        .readout-panel {
+            position: absolute;
+            left: 48px;
+            top: 52px;
+            z-index: 100;
+            min-width: 200px;
+            padding: 12px 14px;
+            background: var(--overlay);
+            border: 1px solid var(--line-2);
+            border-radius: var(--radius);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-2);
+        }
+        .readout-title {
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        .readout-row { display: flex; justify-content: space-between; gap: 16px; padding: 3px 0; }
+        .readout-row b { color: var(--text); font-variant-numeric: tabular-nums; font-weight: 500; }
+        #measure-toggle[hidden], #board-error[hidden], #readouts[hidden] {
+            display: none !important;
+        }
+
+        /* ---------- 右侧解析面板 ---------- */
+        #sidebar {
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            min-width: 0;
+            background: var(--panel);
+            border-left: 1px solid var(--line);
+        }
+        .panel-scroll {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 24px 28px 8px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--line-2) transparent;
+            -webkit-overflow-scrolling: touch;
+        }
+        .panel-scroll::-webkit-scrollbar { width: 8px; }
+        .panel-scroll::-webkit-scrollbar-track { background: transparent; }
+        .panel-scroll::-webkit-scrollbar-thumb { border-radius: 999px; background: var(--line-2); }
+        .panel-scroll::-webkit-scrollbar-thumb:hover { background: var(--faint); }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin: 0 0 22px;
+            font-family: var(--font-cn);
+            font-size: 19px;
+            line-height: 1.65;
+            font-weight: 500;
+            color: var(--text);
+        }
+        h1.is-medium { font-size: 17px; line-height: 1.7; }
+        h1.is-long { font-size: 15.5px; line-height: 1.75; font-weight: 400; color: var(--text-2); }
+        h1.is-xlong { font-size: 14.5px; line-height: 1.8; font-weight: 400; color: var(--text-2); }
+
+        .answer-card {
+            margin-bottom: 22px;
+            padding: 15px 17px;
+            background: var(--inset);
+            border: 1px solid var(--line-2);
+            border-radius: var(--radius);
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+            column-gap: 18px;
+            align-items: end;
+        }
+        .answer-card.is-stacked {
+            grid-template-columns: minmax(0, 1fr);
+            row-gap: 12px;
+            align-items: start;
+        }
+        #answer-title {
+            display: block;
+            margin-bottom: 7px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            color: var(--muted);
+        }
+        .answer-card strong {
+            display: block;
+            font-family: var(--font-cn);
+            font-size: 12.5px;
+            font-weight: 400;
+            line-height: 1.55;
+            color: var(--text-2);
+        }
+        .answer-value {
+            min-width: 0;
+            font-size: 34px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--accent);
+            text-align: right;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .answer-value::-webkit-scrollbar { display: none; }
+        .answer-card.is-stacked .answer-value { text-align: left; font-size: 26px; }
+
+        .answer-list { display: grid; min-width: 0; }
+        .answer-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+            gap: 4px 14px;
+            align-items: baseline;
+            padding: 9px 0;
+            border-top: 1px solid var(--line);
+        }
+        .answer-row:first-child { border-top: none; padding-top: 2px; }
+        .answer-row > span {
+            font-family: var(--font-cn);
+            font-size: 12.5px;
+            line-height: 1.55;
+            color: var(--muted);
+            min-width: 0;
+        }
+        .answer-row > b {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent);
+            text-align: right;
+            min-width: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .answer-row > b::-webkit-scrollbar { display: none; }
+
+        #step-container {
+            min-width: 0;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.28s ease, transform 0.28s ease;
+        }
+        #step-container.is-changing { opacity: 0; transform: translateY(6px); }
+
+        .tl-row { display: grid; grid-template-columns: 22px minmax(0, 1fr); column-gap: 14px; }
+        .tl-rail { display: flex; flex-direction: column; align-items: center; }
+        .tl-dot {
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-top: 6px;
+            background: var(--line-2);
+            flex-shrink: 0;
+            transition: background 0.25s ease, box-shadow 0.25s ease;
+        }
+        .tl-line { display: block; width: 1px; flex-grow: 1; background: var(--line-2); margin: 4px 0; }
+        .tl-row:last-child .tl-line { display: none; }
+        .tl-body { padding-bottom: 18px; min-width: 0; }
+        .tl-row:last-child .tl-body { padding-bottom: 4px; }
+        .tl-head { display: flex; align-items: baseline; gap: 10px; }
+        .tl-num { font-family: var(--font-mono); font-size: 11px; color: var(--faint); flex-shrink: 0; }
+        .step-title { font-family: var(--font-cn); font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+        .tl-row.is-done .tl-dot { background: var(--accent-soft); }
+        .tl-row.is-current .tl-dot { background: var(--accent); box-shadow: 0 0 0 4px var(--accent-glow); }
+        .tl-row.is-current .tl-num { color: var(--accent); }
+        .tl-row.is-current .step-title { font-size: 16px; font-weight: 700; color: var(--text); }
+
+        #step-container.is-review .tl-row.is-open .step-title {
+            font-size: 14px;
+            font-weight: 650;
+            color: var(--text);
+        }
+        #step-container.is-review .tl-row.is-open .tl-num { color: var(--accent); }
+        #step-container.is-review .tl-row.is-open .tl-dot {
+            background: var(--accent);
+            box-shadow: none;
+        }
+        #step-container.is-review .step-content {
+            margin-top: 6px;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+        #step-container.is-review .step-content p { margin: 0 0 8px; }
+        #step-container.is-review .tl-body { padding-bottom: 12px; }
+
+        .step-content {
+            margin-top: 12px;
+            font-family: var(--font-cn);
+            font-size: 13.5px;
+            line-height: 1.85;
+            color: var(--text-2);
+        }
+        .step-content p { margin: 0 0 12px; }
+        .step-content p:last-child { margin-bottom: 0; }
+        .step-content ul, .step-content ol { margin: 0 0 12px; padding-left: 1.25em; }
+        .step-content li { margin-bottom: 4px; }
+
+        .step-content mjx-container[display="true"] {
+            max-width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            overscroll-behavior-x: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+        .step-content mjx-container[display="true"].is-scrollable {
+            overflow-x: scroll;
+            padding-bottom: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--line-2) transparent;
+            cursor: grab;
+            touch-action: pan-x;
+        }
+        .step-content mjx-container[display="true"].is-scrollable.is-dragging {
+            cursor: grabbing;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .step-content mjx-container[display="true"].is-scrollable::-webkit-scrollbar {
+            -webkit-appearance: none;
+            height: 8px;
+        }
+        .step-content mjx-container[display="true"].is-scrollable::-webkit-scrollbar-track { background: transparent; }
+        .step-content mjx-container[display="true"].is-scrollable::-webkit-scrollbar-thumb {
+            border-radius: 999px;
+            background: var(--line-2);
+        }
+        .step-content p, .step-content li {
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: var(--line-2) transparent;
+        }
+        .step-content p::-webkit-scrollbar, .step-content li::-webkit-scrollbar { height: 6px; }
+        .step-content p::-webkit-scrollbar-thumb { border-radius: 999px; background: var(--line-2); }
+
+        .nav-bar {
+            flex-shrink: 0;
+            display: flex;
+            gap: 10px;
+            padding: 16px 28px 20px;
+            border-top: 1px solid var(--line);
+        }
+        .btn {
+            height: 44px;
+            padding: 0 20px;
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            font-family: var(--font-cn);
+            font-size: 14px;
+            transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+        }
+        .btn:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+        .btn-prev { background: transparent; border-color: var(--line-2); color: var(--text-2); }
+        .btn-prev:hover:not(:disabled) { border-color: var(--muted); color: var(--text); }
+        .btn-next {
+            flex-grow: 1;
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--on-accent);
+            font-weight: 600;
+            letter-spacing: 0.08em;
+        }
+        .btn-next:hover:not(:disabled) { background: var(--accent-dark); border-color: var(--accent-dark); }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        @media (max-width: 1200px) {
+            .main { grid-template-columns: minmax(0, 1fr) 400px; }
+            .panel-scroll { padding: 20px 20px 8px; }
+            .nav-bar { padding: 14px 20px 18px; }
+            #scene-label { left: 40px; max-width: calc(100% - 300px); }
+            .tip-bubble { left: 40px; }
+            #reset-view { left: 40px; }
+        }
+
+        @media (max-width: 800px) {
+            body { grid-template-rows: 50px minmax(0, 1fr); }
+            .topbar { padding: 0 14px; }
+            .main {
+                grid-template-columns: minmax(0, 1fr);
+                grid-template-rows: 50vh minmax(0, 1fr);
+            }
+            #sidebar { border-left: none; border-top: 1px solid var(--line); }
+            #jxgbox, .jxgbox { height: 50vh; }
+            .panel-scroll { padding: 16px 16px 8px; }
+            .nav-bar { padding: 12px 16px 14px; }
+            .progress i { flex-basis: 24px; }
+            .bracket { width: 14px; height: 14px; }
+            #scene-label { left: 42px; top: 18px; max-width: calc(100% - 200px); }
+            #measure-toggle { right: 42px; top: 14px; height: 28px; }
+            #reset-view { left: 42px; bottom: 44px; height: 28px; }
+            .tip-bubble { left: 42px; bottom: 22px; }
+            .readout-panel { left: 42px; top: 44px; min-width: 160px; font-size: 11px; }
+            h1 { font-size: 16px; }
+            .answer-value { font-size: 26px; }
+            .tl-row.is-current .step-title { font-size: 15px; }
+            .step-content { font-size: 13px; line-height: 1.75; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$','$$']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        console.log('MathJax initial rendering complete');
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsxgraph@1.10.1/distrib/jsxgraphcore.js"></script>
+    <script id="lesson-data" type="application/json">{"lesson": {"meta": "交互解题 · 椭圆重心与内心的面积比", "title": "已知椭圆 $C$ 的离心率为 $\\dfrac{1}{2}$，左、右焦点分别为 $F_1,F_2$。设 $P$ 为 $C$ 上不与椭圆顶点重合的一点，记 $\\triangle PF_1F_2$ 的重心、内心分别为 $G,I$。若 $\\dfrac{|PI|}{|PG|}=\\dfrac{\\sqrt{3}}{2}$，求 $\\triangle PGI$ 与 $\\triangle PF_1F_2$ 的面积之比。", "answerLabel": "面积比", "language": "zh-CN", "answerValue": "$\\dfrac{\\sqrt{2}}{18}$"}, "steps": [{"title": "建立平面直角坐标系", "content": "<p>离心率 $e=\\dfrac{1}{2}$，故 $c=\\dfrac{a}{2}$，$b^{2}=\\dfrac{3}{4}a^{2}$。椭圆为 $\\dfrac{x^{2}}{4}+\\dfrac{y^{2}}{3}=1$。左焦点 $F_1\\left(-1, 0\\right)$，右焦点 $F_2\\left(1, 0\\right)$。设 $P$ 为椭圆上不与顶点重合的一点，$P\\left(\\sqrt{2}, \\dfrac{\\sqrt{6}}{2}\\right)$。</p>", "highlight": ["Axis", "Curve_C", "Point_F1", "Point_F2", "Point_P"]}, {"title": "求重心 G", "content": "<p>$F_1F_2$ 的中点为 $O\\left(0, 0\\right)$。重心 $G$ 在中线 $PO$ 上，且 $PG:GO=2:1$，故</p><p>$$G\\left(\\dfrac{\\sqrt{2}}{3}, \\dfrac{\\sqrt{6}}{6}\\right)=\\left(\\dfrac{x_P}{3},\\dfrac{y_P}{3}\\right).$$</p>", "highlight": ["Curve_C", "Seg_F1F2", "Seg_PO", "Point_F1", "Point_F2", "Point_P", "Point_O", "Point_G"]}, {"title": "求内心 I，得到 GI 平行于焦点轴", "content": "<p>椭圆上 $|PF_1|=a+ex_P$，$|PF_2|=a-ex_P$，周长为 $2a+2c$。按对边加权，并代入 $a=2$、$c=1$，得</p><p>$$I\\left(\\dfrac{\\sqrt{2}}{2}, \\dfrac{\\sqrt{6}}{6}\\right)=\\left(\\dfrac{x_P}{2},\\dfrac{y_P}{3}\\right).$$</p><p>$G$ 与 $I$ 的纵坐标相同，所以 $GI\\parallel F_1F_2$。</p>", "highlight": ["Curve_C", "Seg_F1F2", "Point_P", "Point_G", "Point_I", "Point_F1", "Point_F2", "Seg_GI"]}, {"title": "用比值条件求 x_P", "content": "<p>由 $G,I$ 的坐标，</p><p>$$|PI|^{2}=\\dfrac{x_P^{2}}{4}+\\dfrac{4y_P^{2}}{9},\\qquad |PG|^{2}=\\dfrac{4}{9}\\left(x_P^{2}+y_P^{2}\\right).$$</p><p>题设 $\\dfrac{|PI|}{|PG|}=\\dfrac{\\sqrt{3}}{2}$。两边平方并化简，得 $y_P^{2}=\\dfrac{3}{4}\\,x_P^{2}$。</p><p>代入椭圆 $\\dfrac{x^{2}}{4}+\\dfrac{y^{2}}{3}=1$：$\\dfrac{x_P^{2}}{4}+\\dfrac{y_P^{2}}{3}=1$ 变为 $\\dfrac{x_P^{2}}{2}=1$，故 $x_P^{2}=2$。$P$ 不是顶点。</p>", "highlight": ["Curve_C", "Seg_PI", "Seg_PG", "Seg_GI", "Point_P", "Point_G", "Point_I"]}, {"title": "求两个三角形的面积比", "content": "<p>$GI$ 与 $F_1F_2$ 都水平。$|GI|=\\dfrac{|x_P|}{6}$，$P$ 到直线 $GI$ 的距离为 $\\dfrac{2|y_P|}{3}$，于是</p><p>$$S_{\\triangle PGI}=\\dfrac{|x_P y_P|}{18},\\qquad S_{\\triangle PF_1F_2}=|y_P|.$$</p><p>$y_P\\neq 0$，比值等于 $\\dfrac{|x_P|}{18}$。由 $x_P^{2}=2$ 得 $|x_P|=\\sqrt{2}$，所以</p><p>$$\\dfrac{S_{\\triangle PGI}}{S_{\\triangle PF_1F_2}}=\\dfrac{\\sqrt{2}}{18}=\\dfrac{\\sqrt{2}}{18}.$$</p>", "highlight": ["Curve_C", "Seg_PF1", "Seg_PF2", "Seg_F1F2", "Seg_PG", "Seg_PI", "Seg_GI", "Point_P", "Point_G", "Point_I", "Point_F1", "Point_F2"]}], "model": {"elements": {"Axis": {"type": "axes"}, "Curve_C": {"type": "ellipse", "curve": "C", "color": "curve"}, "Point_F1": {"type": "point", "center": "F1"}, "Point_F2": {"type": "point", "center": "F2"}, "Point_P": {"type": "point", "center": "P"}, "Point_O": {"type": "point", "center": "O"}, "Point_G": {"type": "point", "center": "G"}, "Point_I": {"type": "point", "center": "I"}, "Seg_PF1": {"type": "segment", "a": "P", "b": "F1", "color": "aux"}, "Seg_PF2": {"type": "segment", "a": "P", "b": "F2", "color": "aux"}, "Seg_F1F2": {"type": "segment", "a": "F1", "b": "F2", "color": "normal"}, "Seg_PO": {"type": "segment", "a": "P", "b": "O", "color": "aux", "dashed": true}, "Seg_PG": {"type": "segment", "a": "P", "b": "G", "color": "emphasis"}, "Seg_PI": {"type": "segment", "a": "P", "b": "I", "color": "emphasis"}, "Seg_GI": {"type": "segment", "a": "G", "b": "I", "color": "emphasis"}}, "points": {"I": [0.7071067811865476, 0.408248290463863], "F1": [-1.0, 0.0], "F2": [1.0, 0.0], "P": [1.4142135623730951, 1.224744871391589], "O": [0.0, 0.0], "G": [0.4714045207910317, 0.408248290463863]}, "plot_curves": {"C": {"type": "ellipse", "cx": 0.0, "cy": 0.0, "rx": 2.0, "ry": 1.7320508075688772}}, "frame": {"xmin": -4.0, "xmax": 4.0, "ymin": -3.0, "ymax": 3.0}}}</script>
+</head>
+<body>
+
+    <a class="skip-link" id="skip-link" href="#step-container">跳到解题步骤</a>
+
+    <header class="topbar">
+        <div class="crumbs">
+            <a class="back-link" id="back-link" href="../../index.html">← 题目列表</a>
+            <span class="sep">/</span>
+            <span id="lesson-meta">交互解题</span>
+        </div>
+        <div class="topbar-right">
+            <button type="button" id="theme-toggle" class="theme-toggle" aria-pressed="false">浅色</button>
+            <div class="progress" id="progress-bars" aria-hidden="true"></div>
+            <span class="topbar-step" id="step-indicator"></span>
+        </div>
+    </header>
+
+    <main class="main">
+        <div id="board-wrap" role="img" aria-label="解析几何画板">
+            <span class="bracket tl" aria-hidden="true"></span>
+            <span class="bracket tr" aria-hidden="true"></span>
+            <span class="bracket bl" aria-hidden="true"></span>
+            <span class="bracket br" aria-hidden="true"></span>
+            <span id="scene-label"></span>
+            <span class="tip-bubble" id="interaction-tip">拖动平移 · 滚轮缩放</span>
+            <span id="grid-hint"></span>
+            <div id="jxgbox" role="img" aria-label="解析几何画板" style="width:100%;height:100%;"></div>
+            <div id="board-error" hidden></div>
+            <div id="readouts" class="readout-panel" hidden></div>
+            <button type="button" id="reset-view">复位视野</button>
+            <button type="button" id="measure-toggle" hidden>长度标注：开</button>
+        </div>
+
+        <aside id="sidebar" aria-label="解析几何解题步骤面板">
+            <div class="panel-scroll" id="panel-scroll">
+                <div class="section-label">PROBLEM</div>
+                <h1 id="lesson-title"></h1>
+
+                <section class="answer-card" id="answer-card" aria-label="最终答案">
+                    <div>
+                        <span id="answer-title">最终答案</span>
+                        <strong id="answer-summary"></strong>
+                    </div>
+                    <div class="answer-value" id="answer-value"></div>
+                </section>
+
+                <div id="step-container" role="region" aria-live="polite" tabindex="-1"></div>
+            </div>
+            <div class="nav-bar">
+                <button id="prev-btn" class="btn btn-prev" type="button" aria-controls="step-container" disabled>上一步</button>
+                <button id="next-btn" class="btn btn-next" type="button" aria-controls="step-container">下一步</button>
+            </div>
+        </aside>
+    </main>
+
+    <script>
+        const DATA = JSON.parse(document.getElementById('lesson-data').textContent);
+        const lesson = DATA.lesson || {};
+        const steps = DATA.steps || [];
+        const model = DATA.model || {};
+
+        const UI_ZH = {
+            skipToSteps: "跳到解题步骤",
+            backToList: "← 题目列表",
+            sidebarLabel: "解析几何解题步骤面板",
+            answerCardLabel: "最终答案",
+            answerTitle: "最终答案",
+            solutionCardLabel: "解题步骤",
+            sceneLabel: "解析几何交互画板",
+            interactionTip: "拖动平移 · 滚轮缩放",
+            previous: "上一步",
+            next: "下一步",
+            finish: "完成",
+            finished: "已完成",
+            stepTemplate: "步骤 {current} / {total}",
+            reviewLabel: "完整过程",
+            finishAria: "显示完整解题过程",
+            finishedAria: "解题已完成，当前显示全部步骤",
+            collapseAria: "收起完整过程",
+            nextAriaTemplate: "进入步骤 {step}",
+            previousAriaTemplate: "返回步骤 {step}",
+            firstStepAria: "已经是第一步",
+            measureToggleOn: "长度标注：开",
+            measureToggleOff: "长度标注：关",
+            gridUnit: "1 格 = 1 个单位",
+            themeLight: "浅色",
+            themeDark: "深色",
+            themeToggle: "切换浅色 / 深色主题",
+            resetView: "复位视野",
+            standardMark: "标准位",
+            boardError: "图形加载失败"
+        };
+        const ui = { pageTitle: lesson.title, ...UI_ZH, ...(lesson.ui || {}) };
+
+        const COLORS = {
+          frame: '#98A2AE', aux: '#8B96A5', emphasis: '#2563EB',
+          normal: '#3B82F6', curve: '#2563EB', point: '#1D4ED8'
+        };
+        function frameBB(f) {
+          f = f || {};
+          return [f.xmin ?? -8, f.ymax ?? 5, f.xmax ?? 8, f.ymin ?? -5];
+        }
+        function boardPx() {
+          const el = document.getElementById('jxgbox');
+          const w = (board && board.canvasWidth) || (el && el.clientWidth) || 0;
+          const h = (board && board.canvasHeight) || (el && el.clientHeight) || 0;
+          return [w, h];
+        }
+        // Expand the requested window so 1 x-unit = 1 y-unit, never crop.
+        function fitBB(bb) {
+          let xmin = Math.min(bb[0], bb[2]), xmax = Math.max(bb[0], bb[2]);
+          let ymin = Math.min(bb[1], bb[3]), ymax = Math.max(bb[1], bb[3]);
+          const mx = (xmax - xmin) * 0.08 || 0.5;
+          const my = (ymax - ymin) * 0.08 || 0.5;
+          xmin -= mx; xmax += mx; ymin -= my; ymax += my;
+          const [w, h] = boardPx();
+          if (w > 1 && h > 1) {
+            const unit = Math.max((xmax - xmin) / w, (ymax - ymin) / h);
+            const cx = (xmin + xmax) / 2, cy = (ymin + ymax) / 2;
+            xmin = cx - unit * w / 2;
+            xmax = cx + unit * w / 2;
+            ymin = cy - unit * h / 2;
+            ymax = cy + unit * h / 2;
+          }
+          return [xmin, ymax, xmax, ymin];
+        }
+        function setBox(bb) {
+          if (!board) return;
+          const raw = Array.isArray(bb) ? bb : frameBB(bb);
+          board.setBoundingBox(fitBB(raw), true);
+        }
+        function jsExpr(s) {
+          return String(s)
+            .replace(/(?<!Math\.)\bcos\b/g, 'Math.cos')
+            .replace(/(?<!Math\.)\bsin\b/g, 'Math.sin')
+            .replace(/(?<!Math\.)\btan\b/g, 'Math.tan')
+            .replace(/(?<!Math\.)\bsqrt\b/g, 'Math.sqrt')
+            .replace(/(?<!Math\.)\bpi\b/g, 'Math.PI')
+            .replace(/(?<!Math\.)\babs\b/g, 'Math.abs');
+        }
+        function viewBox() {
+          const bb = board && board.getBoundingBox ? board.getBoundingBox() : [-20, 15, 20, -15];
+          return {
+            xmin: Math.min(bb[0], bb[2]), xmax: Math.max(bb[0], bb[2]),
+            ymin: Math.min(bb[1], bb[3]), ymax: Math.max(bb[1], bb[3])
+          };
+        }
+        function asinh(x) {
+          x = Number(x);
+          return Math.log(x + Math.sqrt(x * x + 1));
+        }
+        function acosh(x) {
+          x = Math.max(1, Number(x));
+          return Math.log(x + Math.sqrt(x * x - 1));
+        }
+        function hyperbolaSpan(recipe) {
+          return function () {
+            const v = viewBox();
+            const a = Math.abs(recipe.a) || 1, b = Math.abs(recipe.b) || 1;
+            const cx = recipe.cx || 0, cy = recipe.cy || 0, pad = 1.08;
+            let t;
+            if (recipe.transverse === 'y') {
+              t = Math.max(
+                asinh(Math.max(Math.abs(v.xmin - cx), Math.abs(v.xmax - cx)) * pad / b),
+                acosh(Math.max(Math.abs(v.ymin - cy), Math.abs(v.ymax - cy)) * pad / a)
+              );
+            } else {
+              t = Math.max(
+                asinh(Math.max(Math.abs(v.ymin - cy), Math.abs(v.ymax - cy)) * pad / b),
+                acosh(Math.max(Math.abs(v.xmin - cx), Math.abs(v.xmax - cx)) * pad / a)
+              );
+            }
+            if (!isFinite(t) || t < 2.5) t = 2.5;
+            return Math.min(t, 12);
+          };
+        }
+        function parabolaSpan(recipe) {
+          return function () {
+            const v = viewBox();
+            const p = Math.abs(recipe.p) || 1;
+            const vx = recipe.vx || 0, vy = recipe.vy || 0;
+            const dir = recipe.direction === '-' ? -1 : 1;
+            let t;
+            if (recipe.axis === 'x') {
+              t = Math.max(Math.abs(v.ymin - vy), Math.abs(v.ymax - vy));
+              const reach = dir > 0 ? Math.max(0, v.xmax - vx) : Math.max(0, vx - v.xmin);
+              t = Math.max(t, Math.sqrt(Math.max(0, 2 * p * reach)));
+            } else {
+              t = Math.max(Math.abs(v.xmin - vx), Math.abs(v.xmax - vx));
+              const reach = dir > 0 ? Math.max(0, v.ymax - vy) : Math.max(0, vy - v.ymin);
+              t = Math.max(t, Math.sqrt(Math.max(0, 2 * p * reach)));
+            }
+            if (!isFinite(t) || t < 8) t = 8;
+            return Math.min(t + 2, 400);
+          };
+        }
+        function drawPlot(board, recipe, opts) {
+          const vis = opts.visible !== false;
+          const col = opts.color || COLORS.curve;
+          const w = opts.strokeWidth || 1.5;
+          const dash = opts.dash || 0;
+          const attr = {
+            visible: vis, strokeColor: col, strokeWidth: w, highlight: false, dash: dash,
+            numberPoints: 360
+          };
+          if (recipe.type === 'ellipse') {
+            return board.create('curve', [
+              function (t) { return recipe.cx + recipe.rx * Math.cos(t); },
+              function (t) { return recipe.cy + recipe.ry * Math.sin(t); },
+              0, 2 * Math.PI
+            ], attr);
+          }
+          if (recipe.type === 'line') {
+            const {a, b, c} = recipe;
+            return board.create('line', [c, a, b], attr);
+          }
+          if (recipe.type === 'hyperbola') {
+            const span = hyperbolaSpan(recipe);
+            const t0 = function () { return -span(); };
+            const t1 = function () { return span(); };
+            if (recipe.transverse === 'y') {
+              const gx = (t) => recipe.cx + recipe.b * Math.sinh(t);
+              const upper = board.create('curve', [gx, (t) => recipe.cy + recipe.a * Math.cosh(t), t0, t1], attr);
+              const lower = board.create('curve', [gx, (t) => recipe.cy - recipe.a * Math.cosh(t), t0, t1], attr);
+              return { setAttribute(o) { upper.setAttribute(o); lower.setAttribute(o); }, upper, lower };
+            }
+            const g = (t) => recipe.cy + recipe.b * Math.sinh(t);
+            const left = board.create('curve', [(t) => recipe.cx - recipe.a * Math.cosh(t), g, t0, t1], attr);
+            const right = board.create('curve', [(t) => recipe.cx + recipe.a * Math.cosh(t), g, t0, t1], attr);
+            return { setAttribute(o) { left.setAttribute(o); right.setAttribute(o); }, left, right };
+          }
+          if (recipe.type === 'parabola') {
+            const p = recipe.p, vx = recipe.vx, vy = recipe.vy;
+            const axis = recipe.axis, dir = recipe.direction === '-' ? -1 : 1;
+            const span = parabolaSpan(recipe);
+            return board.create('curve', [
+              function (t) { return axis === 'x' ? vx + dir * t * t / (2 * p) : vx + t; },
+              function (t) { return axis === 'x' ? vy + t : vy + dir * t * t / (2 * p); },
+              function () { return -span(); },
+              function () { return span(); }
+            ], attr);
+          }
+          if (recipe.type === 'parametric') {
+            const xf = new Function('t', 'return (' + jsExpr(recipe.x) + ');');
+            const yf = new Function('t', 'return (' + jsExpr(recipe.y) + ');');
+            return board.create('curve', [(t) => xf(t), (t) => yf(t), recipe.tmin, recipe.tmax], attr);
+          }
+          if (recipe.type === 'polar') {
+            const rf = new Function('theta', 'return (' + jsExpr(recipe.r) + ');');
+            return board.create('curve', [
+              (t) => rf(t) * Math.cos(t), (t) => rf(t) * Math.sin(t), recipe.tmin, recipe.tmax
+            ], attr);
+          }
+          if (recipe.type === 'implicit') {
+            return board.create('implicitcurve', [recipe.expr], attr);
+          }
+        }
+
+        const CURVE_TYPES = ['circle', 'ellipse', 'hyperbola', 'parabola', 'implicit', 'polar', 'parametric'];
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let board = null;
+        let switchable = {};
+        let resident = {};
+        let namedPts = {};
+        let currentStep = 0;
+        let finished = false;
+        let measuresOn = true;
+
+        function dummy() {
+            return { setAttribute: function () {} };
+        }
+        function colorOf(el, fallback) {
+            return (el && el.color && COLORS[el.color]) || COLORS[fallback];
+        }
+        function ptCoords(name) {
+            const pts = model.points || {};
+            return pts[name];
+        }
+        function currentTheme() {
+            return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        }
+        function syncThemeToggle() {
+            const btn = document.getElementById('theme-toggle');
+            const dark = currentTheme() === 'dark';
+            btn.textContent = dark ? ui.themeDark : ui.themeLight;
+            btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+            btn.setAttribute('aria-label', ui.themeToggle);
+        }
+        function applyTheme(theme) {
+            const next = theme === 'dark' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            try { localStorage.setItem('analytical-geometry-theme', next); } catch (_) {}
+            syncThemeToggle();
+        }
+
+        function initializeLessonText() {
+            document.documentElement.lang = lesson.language || 'zh-CN';
+            document.title = ui.pageTitle || lesson.title || '解析几何交互教学';
+            document.getElementById('skip-link').textContent = ui.skipToSteps;
+            document.getElementById('back-link').textContent = ui.backToList;
+            document.getElementById('sidebar').setAttribute('aria-label', ui.sidebarLabel);
+            document.getElementById('answer-card').setAttribute('aria-label', ui.answerCardLabel);
+            document.getElementById('answer-title').textContent = ui.answerTitle;
+            document.getElementById('step-container').setAttribute('aria-label', ui.solutionCardLabel);
+            document.getElementById('board-wrap').setAttribute('aria-label', ui.sceneLabel);
+            document.getElementById('jxgbox').setAttribute('aria-label', ui.sceneLabel);
+            document.getElementById('interaction-tip').textContent = ui.interactionTip;
+            document.getElementById('grid-hint').textContent = ui.gridUnit;
+            document.getElementById('prev-btn').textContent = ui.previous;
+            document.getElementById('reset-view').textContent = ui.resetView;
+            document.getElementById('lesson-meta').textContent = lesson.meta || '';
+            syncThemeToggle();
+
+            const titleEl = document.getElementById('lesson-title');
+            titleEl.innerHTML = lesson.title || '';
+            const titleLen = (lesson.title || '').replace(/<[^>]+>/g, '').length;
+            titleEl.className = titleLen > 240 ? 'is-xlong'
+                : titleLen > 130 ? 'is-long'
+                : titleLen > 55 ? 'is-medium' : '';
+
+            renderAnswer();
+        }
+
+        function renderAnswer() {
+            const card = document.getElementById('answer-card');
+            const summary = document.getElementById('answer-summary');
+            const value = document.getElementById('answer-value');
+            const answers = Array.isArray(lesson.answers) ? lesson.answers : null;
+
+            if (answers && answers.length) {
+                document.getElementById('answer-title').textContent =
+                    lesson.answerLabel ? `${ui.answerTitle} · ${lesson.answerLabel}` : ui.answerTitle;
+                summary.innerHTML = '';
+                summary.hidden = true;
+                value.innerHTML = '';
+                const list = document.createElement('div');
+                list.className = 'answer-list';
+                list.innerHTML = answers.map((a) =>
+                    `<div class="answer-row"><span>${a.label || ''}</span><b>${a.value || ''}</b></div>`
+                ).join('');
+                value.appendChild(list);
+                card.classList.add('is-stacked');
+                return;
+            }
+
+            summary.hidden = false;
+            summary.innerHTML = lesson.answerLabel || '';
+            value.innerHTML = lesson.answerValue || '';
+            const valueLen = (lesson.answerValue || '').replace(/<[^>]+>/g, '').length;
+            card.classList.toggle('is-stacked', valueLen > 28);
+        }
+
+        function markScrollableMath(root) {
+            const blocks = root.querySelectorAll('.step-content mjx-container[display="true"]');
+            blocks.forEach((el) => {
+                const overflowing = el.scrollWidth - el.clientWidth > 1;
+                el.classList.toggle('is-scrollable', overflowing);
+            });
+        }
+
+        function typesetMath(container) {
+            const run = () => {
+                if (window.MathJax && window.MathJax.typesetPromise) {
+                    window.MathJax.typesetPromise([container])
+                        .then(() => markScrollableMath(container))
+                        .catch((err) => console.log(err));
+                } else {
+                    setTimeout(run, 120);
+                }
+            };
+            run();
+        }
+
+        function enableDragScroll(scope) {
+            let dragEl = null;
+            let startX = 0;
+            let startScroll = 0;
+            let pointerId = null;
+            let moved = false;
+
+            function findScrollable(target) {
+                let el = target;
+                while (el && el !== scope) {
+                    if (el.scrollWidth - el.clientWidth > 1) {
+                        const ox = getComputedStyle(el).overflowX;
+                        if (ox === 'auto' || ox === 'scroll') return el;
+                    }
+                    el = el.parentElement;
+                }
+                return null;
+            }
+
+            scope.addEventListener('pointerdown', (e) => {
+                if (e.pointerType === 'touch') return;
+                const el = findScrollable(e.target);
+                if (!el) return;
+                dragEl = el;
+                startX = e.clientX;
+                startScroll = el.scrollLeft;
+                pointerId = e.pointerId;
+                moved = false;
+                el.classList.add('is-dragging');
+                try { el.setPointerCapture(pointerId); } catch (_) {}
+            });
+
+            scope.addEventListener('pointermove', (e) => {
+                if (!dragEl) return;
+                const dx = e.clientX - startX;
+                if (Math.abs(dx) > 2) moved = true;
+                dragEl.scrollLeft = startScroll - dx;
+                e.preventDefault();
+            });
+
+            function end() {
+                if (!dragEl) return;
+                try { dragEl.releasePointerCapture(pointerId); } catch (_) {}
+                dragEl.classList.remove('is-dragging');
+                dragEl = null;
+                pointerId = null;
+            }
+
+            scope.addEventListener('pointerup', end);
+            scope.addEventListener('pointercancel', end);
+            scope.addEventListener('lostpointercapture', end);
+            scope.addEventListener('click', (e) => {
+                if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; }
+            }, true);
+        }
+
+        function goToStep(index) {
+            finished = false;
+            currentStep = Math.max(0, Math.min(index, Math.max(0, steps.length - 1)));
+            updateUI();
+        }
+
+        function highlightKeysForView() {
+            if (!finished) return (steps[currentStep] && steps[currentStep].highlight) || [];
+            const seen = new Set();
+            const keys = [];
+            steps.forEach((st) => {
+                (st.highlight || []).forEach((key) => {
+                    if (seen.has(key)) return;
+                    seen.add(key);
+                    keys.push(key);
+                });
+            });
+            return keys;
+        }
+
+        function applyHighlight(keys) {
+            const elements = model.elements || {};
+            Object.keys(switchable).forEach((k) => {
+                switchable[k].setAttribute({ visible: false });
+            });
+            (keys || []).forEach((k) => {
+                const obj = switchable[k];
+                if (!obj) return;
+                const el = elements[k];
+                if (el && el.type === 'measure' && !measuresOn) return;
+                obj.setAttribute({ visible: true });
+            });
+        }
+
+        function applyStepBox(step) {
+            if (!board || !step || !step.boundingbox) return;
+            setBox(step.boundingbox);
+        }
+
+        function focusCoords(el) {
+            const recipe = (model.plot_curves || {})[el.of];
+            if (!recipe) return null;
+            const which = el.which;
+            if (recipe.type === 'ellipse') {
+                const cx = recipe.cx, cy = recipe.cy, rx = recipe.rx, ry = recipe.ry;
+                const c = Math.sqrt(Math.abs(rx * rx - ry * ry));
+                if (rx >= ry) {
+                    if (which === 'right') return [cx + c, cy];
+                    if (which === 'left') return [cx - c, cy];
+                } else {
+                    if (which === 'upper') return [cx, cy + c];
+                    if (which === 'lower') return [cx, cy - c];
+                }
+            }
+            if (recipe.type === 'hyperbola') {
+                const cx = recipe.cx, cy = recipe.cy, a = recipe.a, b = recipe.b;
+                const c = Math.sqrt(a * a + b * b);
+                if (recipe.transverse === 'y') {
+                    if (which === 'upper') return [cx, cy + c];
+                    if (which === 'lower') return [cx, cy - c];
+                } else {
+                    if (which === 'right') return [cx + c, cy];
+                    if (which === 'left') return [cx - c, cy];
+                }
+            }
+            if (recipe.type === 'parabola') {
+                const s = recipe.direction === '-' ? -1 : 1;
+                const d = recipe.p / 2;
+                if (recipe.axis === 'x') return [recipe.vx + s * d, recipe.vy];
+                return [recipe.vx, recipe.vy + s * d];
+            }
+            return null;
+        }
+
+        function createSwitchable(el) {
+            const vis = false;
+            const col = colorOf(el, 'emphasis');
+            const w = 2.5;
+            const plots = model.plot_curves || {};
+            const original = !!(el.curve && plots[el.curve]);
+            const dash = (function () {
+                if (el.dashed === true) return 2;
+                if (el.dashed === false) return 0;
+                if (el.color === 'aux') return 2;
+                if (original) return 0;
+                if (el.type === 'line' || el.type === 'segment' || el.type === 'directrix' || el.type === 'arrow') return 2;
+                return 0;
+            })();
+            const lineAttr = {
+                visible: vis, strokeColor: col, strokeWidth: w,
+                highlight: false, dash: dash, fixed: true, lastArrow: false
+            };
+
+            if (el.type === 'point') {
+                const src = namedPts[el.center];
+                if (model.draggable && el.center === model.draggable.point && src) {
+                    return {
+                        setAttribute: function (o) {
+                            if (!src.setAttribute) return;
+                            if (o.visible === true) {
+                                src.setAttribute({ size: 5, strokeColor: col, fillColor: col });
+                            } else if (o.visible === false) {
+                                src.setAttribute({
+                                    size: 4,
+                                    strokeColor: COLORS.emphasis,
+                                    fillColor: COLORS.emphasis
+                                });
+                            }
+                        }
+                    };
+                }
+                if (src && typeof src.X === 'function') {
+                    return board.create('point', [
+                        function () { return src.X(); },
+                        function () { return src.Y(); }
+                    ], {
+                        name: '', withLabel: false, size: 5,
+                        strokeColor: col, fillColor: col,
+                        fixed: true, highlight: false, visible: vis
+                    });
+                }
+                const xy = ptCoords(el.center);
+                if (!xy) return dummy();
+                return board.create('point', xy, {
+                    name: '', withLabel: false, size: 5,
+                    strokeColor: col, fillColor: col,
+                    fixed: true, highlight: false, visible: vis
+                });
+            }
+            if (el.type === 'line') {
+                if (el.a != null && el.b != null) {
+                    const A = namedPts[el.a] || ptCoords(el.a);
+                    const B = namedPts[el.b] || ptCoords(el.b);
+                    if (!A || !B) return dummy();
+                    return board.create('line', [A, B], lineAttr);
+                }
+                if (el.curve && plots[el.curve]) {
+                    return drawPlot(board, plots[el.curve], {
+                        visible: vis, color: col, strokeWidth: w, dash: dash
+                    }) || dummy();
+                }
+                return dummy();
+            }
+            if (el.type === 'segment') {
+                const A = namedPts[el.a] || ptCoords(el.a);
+                const B = namedPts[el.b] || ptCoords(el.b);
+                if (!A || !B) return dummy();
+                return board.create('segment', [A, B], lineAttr);
+            }
+            if (CURVE_TYPES.indexOf(el.type) !== -1) {
+                if (!el.curve || !plots[el.curve]) return dummy();
+                return drawPlot(board, plots[el.curve], {
+                    visible: vis, color: col, strokeWidth: w, dash: dash
+                }) || dummy();
+            }
+            if (el.type === 'axes') return dummy();
+            if (el.type === 'focus') {
+                const xy = focusCoords(el);
+                if (!xy) return dummy();
+                return board.create('point', xy, {
+                    name: '', withLabel: false, size: 5,
+                    strokeColor: col, fillColor: col,
+                    fixed: true, highlight: false, visible: vis
+                });
+            }
+            if (el.type === 'directrix') {
+                if (el.a != null && el.b != null && el.c != null) {
+                    return board.create('line', [el.c, el.a, el.b], lineAttr);
+                }
+                return dummy();
+            }
+            if (el.type === 'arrow') {
+                const o = ptCoords(el.origin);
+                if (!o || !el.dir) return dummy();
+                const d = el.dir;
+                const mag = Math.hypot(d[0], d[1]) || 1;
+                const len = el.length || 1;
+                const end = [o[0] + d[0] / mag * len, o[1] + d[1] / mag * len];
+                return board.create('arrow', [o, end], lineAttr);
+            }
+            if (el.type === 'measure') {
+                const A = namedPts[el.a] || ptCoords(el.a);
+                const B = namedPts[el.b] || ptCoords(el.b);
+                if (!A || !B) return dummy();
+                const xOf = (p) => (typeof p.X === 'function' ? p.X() : p[0]);
+                const yOf = (p) => (typeof p.Y === 'function' ? p.Y() : p[1]);
+                const label = '$' + (el.label != null ? el.label : '') + '$';
+                return board.create('text', [
+                    function () { return (xOf(A) + xOf(B)) / 2; },
+                    function () { return (yOf(A) + yOf(B)) / 2; },
+                    label
+                ], {
+                    visible: vis, color: COLORS.emphasis, fontSize: 14,
+                    highlight: false, parse: true, fixed: true, anchorX: 'middle'
+                });
+            }
+            if (el.type === 'locus') return dummy();
+            return dummy();
+        }
+
+        function parseT0(v) {
+            if (v == null || v === '') return 0;
+            if (typeof v === 'number' && Number.isFinite(v)) return v;
+            try {
+                const n = Function('"use strict"; return (' + jsExpr(String(v)) + ');')();
+                return Number.isFinite(n) ? n : 0;
+            } catch (_) {
+                const n = Number(v);
+                return Number.isFinite(n) ? n : 0;
+            }
+        }
+        function formatNum(x) {
+            if (x == null || !Number.isFinite(Number(x))) return '—';
+            return String(Math.round(Number(x) * 1e4) / 1e4);
+        }
+        function liveXY(name) {
+            const obj = namedPts[name];
+            if (obj && typeof obj.X === 'function') return [obj.X(), obj.Y()];
+            return (model.points || {})[name] || (model.mathPoints || {})[name];
+        }
+        function distXY(a, b) {
+            if (!a || !b) return null;
+            return Math.hypot(a[0] - b[0], a[1] - b[1]);
+        }
+        function gliderHost(obj) {
+            if (!obj) return null;
+            if (typeof obj.elType === 'string') return obj;
+            if (obj.right && typeof obj.right.elType === 'string') return obj.right;
+            return null;
+        }
+        function initialDragXY(dg) {
+            const t0 = parseT0(dg.t0 != null ? dg.t0 : dg.t);
+            const on = dg.on;
+            if (typeof on === 'string') {
+                const recipe = (model.plot_curves || {})[on];
+                if (recipe && recipe.rx != null && recipe.ry != null) {
+                    return [
+                        recipe.cx + recipe.rx * Math.cos(t0),
+                        recipe.cy + recipe.ry * Math.sin(t0)
+                    ];
+                }
+            }
+            return liveXY(dg.point) || [0, 0];
+        }
+        function lineABC(r) {
+            if (r.a != null && r.b != null && r.c != null) return [r.a, r.b, r.c];
+            const line = r.line;
+            if (typeof line === 'string') {
+                const rec = (model.plot_curves || {})[line];
+                if (rec && rec.a != null) return [rec.a, rec.b, rec.c];
+            }
+            if (Array.isArray(line) && line.length === 2) {
+                const A = liveXY(line[0]), B = liveXY(line[1]);
+                if (!A || !B) return null;
+                return [A[1] - B[1], B[0] - A[0], A[0] * B[1] - B[0] * A[1]];
+            }
+            return null;
+        }
+        function computeReadout(r) {
+            if (r.type === 'length' || (r.type === 'chord_length' && r.pts && r.pts.length >= 2)) {
+                return distXY(liveXY(r.pts[0]), liveXY(r.pts[1]));
+            }
+            if (r.type === 'chord_length') {
+                return distXY(liveXY('A'), liveXY('B'));
+            }
+            if (r.type === 'distance_point_line') {
+                const P = liveXY(r.point || (r.pts && r.pts[0]));
+                const abc = lineABC(r);
+                if (!P || !abc) return null;
+                const [a, b, c] = abc;
+                return Math.abs(a * P[0] + b * P[1] + c) / (Math.hypot(a, b) || 1);
+            }
+            if (r.type === 'eccentricity') {
+                const rec = (model.plot_curves || {})[r.curve];
+                if (!rec || rec.rx == null || rec.ry == null) return null;
+                const rx = Math.abs(rec.rx), ry = Math.abs(rec.ry);
+                return Math.sqrt(Math.abs(rx * rx - ry * ry)) / (Math.max(rx, ry) || 1);
+            }
+            if (r.type === 'area_triangle' && r.pts && r.pts.length >= 3) {
+                const A = liveXY(r.pts[0]), B = liveXY(r.pts[1]), C = liveXY(r.pts[2]);
+                if (!A || !B || !C) return null;
+                return Math.abs((B[0] - A[0]) * (C[1] - A[1]) - (B[1] - A[1]) * (C[0] - A[0])) / 2;
+            }
+            return null;
+        }
+        function updateDependent(dg) {
+            (dg.dependent || []).forEach((d) => {
+                const obj = namedPts[d.name];
+                if (!obj || !d.of || d.of.length < 2) return;
+                const A = liveXY(d.of[0]), B = liveXY(d.of[1]);
+                if (!A || !B) return;
+                let xy = null;
+                if (d.kind === 'midpoint') {
+                    xy = [(A[0] + B[0]) / 2, (A[1] + B[1]) / 2];
+                } else if (d.kind === 'ratio') {
+                    const t = parseT0(d.t);
+                    xy = [A[0] + t * (B[0] - A[0]), A[1] + t * (B[1] - A[1])];
+                }
+                if (xy && obj.moveTo) obj.moveTo(xy, 0);
+            });
+        }
+        function ellipseParamT(xy, recipe) {
+            if (!xy || !recipe || recipe.rx == null || recipe.ry == null) return null;
+            return Math.atan2((xy[1] - recipe.cy) / recipe.ry, (xy[0] - recipe.cx) / recipe.rx);
+        }
+        function renderReadouts(dg) {
+            const panel = document.getElementById('readouts');
+            if (!panel || !dg) return;
+            const t0 = parseT0(dg.t0 != null ? dg.t0 : dg.t);
+            let atStd = false;
+            if (typeof dg.on === 'string') {
+                const t = ellipseParamT(liveXY(dg.point), (model.plot_curves || {})[dg.on]);
+                if (t != null) {
+                    atStd = Math.abs(t - t0) / Math.max(1, Math.abs(t0)) < 0.02;
+                }
+            }
+            const rows = (dg.readouts || []).map((r) => {
+                const val = computeReadout(r);
+                return `<div class="readout-row"><span>${r.label || ''}</span><b>${formatNum(val)}</b></div>`;
+            });
+            const mark = atStd ? ((ui.standardMark || '标准位') + ' ✓') : '';
+            const title = [dg.standardLabel || '', mark].filter(Boolean).join(' · ');
+            panel.innerHTML =
+                (title ? `<div class="readout-title">${title}</div>` : '') + rows.join('');
+        }
+        function setupDraggable() {
+            const dg = model.draggable;
+            if (!dg || !board) return;
+            document.getElementById('readouts').hidden = false;
+            board.sliderValues = board.sliderValues || {};
+
+            const xy0 = initialDragXY(dg);
+            let host = null;
+            if (typeof dg.on === 'string') {
+                host = gliderHost(resident[dg.on]);
+            } else if (Array.isArray(dg.on) && dg.on.length === 2) {
+                const A = namedPts[dg.on[0]], B = namedPts[dg.on[1]];
+                if (A && B) {
+                    host = board.create('segment', [A, B], {
+                        visible: false, strokeOpacity: 0, highlight: false, fixed: true
+                    });
+                }
+            }
+
+            const attr = {
+                name: dg.point,
+                size: 4,
+                strokeColor: COLORS.emphasis,
+                fillColor: COLORS.emphasis,
+                fixed: false,
+                highlight: true,
+                label: { fontSize: 14 }
+            };
+            if (host) {
+                namedPts[dg.point] = board.create('glider', [xy0[0], xy0[1], host], attr);
+            } else {
+                namedPts[dg.point] = board.create('point', xy0, attr);
+            }
+            if (namedPts[dg.point].setPosition) {
+                namedPts[dg.point].setPosition(1, xy0);
+            }
+
+            const frame = model.frame || {};
+            const xmin = frame.xmin ?? -8, ymax = frame.ymax ?? 5;
+            (dg.sliders || []).forEach((s, i) => {
+                const sl = board.create('slider', [
+                    [xmin + 0.5, ymax - 0.6 - i * 0.5],
+                    [xmin + 3, ymax - 0.6 - i * 0.5],
+                    [s.min, s.value, s.max]
+                ], { name: s.label || s.name });
+                const apply = () => { board.sliderValues[s.name] = sl.Value(); };
+                apply();
+                sl.on('drag', apply);
+            });
+
+            let inside = false;
+            const onUpdate = () => {
+                if (inside) return;
+                inside = true;
+                try {
+                    updateDependent(dg);
+                    renderReadouts(dg);
+                } finally {
+                    inside = false;
+                }
+            };
+            board.on('update', onUpdate);
+            onUpdate();
+        }
+
+        function initBoard() {
+            try {
+                if (!window.JXG || !JXG.JSXGraph) throw new Error('JSXGraph missing');
+                if (JXG.Options && JXG.Options.point) JXG.Options.point.fixed = true;
+                board = JXG.JSXGraph.initBoard('jxgbox', {
+                    boundingbox: frameBB(model.frame),
+                    keepaspectratio: true,
+                    axis: true,
+                    grid: true,
+                    showCopyright: false,
+                    showNavigation: true,
+                    pan: { enabled: true, needShift: false, needTwoFingers: false },
+                    zoom: {
+                        enabled: true,
+                        wheel: false,
+                        needShift: false,
+                        factorX: 1.1,
+                        factorY: 1.1,
+                        min: 0.25,
+                        max: 8
+                    }
+                });
+
+                const plotCurves = model.plot_curves || {};
+                Object.keys(plotCurves).forEach((key) => {
+                    resident[key] = drawPlot(board, plotCurves[key], {
+                        strokeWidth: 1, color: COLORS.frame, visible: true
+                    });
+                });
+
+                const dragName = model.draggable ? model.draggable.point : null;
+                Object.keys(model.points || {}).forEach((name) => {
+                    if (name === dragName) return;
+                    const xy = model.points[name];
+                    namedPts[name] = board.create('point', xy, {
+                        name: name, size: 2,
+                        strokeColor: COLORS.point, fillColor: COLORS.point,
+                        fixed: true, highlight: false, label: { fontSize: 14 }
+                    });
+                });
+
+                if (model.draggable) setupDraggable();
+
+                const elements = model.elements || {};
+                Object.keys(elements).forEach((key) => {
+                    switchable[key] = createSwitchable(elements[key]) || dummy();
+                });
+
+                const hasMeasure = Object.keys(elements).some((k) => elements[k].type === 'measure');
+                const mbtn = document.getElementById('measure-toggle');
+                if (hasMeasure) {
+                    mbtn.hidden = false;
+                    const sync = () => {
+                        mbtn.textContent = measuresOn ? ui.measureToggleOn : ui.measureToggleOff;
+                        mbtn.classList.toggle('is-on', measuresOn);
+                        mbtn.setAttribute('aria-pressed', String(measuresOn));
+                    };
+                    sync();
+                    mbtn.addEventListener('click', () => {
+                        measuresOn = !measuresOn;
+                        sync();
+                        applyHighlight(highlightKeysForView());
+                    });
+                }
+
+                document.getElementById('reset-view').addEventListener('click', () => {
+                    setBox(frameBB(model.frame));
+                });
+
+                (function bindWheelZoom() {
+                    const box = document.getElementById('jxgbox');
+                    let acc = 0;
+                    const STEP = 96;
+                    box.addEventListener('wheel', function (evt) {
+                        evt.preventDefault();
+                        if (!board) return;
+                        let d = evt.deltaY;
+                        if (evt.deltaMode === 1) d *= 16;
+                        if (evt.deltaMode === 2) d *= 400;
+                        acc += d;
+                        let xy = null;
+                        try { xy = board.getUsrCoordsOfMouse(evt); } catch (_) { xy = null; }
+                        const x = xy ? xy[0] : undefined;
+                        const y = xy ? xy[1] : undefined;
+                        while (acc <= -STEP) {
+                            acc += STEP;
+                            board.zoomIn(x, y);
+                        }
+                        while (acc >= STEP) {
+                            acc -= STEP;
+                            board.zoomOut(x, y);
+                        }
+                    }, { passive: false });
+                })();
+
+                window.addEventListener('resize', () => {
+                    if (board && board.resizeContainer) board.resizeContainer();
+                    markScrollableMath(document.getElementById('sidebar'));
+                });
+                setBox(frameBB(model.frame));
+                requestAnimationFrame(() => {
+                    if (board && board.resizeContainer) {
+                        board.resizeContainer();
+                        setBox(frameBB(model.frame));
+                    }
+                });
+            } catch (e) {
+                console.error(e);
+                const err = document.getElementById('board-error');
+                err.hidden = false;
+                err.textContent = ui.boardError;
+            }
+        }
+
+        function updateUI() {
+            const stepData = steps[currentStep] || { title: '', content: '', highlight: [] };
+            const fill = (tpl) => tpl
+                .replace('{current}', currentStep + 1)
+                .replace('{total}', steps.length);
+            document.getElementById('step-indicator').textContent =
+                finished ? ui.reviewLabel : fill(ui.stepTemplate);
+
+            const bars = document.getElementById('progress-bars');
+            if (bars.childElementCount !== steps.length) {
+                bars.innerHTML = steps.map(() => '<i></i>').join('');
+            }
+            Array.from(bars.children).forEach((bar, i) => {
+                bar.className = finished
+                    ? 'is-done'
+                    : (i === currentStep ? 'is-current' : (i < currentStep ? 'is-done' : ''));
+            });
+
+            document.getElementById('scene-label').textContent = finished
+                ? ui.reviewLabel
+                : `${fill(ui.stepTemplate)} — ${stepData.title}`;
+
+            const container = document.getElementById('step-container');
+            container.classList.toggle('is-review', finished);
+            container.innerHTML = steps.map((st, i) => {
+                const state = finished
+                    ? 'is-done is-open'
+                    : (i === currentStep ? 'is-current' : (i < currentStep ? 'is-done' : ''));
+                const n = String(i + 1).padStart(2, '0');
+                const body = (finished || i === currentStep)
+                    ? `<div class="step-content">${st.content}</div>` : '';
+                return `<div class="tl-row ${state}">
+                    <div class="tl-rail"><span class="tl-dot"></span><span class="tl-line"></span></div>
+                    <div class="tl-body">
+                        <div class="tl-head"><span class="tl-num">${n}</span><span class="step-title">${st.title}</span></div>
+                        ${body}
+                    </div>
+                </div>`;
+            }).join('');
+            document.getElementById('panel-scroll').scrollTop = 0;
+
+            typesetMath(document.getElementById('sidebar'));
+            if (!prefersReducedMotion) {
+                container.getAnimations().forEach((animation) => animation.cancel());
+                container.animate([
+                    { opacity: 0, transform: 'translateY(8px)' },
+                    { opacity: 1, transform: 'translateY(0)' }
+                ], {
+                    duration: 280,
+                    easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)'
+                });
+            } else {
+                container.classList.remove('is-changing');
+            }
+
+            const nextBtn = document.getElementById('next-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            prevBtn.disabled = currentStep === 0 && !finished;
+            nextBtn.disabled = finished;
+            nextBtn.textContent = finished
+                ? ui.finished
+                : (currentStep === steps.length - 1 ? ui.finish : ui.next);
+            nextBtn.setAttribute(
+                'aria-label',
+                finished
+                    ? ui.finishedAria
+                    : (currentStep === steps.length - 1
+                        ? ui.finishAria
+                        : ui.nextAriaTemplate.replace('{step}', currentStep + 2))
+            );
+            prevBtn.setAttribute(
+                'aria-label',
+                finished
+                    ? ui.collapseAria
+                    : (currentStep === 0
+                        ? ui.firstStepAria
+                        : ui.previousAriaTemplate.replace('{step}', currentStep))
+            );
+
+            applyHighlight(highlightKeysForView());
+            if (!finished) applyStepBox(stepData);
+        }
+
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+        });
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            if (finished) {
+                goToStep(currentStep);
+                return;
+            }
+            if (currentStep > 0) goToStep(currentStep - 1);
+        });
+        document.getElementById('next-btn').addEventListener('click', () => {
+            if (currentStep < steps.length - 1) {
+                goToStep(currentStep + 1);
+            } else if (!finished) {
+                finished = true;
+                updateUI();
+            }
+        });
+
+        applyTheme(currentTheme());
+        initializeLessonText();
+        enableDragScroll(document.getElementById('panel-scroll'));
+        if (!model.draggable) document.getElementById('readouts').hidden = true;
+        initBoard();
+        updateUI();
+    </script>
+</body>
+</html>

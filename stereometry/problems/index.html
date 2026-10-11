@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('stereometry-theme');
+        document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <title>题目列表 · 立体几何</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #F3F5F8;
+      --panel: #FFFFFF;
+      --inset: #F7F8FA;
+      --line: #E2E7EE;
+      --line-2: #D3DAE3;
+      --text: #1A2330;
+      --text-2: #3D4A5C;
+      --muted: #6B7787;
+      --faint: #98A2AE;
+      --accent: #2563EB;
+      --accent-dark: #1D4ED8;
+      --accent-soft: rgba(37, 99, 235, 0.12);
+      --on-accent: #FFFFFF;
+      --shadow: 0 1px 2px rgba(26, 35, 48, 0.06), 0 8px 24px rgba(26, 35, 48, 0.04);
+      --font-body: 'Instrument Sans', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0A0D12;
+      --panel: #0E131A;
+      --inset: #0B1016;
+      --line: #1F2731;
+      --line-2: #243040;
+      --text: #E7ECF2;
+      --text-2: #B8C1CC;
+      --muted: #8B96A5;
+      --faint: #4E5A69;
+      --accent: #60A5FA;
+      --accent-dark: #3B82F6;
+      --accent-soft: rgba(96, 165, 250, 0.16);
+      --on-accent: #0A1628;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-body); }
+    body { min-height: 100vh; }
+    a { color: inherit; }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--bg) 86%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .bar {
+      max-width: 980px; margin: 0 auto; padding: 16px 20px 14px;
+      display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center;
+    }
+    .brand { flex: 1 1 180px; min-width: 0; }
+    .brand h1 {
+      margin: 0; font-size: 18px; font-weight: 600; letter-spacing: 0.02em;
+    }
+    .brand p {
+      margin: 4px 0 0; color: var(--muted); font-size: 12px;
+      font-family: var(--font-mono);
+    }
+    .search {
+      flex: 2 1 240px;
+      position: relative;
+    }
+    .search input {
+      width: 100%; height: 38px; padding: 0 12px 0 34px;
+      border: 1px solid var(--line-2); border-radius: 8px;
+      background: var(--panel); color: var(--text);
+      font: 14px/1 var(--font-body); outline: none;
+    }
+    .search input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .search svg {
+      position: absolute; left: 10px; top: 10px; width: 16px; height: 16px;
+      color: var(--faint);
+    }
+    .theme {
+      width: 38px; height: 38px; border-radius: 8px;
+      border: 1px solid var(--line-2); background: var(--panel); color: var(--text-2);
+      cursor: pointer; display: grid; place-items: center;
+    }
+    .theme:hover { border-color: var(--accent); color: var(--accent); }
+    .filters {
+      max-width: 980px; margin: 0 auto; padding: 0 20px 14px;
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .chip {
+      border: 1px solid var(--line-2); background: var(--panel); color: var(--text-2);
+      border-radius: 999px; padding: 5px 12px; font-size: 13px; cursor: pointer;
+    }
+    .chip.is-on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+    main { max-width: 980px; margin: 0 auto; padding: 18px 20px 48px; }
+    .grid { display: grid; gap: 12px; }
+    .card {
+      display: grid; grid-template-columns: auto 1fr auto; gap: 12px 16px;
+      align-items: start;
+      background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+      padding: 16px 18px; text-decoration: none; box-shadow: var(--shadow);
+      transition: border-color .15s ease, transform .15s ease;
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .badge {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      padding: 4px 8px; border-radius: 999px; background: var(--accent-soft);
+      color: var(--accent-dark); white-space: nowrap;
+    }
+    html[data-theme="dark"] .badge { color: var(--accent); }
+    .body { min-width: 0; }
+    .kicker {
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+      color: var(--muted); font-size: 12px; font-family: var(--font-mono);
+      margin-bottom: 6px;
+    }
+    .title {
+      margin: 0; font-size: 15px; font-weight: 500; line-height: 1.55; color: var(--text);
+    }
+    .go {
+      align-self: center; color: var(--faint); font-size: 13px; white-space: nowrap;
+      font-family: var(--font-mono);
+    }
+    .card:hover .go { color: var(--accent); }
+    .empty { text-align: center; color: var(--muted); padding: 48px 12px; }
+    @media (max-width: 640px) {
+      .card { grid-template-columns: auto 1fr; }
+      .go { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <div class="brand">
+        <h1>立体几何题目</h1>
+        <p><a href="../../index.html">几何</a> · <span id="count">21</span> 题 · 更新 2026-10-03 20:33</p>
+      </div>
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+        </svg>
+        <input id="q" type="search" placeholder="搜索题号或题面" autocomplete="off">
+      </label>
+      <button class="theme" id="theme" type="button" title="切换亮/暗色" aria-label="切换主题">◐</button>
+    </div>
+    <div class="filters" id="filters"></div>
+  </header>
+  <main>
+    <div class="grid" id="list"></div>
+    <p class="empty" id="empty" hidden>没有匹配的题目</p>
+  </main>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']], processEscapes: true },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    const PROBLEMS = [{"id": "20261002-03-ex1-dist-set", "href": "20261002-03-ex1-dist-set/index.html", "slug": "ex1-dist-set", "label": "例题 1", "kind": "ex", "num": 1, "seq": 3, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T19:57:03+08:00", "meta": "交互解题 · 距离集合", "title": "空间中四面体 $ABCD$ 与平面 $\\alpha$：四点都不在 $\\alpha$ 上，且不都在同侧；若某棱与 $\\alpha$ 有交点，则该点总是这条棱的中点或三等分点。设 $S$ 为四点到 $\\alpha$ 的距离组成的集合，求 $|S|$ 的所有可能值", "source": true}, {"id": "20261002-02-ex2-pc-min", "href": "20261002-02-ex2-pc-min/index.html", "slug": "ex2-pc-min", "label": "例题 2", "kind": "ex", "num": 2, "seq": 2, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T19:51:47+08:00", "meta": "交互解题 · 最短距离", "title": "三棱锥 $P$-$ABC$ 满足 $AB=2\\sqrt{3}$，二面角 $P$-$AB$-$C=\\dfrac{\\pi}{3}$，已知 $PC\\perp AB$，$PA+PB=4$，$CA-CB=2$，求 $PC$ 长度的最小值", "source": true}, {"id": "20261002-04-ex3-pyramid-pm-vol", "href": "20261002-04-ex3-pyramid-pm-vol/index.html", "slug": "ex3-pyramid-pm-vol", "label": "例题 3", "kind": "ex", "num": 3, "seq": 4, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 体积比与线段比", "title": "四棱锥 $P$-$ABCD$ 中，$AB=AD=\\sqrt{10}$，$CB=CD=5$，$\\angle BAD=90^{\\circ}$，$PB=4$，$PC=3$。点 $Q$ 为 $\\triangle PBC$ 内部任一点，平面 $QAD$ 与 $PB$ 交于 $M$。记四面体 $ACDQ$、$ADPQ$ 的体积分别为 $V_1$、$V_2$，求 $\\dfrac{|PM|}{|BM|}+\\dfrac{2V_1}{V_2}$ 的最小值", "source": true}, {"id": "20261002-05-ex4-cuboid-n-dist", "href": "20261002-05-ex4-cuboid-n-dist/index.html", "slug": "ex4-cuboid-n-dist", "label": "例题 4", "kind": "ex", "num": 4, "seq": 5, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 点到平面距离", "title": "长方体 $ABCD$-$A_1B_1C_1D_1$ 中，$AB=3$，$BC=1$，$AA_1=2$，$M$ 为 $A_1B_1$ 的中点。点 $N$ 是长方体表面上一点，满足 $NB=NM=ND$，则 $N$ 到平面 $ABCD$ 的距离为", "source": true}, {"id": "20261002-06-ex5-cuboid-prob", "href": "20261002-06-ex5-cuboid-prob/index.html", "slug": "ex5-cuboid-prob", "label": "例题 5", "kind": "ex", "num": 5, "seq": 6, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 几何概型", "title": "长方体 $ABCD$-$A_1B_1C_1D_1$ 中，$AB=AD=5$，$AA_1=1$，点 $M$ 满足 $3\\overrightarrow{AM}+2\\overrightarrow{BM}=\\vec 0$。在正方形 $ABCD$ 内随机取点 $P$，$P$ 到直线 $A_1D_1$ 的距离为 $d_1$，$PM$ 长为 $d_2$，求事件 $d_1-d_2\\ge 1$ 的概率", "source": true}, {"id": "20261002-07-ex6-pyramid-vol-min", "href": "20261002-07-ex6-pyramid-vol-min/index.html", "slug": "ex6-pyramid-vol-min", "label": "例题 6", "kind": "ex", "num": 6, "seq": 7, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 体积最小值", "title": "四棱锥 $P$-$ABCD$ 中，$\\triangle PAB$ 为直角三角形，且它在平面 $PDC$ 上的投影恰为 $\\triangle PDC$。已知 $PC=3$，$PD=4$，$CD=5$，求四棱锥 $P$-$ABCD$ 体积的最小值", "source": true}, {"id": "20261002-08-ex7-disphenoid-r", "href": "20261002-08-ex7-disphenoid-r/index.html", "slug": "ex7-disphenoid-r", "label": "例题 7", "kind": "ex", "num": 7, "seq": 8, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 外接球半径", "title": "四面体中，取其异面的两条棱的中点连线称为该四面体的一条「内棱」，三条内棱两两垂直的四面体称为「垂棱四面体」。空间直角坐标系中，$xOy$ 平面内有圆 $O:x^{2}+y^{2}=4$，直线 $y=kx-\\sqrt{3}$ 与圆 $O$ 交于 $A$、$B$ 两点，$P$ 为 $xOy$ 平面下方一点。若 $P$-$ABO$ 为垂棱四面体，则其外接球表面积 $S(k)$ 的取值范围是", "source": true}, {"id": "20261002-09-ex8-tetra-cd-min", "href": "20261002-09-ex8-tetra-cd-min/index.html", "slug": "ex8-tetra-cd-min", "label": "例题 8", "kind": "ex", "num": 8, "seq": 9, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 线段最小值", "title": "三棱锥 $A$-$BCD$ 中，点 $B$ 在平面 $ACD$ 上的射影 $H$ 在线段 $CD$ 上。设 $M$ 是线段 $CH$ 的中点。若 $\\angle BAH=30^{\\circ}$，$AB=2$，$\\triangle ABM$、$\\triangle ABD$ 的面积均为 $1$，则线段 $CD$ 长度的最小值是", "source": true}, {"id": "20261002-10-ex9-cup-ellipse-e", "href": "20261002-10-ex9-cup-ellipse-e/index.html", "slug": "ex9-cup-ellipse-e", "label": "例题 9", "kind": "ex", "num": 9, "seq": 10, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 椭圆离心率", "title": "机场为旅客提供的圆锥纸杯，该纸杯母线长为 $12$ 厘米，开口直径为 $8$ 厘米。旅客使用纸杯喝水时，当水面与纸杯内壁所形成的椭圆经过母线中点时，椭圆的离心率为", "source": true}, {"id": "20261002-11-ex10-pyramid-inradius", "href": "20261002-11-ex10-pyramid-inradius/index.html", "slug": "ex10-pyramid-inradius", "label": "例题 10", "kind": "ex", "num": 10, "seq": 11, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 内切球半径", "title": "长方体 $ABCD$-$EFGH$ 中，$AB=BC$，点 $P$ 是正方形 $EFGH$ 的中心。若 $|AE|+\\dfrac{\\sqrt{3}}{2}|AD|=1$，则四棱锥 $P$-$ABCD$ 内切球半径的最大值是", "source": true}, {"id": "20261002-12-ex11-unit-vec-range", "href": "20261002-12-ex11-unit-vec-range/index.html", "slug": "ex11-unit-vec-range", "label": "例题 11", "kind": "ex", "num": 11, "seq": 12, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 取值范围", "title": "若互不相等的单位空间向量 $\\overrightarrow{OP_i}\\ (i=1,2,3,4)$ 满足 $|P_1P_2|=|P_2P_3|=|P_3P_4|=|P_4P_1|=1$，则 $|P_1P_3|^{2}+|P_2P_4|^{2}$ 的取值范围是", "source": true}, {"id": "20261002-13-ex12-pyramid-volume", "href": "20261002-13-ex12-pyramid-volume/index.html", "slug": "ex12-pyramid-volume", "label": "例题 12", "kind": "ex", "num": 12, "seq": 13, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 体积", "title": "正三棱锥 $S$-$ABC$ 中，底边长为 $4$，$SA$、$SB$、$SC$ 的中点分别为 $A'、B'、C'$，$A'B'$ 的中点为 $D$。若三棱锥 $S$-$ABC'$ 的外接球球心为 $O$，满足 $OC^{2}-OD^{2}=AB^{2}$，则三棱锥 $S$-$ABC$ 的体积为", "source": true}, {"id": "20261002-14-ex13-prism-circumsphere", "href": "20261002-14-ex13-prism-circumsphere/index.html", "slug": "ex13-prism-circumsphere", "label": "例题 13", "kind": "ex", "num": 13, "seq": 14, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 外接球半径", "title": "直三棱柱 $ABC$-$A_1B_1C_1$ 中，$AC\\perp AB$，$AC=2$，$AA_1=4$，$AB=6$。点 $E$、$F$ 分别是棱 $AA_1$、$AB$ 上的动点，当折线 $C_1$-$E$-$F$-$B_1$ 的长度即 $C_1E+EF+FB_1$ 最小时，三棱锥 $B_1C_1EF$ 的外接球半径是", "source": true}, {"id": "20261002-15-ex14-hemisphere-r", "href": "20261002-15-ex14-hemisphere-r/index.html", "slug": "ex14-hemisphere-r", "label": "例题 14", "kind": "ex", "num": 14, "seq": 15, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 截面圆半径", "title": "有一个半径为 $1$ 的半球。若 $3$ 个半径为 $r$ 的截面圆两两相切，且均与该半球的底面圆周相切，则 $r=$", "source": true}, {"id": "20261002-16-ex15-sphere-circles", "href": "20261002-16-ex15-sphere-circles/index.html", "slug": "ex15-sphere-circles", "label": "例题 15", "kind": "ex", "num": 15, "seq": 16, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 球面圆半径", "title": "在半径为 $1$ 的球面上有 $n+1$ 个半径相等的圆 $C_0,C_1,\\ldots,C_n$，且对任意 $i\\in\\{1,2,3,4,n\\}$，$C_i$ 与 $C_0$ 相切，$C_i$ 与 $C_{i+1}$ 相切，这里 $C_{n+1}=C_1$。这 $n+1$ 个圆的半径等于", "source": true}, {"id": "20261002-17-ex16-vec-dot-range", "href": "20261002-17-ex16-vec-dot-range/index.html", "slug": "ex16-vec-dot-range", "label": "例题 16", "kind": "ex", "num": 16, "seq": 17, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 数量积范围", "title": "若空间向量 $\\vec a_1,\\vec a_2,\\vec a_3,\\vec a_4$ 满足 $|\\vec a_1-\\vec a_3|\\le|\\vec a_1-\\vec a_2|=2|\\vec a_3-\\vec a_4|=4$，则 $(\\vec a_1-\\vec a_3)\\cdot(\\vec a_2-\\vec a_4)$ 的取值范围是", "source": true}, {"id": "20261002-18-ex17-pyramid-locus", "href": "20261002-18-ex17-pyramid-locus/index.html", "slug": "ex17-pyramid-locus", "label": "例题 17", "kind": "ex", "num": 17, "seq": 18, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 轨迹", "title": "给定一个正三棱锥 $S$-$ABC$（$SA=SB=SC$，$AB=BC=CA$）。空间中有不同于 $S$ 的点 $D$，满足 $\\lvert\\cos\\angle ASD-2\\cos\\angle BSD-2\\cos\\angle CSD\\rvert=3$，求这种点 $D$ 的轨迹", "source": true}, {"id": "20261002-19-ex18-five-pts-angle", "href": "20261002-19-ex18-five-pts-angle/index.html", "slug": "ex18-five-pts-angle", "label": "例题 18", "kind": "ex", "num": 18, "seq": 19, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 空间折线", "title": "已知空间中五个点 $A,B,C,D,E$ 满足 $AB=BC=CD=DE=EA$，且 $\\angle ABC,\\angle BCD,\\angle CDE,\\angle DEA,\\angle EAB$ 中有四个是直角，求最后一个角的所有可能大小", "source": true}, {"id": "20261002-20-ex19-tetra-volume", "href": "20261002-20-ex19-tetra-volume/index.html", "slug": "ex19-tetra-volume", "label": "例题 19", "kind": "ex", "num": 19, "seq": 20, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 体积", "title": "在空间直角坐标系 $O$-$xyz$ 中，一个正四面体的顶点 $A,B,C,D$ 的横坐标分别为 $2,3,5,7$，则该正四面体的体积是", "source": true}, {"id": "20261002-21-ex20-pyramid-ad-max", "href": "20261002-21-ex20-pyramid-ad-max/index.html", "slug": "ex20-pyramid-ad-max", "label": "例题 20", "kind": "ex", "num": 20, "seq": 21, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T20:38:42+08:00", "meta": "交互解题 · 线段最大值", "title": "四棱锥 $P$-$ABCD$ 中，$\\angle PAD=\\angle PBC=135^{\\circ}$，$\\angle PAB=\\angle PBA=60^{\\circ}$，且 $AD\\perp$ 平面 $PBC$。已知 $|AB|=\\sqrt{2}$，平面 $PAB$ 和平面 $PCD$ 所成角的正弦值为 $\\dfrac{1}{3}$，求 $|AD|$ 的最大值", "source": true}, {"id": "20261002-01-pyramid-be-pac", "href": "20261002-01-pyramid-be-pac/index.html", "slug": "pyramid-be-pac", "label": "演示", "kind": "demo", "num": 0, "seq": 1, "day": "20261002", "date": "2026-10-02", "created": "2026-10-02T19:30:38+08:00", "meta": "交互解题 · 线面角", "title": "正四棱锥 $P$-$ABCD$ 中，底面边长为 $2$，高为 $1$，$E$ 为 $PC$ 中点，求直线 $BE$ 与平面 $PAC$ 所成角的正弦值", "source": false}];
+    const KINDS = [
+      { id: 'all', label: '全部' },
+      { id: 'ex', label: '例题' },
+      { id: 'exer', label: '习题' },
+      { id: 'demo', label: '演示' }
+    ];
+    let kind = 'all';
+    const list = document.getElementById('list');
+    const empty = document.getElementById('empty');
+    const q = document.getElementById('q');
+    const filters = document.getElementById('filters');
+    const countEl = document.getElementById('count');
+
+    KINDS.forEach((k) => {
+      const n = k.id === 'all' ? PROBLEMS.length : PROBLEMS.filter((p) => p.kind === k.id).length;
+      if (k.id !== 'all' && n === 0) return;
+      const b = document.createElement('button');
+      b.className = 'chip' + (k.id === 'all' ? ' is-on' : '');
+      b.type = 'button';
+      b.dataset.kind = k.id;
+      b.textContent = k.label + ' ' + n;
+      b.addEventListener('click', () => {
+        kind = k.id;
+        filters.querySelectorAll('.chip').forEach((c) => c.classList.toggle('is-on', c.dataset.kind === kind));
+        render();
+      });
+      filters.appendChild(b);
+    });
+
+    function hay(p) {
+      return [p.label, p.slug, p.title, p.meta, p.date].join(' ').toLowerCase();
+    }
+    function visible() {
+      const s = (q.value || '').trim().toLowerCase();
+      return PROBLEMS.filter((p) => (kind === 'all' || p.kind === kind) && (!s || hay(p).includes(s)));
+    }
+    function render() {
+      const rows = visible();
+      list.innerHTML = '';
+      empty.hidden = rows.length > 0;
+      countEl.textContent = String(rows.length);
+      rows.forEach((p) => {
+        const a = document.createElement('a');
+        a.className = 'card';
+        a.href = p.href;
+        a.innerHTML =
+          '<span class="badge">' + p.label + '</span>' +
+          '<div class="body">' +
+            '<div class="kicker">' +
+              (p.meta ? '<span>' + p.meta + '</span>' : '') +
+              '<span>' + p.date + '</span>' +
+              (p.source ? '<span>原图</span>' : '') +
+            '</div>' +
+            '<p class="title">' + p.title + '</p>' +
+          '</div>' +
+          '<span class="go">打开 →</span>';
+        list.appendChild(a);
+      });
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([list]).catch(() => {});
+      }
+    }
+    q.addEventListener('input', render);
+    document.getElementById('theme').addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('stereometry-theme', next); } catch (e) {}
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== q) {
+        e.preventDefault();
+        q.focus();
+      }
+    });
+    render();
+    const wait = setInterval(() => {
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        clearInterval(wait);
+        MathJax.typesetPromise([list]).catch(() => {});
+      }
+    }, 80);
+  </script>
+</body>
+</html>

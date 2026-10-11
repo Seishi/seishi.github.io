@@ -1,0 +1,12 @@
+{
+  "id": "20261003-14-ex13-two-parabolas-power",
+  "slug": "ex13-two-parabolas-power",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "parabola"
+  ],
+  "title": "平面上两个抛物线，它们有相互垂直的对称轴且有公共焦点 $O$。设两个抛物线相交于 $A,B$ 两点。一条公切线 $l$ 与直线 $AB$ 相交于点 $C$。证明：$|OC|^{2}=|AC|\\cdot|BC|$。",
+  "answer": "$|OC|^{2}=|AC|\\cdot|BC|$"
+}

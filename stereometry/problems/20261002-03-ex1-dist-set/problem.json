@@ -1,0 +1,352 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "body": "custom",
+    "scale": 1.8,
+    "points": {
+      "A": [
+        "0",
+        "0",
+        "0"
+      ],
+      "B": [
+        "4",
+        "0",
+        "0"
+      ],
+      "C": [
+        "2",
+        "-6",
+        "0"
+      ],
+      "D": [
+        "2",
+        "-2",
+        "4"
+      ],
+      "E": [
+        "2",
+        "0",
+        "0"
+      ],
+      "F": [
+        "1",
+        "-3",
+        "0"
+      ],
+      "G": [
+        "3",
+        "-1",
+        "2"
+      ],
+      "H": [
+        "2",
+        "-4",
+        "2"
+      ],
+      "U": [
+        "1",
+        "-1",
+        "2"
+      ],
+      "V": [
+        "3",
+        "-1",
+        "2"
+      ],
+      "W": [
+        "2",
+        "-4",
+        "2"
+      ],
+      "U3": [
+        "2/3",
+        "-2/3",
+        "4/3"
+      ],
+      "V3": [
+        "3",
+        "-1",
+        "2"
+      ],
+      "W3": [
+        "2",
+        "-10/3",
+        "8/3"
+      ]
+    },
+    "topo": {
+      "spheres": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "U",
+        "V",
+        "W",
+        "U3",
+        "V3",
+        "W3"
+      ],
+      "edges": [
+        {
+          "a": "A",
+          "b": "B"
+        },
+        {
+          "a": "B",
+          "b": "C"
+        },
+        {
+          "a": "C",
+          "b": "A"
+        },
+        {
+          "a": "D",
+          "b": "A"
+        },
+        {
+          "a": "D",
+          "b": "B"
+        },
+        {
+          "a": "D",
+          "b": "C"
+        }
+      ]
+    },
+    "query": {
+      "type": "volume",
+      "kind": "tetra",
+      "pts": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    "_note": "所求是 |S| 的可能值，不属于 5 类 query；index.html 由本脚本渲染。"
+  },
+  "lesson": {
+    "language": "zh-CN",
+    "meta": "交互解题 · 距离集合",
+    "title": "空间中四面体 $ABCD$ 与平面 $\\alpha$：四点都不在 $\\alpha$ 上，且不都在同侧；若某棱与 $\\alpha$ 有交点，则该点总是这条棱的中点或三等分点。设 $S$ 为四点到 $\\alpha$ 的距离组成的集合，求 $|S|$ 的所有可能值",
+    "answerLabel": "集合 $S$ 元素个数的所有可能值",
+    "answerValue": "$1,2,3$"
+  },
+  "steps": [
+    {
+      "title": "平面怎样切开四面体",
+      "content": "<p>把四面体看成棱锥 $D$-$ABC$，底面 $ABC$ 放在水平面 $z=0$，顶点 $D$ 在上方。</p><p>四点都不在 $\\alpha$ 上，又不同侧，故 $\\alpha$ 把顶点分成两类：</p><ul><li>$1$–$3$：一侧 $1$ 点，另一侧 $3$ 点，截 $3$ 条棱；</li><li>$2$–$2$：两侧各 $2$ 点，截 $4$ 条棱（截面为四边形）。</li></ul>",
+      "highlight": [
+        "Axis",
+        "Plane_ABC",
+        "Point_A",
+        "Point_B",
+        "Point_C",
+        "Point_D"
+      ],
+      "cameraPos": {
+        "x": 16.31,
+        "y": 11.97,
+        "z": 11.65
+      }
+    },
+    {
+      "title": "截点位置决定距离比",
+      "content": "<p>点 $X,Y$ 分居 $\\alpha$ 两侧时，棱 $XY$ 与 $\\alpha$ 的交点分线段比等于到平面的距离比。</p><p>交点是中点 $\\Rightarrow d(X,\\alpha)=d(Y,\\alpha)$；是三等分点 $\\Rightarrow$ 距离比为 $1:2$ 或 $2:1$。</p><p>因此每个距离只能是某个基准 $h$ 的 $h,\\ \\dfrac{h}{2},\\ 2h$。</p>",
+      "highlight": [
+        "Line_DA",
+        "Line_DB",
+        "Line_DC",
+        "Point_U",
+        "Point_V",
+        "Point_W"
+      ],
+      "cameraPos": {
+        "x": 20.2,
+        "y": 7.33,
+        "z": 10.23
+      }
+    },
+    {
+      "title": "情形 $2$–$2$",
+      "content": "<p>两侧各两点，截面为四边形。图中 $\\alpha$ 过 $AB,AC,DB,DC$ 的中点 $E,F,G,H$：此时四点距离都是 $h$，$|S|=1$。</p><p>把其中若干条跨棱改成三等分，两侧距离仍只能取 $h,\\dfrac{h}{2},2h$ 这三档，交约束后 $|S|\\in\\{1,2,3\\}$，凑不出 $4$ 个互异距离。</p>",
+      "highlight": [
+        "Plane_Alpha22",
+        "Line_AB",
+        "Line_AC",
+        "Line_DB",
+        "Line_DC",
+        "Point_E",
+        "Point_F",
+        "Point_G",
+        "Point_H"
+      ],
+      "cameraPos": {
+        "x": 18.85,
+        "y": 11.97,
+        "z": 9.11
+      }
+    },
+    {
+      "title": "情形 $1$–$3$",
+      "content": "<p>孤立点一侧、另三点另一侧，截 $DA,DB,DC$ 三条棱。</p><p>浅色截面 $UVW$ 过三条棱中点、平行于底面：四点距离都是 $h$，$|S|=1$。把截点整体移近底面（三等分）则 $|S|=2$。</p><p>另一截面 $U_3V_3W_3$ 取距离比 $2:1,\\ 1:1,\\ 1:2$，四点距离为 $h,\\dfrac{h}{2},h,2h$，$|S|=3$。</p><p>两种分隔都能取到 $1,2,3$，都不能取到 $4$。所以 $|S|$ 的所有可能值为 $1,2,3$。</p>",
+      "highlight": [
+        "Plane_Alpha13",
+        "Plane_Alpha13b",
+        "Line_DA",
+        "Line_DB",
+        "Line_DC",
+        "Point_U",
+        "Point_V",
+        "Point_W",
+        "Point_U3",
+        "Point_V3",
+        "Point_W3"
+      ],
+      "cameraPos": {
+        "x": 14.42,
+        "y": 18.03,
+        "z": 7.22
+      }
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {
+        "type": "axes",
+        "size": 3
+      },
+      "Plane_Alpha22": {
+        "type": "plane",
+        "pts": [
+          "E",
+          "F",
+          "H",
+          "G"
+        ]
+      },
+      "Plane_Alpha13": {
+        "type": "plane",
+        "pts": [
+          "U",
+          "V",
+          "W"
+        ]
+      },
+      "Plane_Alpha13b": {
+        "type": "plane",
+        "pts": [
+          "U3",
+          "V3",
+          "W3"
+        ]
+      },
+      "Plane_ABC": {
+        "type": "plane",
+        "pts": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "Point_A": {
+        "type": "point",
+        "center": "A"
+      },
+      "Point_B": {
+        "type": "point",
+        "center": "B"
+      },
+      "Point_C": {
+        "type": "point",
+        "center": "C"
+      },
+      "Point_D": {
+        "type": "point",
+        "center": "D"
+      },
+      "Point_E": {
+        "type": "point",
+        "center": "E"
+      },
+      "Point_F": {
+        "type": "point",
+        "center": "F"
+      },
+      "Point_G": {
+        "type": "point",
+        "center": "G"
+      },
+      "Point_H": {
+        "type": "point",
+        "center": "H"
+      },
+      "Point_U": {
+        "type": "point",
+        "center": "U"
+      },
+      "Point_V": {
+        "type": "point",
+        "center": "V"
+      },
+      "Point_W": {
+        "type": "point",
+        "center": "W"
+      },
+      "Point_U3": {
+        "type": "point",
+        "center": "U3"
+      },
+      "Point_V3": {
+        "type": "point",
+        "center": "V3"
+      },
+      "Point_W3": {
+        "type": "point",
+        "center": "W3"
+      },
+      "Line_AB": {
+        "type": "line",
+        "a": "A",
+        "b": "B",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_AC": {
+        "type": "line",
+        "a": "A",
+        "b": "C",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_DA": {
+        "type": "line",
+        "a": "D",
+        "b": "A",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_DB": {
+        "type": "line",
+        "a": "D",
+        "b": "B",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Line_DC": {
+        "type": "line",
+        "a": "D",
+        "b": "C",
+        "color": "emphasis",
+        "depthTest": false
+      }
+    }
+  },
+  "_answer": "1,2,3"
+}

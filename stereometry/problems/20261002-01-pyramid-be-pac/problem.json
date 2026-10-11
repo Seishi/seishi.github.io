@@ -1,0 +1,61 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "body": "regular_quad_pyramid",
+    "dims": { "base_edge": 2, "height": 1 },
+    "scale": 1.5,
+    "givens": [{ "name": "E", "kind": "midpoint", "of": ["P", "C"] }],
+    "lengths": { "AB": ["A", "B"], "AC": ["A", "C"], "PO": ["P", "O"] },
+    "query": { "type": "line_plane_angle", "line": ["B", "E"], "plane": ["P", "A", "C"] }
+  },
+  "lesson": {
+    "meta": "交互解题 · 线面角",
+    "title": "正四棱锥 $P$-$ABCD$ 中，底面边长为 $2$，高为 $1$，$E$ 为 $PC$ 中点，求直线 $BE$ 与平面 $PAC$ 所成角的正弦值",
+    "answerLabel": "直线 $BE$ 与平面 $PAC$ 所成角的正弦值"
+  },
+  "steps": [
+    {
+      "title": "建立空间直角坐标系",
+      "content": "<p>取底面正方形 $ABCD$ 的中心 $O$ 为原点，对角线 $AC$ 在 $x$ 轴、$BD$ 在 $y$ 轴，顶点 $P$ 在 $z$ 轴。</p><p>关键点坐标：</p>$$A{{mp.A}},\\ B{{mp.B}},\\ C{{mp.C}},\\ D{{mp.D}},\\ P{{mp.P}}$$",
+      "highlight": ["Axis", "Len_AB", "Len_AC", "Len_PO", "Plane_ABCD", "Line_BD", "Point_O"],
+      "cameraPos": { "x": 10, "y": 8, "z": 10 }
+    },
+    {
+      "title": "计算中点 $E$ 与向量 $\\vec{BE}$",
+      "content": "<p>$E$ 是 $PC$ 的中点，$E{{mp.E}}$。</p><p>直线 $BE$ 的方向向量：</p>$$\\vec{BE} = {{vals.v}}$$",
+      "highlight": ["Line_BE", "Line_PC", "Point_E"],
+      "cameraPos": { "x": 8, "y": 6, "z": 11 }
+    },
+    {
+      "title": "确定平面 $PAC$ 的法向量",
+      "content": "<p>平面 $PAC$ 过 $P,A,C$，法向量</p>$$\\vec{n} = {{vals.n_simpl}}$$",
+      "highlight": ["Plane_PAC", "Normal_Vector", "Point_P", "Point_A", "Point_C"],
+      "cameraPos": { "x": 11, "y": 9, "z": 5 }
+    },
+    {
+      "title": "代入线面角公式",
+      "content": "<p>设直线 $BE$ 与平面 $PAC$ 所成角为 $\\theta$。$\\sin\\theta = \\dfrac{|\\vec{v}\\cdot\\vec{n}|}{|\\vec{v}|\\,|\\vec{n}|}$。</p>$$\\vec{v}\\cdot\\vec{n} = {{vals.dot}},\\quad |\\vec{v}| = {{vals.norm_v}},\\quad |\\vec{n}| = {{vals.norm_n}}$$<p>代入得 $\\sin\\theta = {{vals.sin}}$，所以正弦值为 ${{answer}}$。</p>",
+      "highlight": ["Line_BE", "Plane_PAC", "Normal_Vector", "Point_P", "Point_A", "Point_C"],
+      "cameraPos": { "x": 10, "y": 8, "z": 9 }
+    }
+  ],
+  "model": {
+    "elements": {
+      "Line_BE": { "type": "line", "a": "B", "b": "E", "color": "emphasis", "depthTest": false },
+      "Line_PC": { "type": "line", "a": "P", "b": "C", "color": "emphasis", "depthTest": false },
+      "Line_BD": { "type": "line", "a": "B", "b": "D", "color": "emphasis", "depthTest": false },
+      "Plane_PAC": { "type": "plane", "pts": ["P", "A", "C"] },
+      "Plane_ABCD": { "type": "plane", "pts": ["A", "B", "C", "D"] },
+      "Normal_Vector": { "type": "arrow", "origin": "O", "dir": [0, 0, 1], "length": 1.5, "color": "normal" },
+      "Axis": { "type": "axes", "size": 3 },
+      "Point_O": { "type": "point", "center": "O" },
+      "Point_E": { "type": "point", "center": "E" },
+      "Point_P": { "type": "point", "center": "P" },
+      "Point_A": { "type": "point", "center": "A" },
+      "Point_C": { "type": "point", "center": "C" },
+      "Len_AB": { "type": "measure", "a": "A", "b": "B", "label": "{{vals.len_AB}}" },
+      "Len_AC": { "type": "measure", "a": "A", "b": "C", "label": "{{vals.len_AC}}" },
+      "Len_PO": { "type": "measure", "a": "P", "b": "O", "label": "{{vals.len_PO}}" }
+    }
+  }
+}

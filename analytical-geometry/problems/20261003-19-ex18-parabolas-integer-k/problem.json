@@ -1,0 +1,81 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["parabola"],
+    "frame": {"xmin": -28, "xmax": 14, "ymin": -28, "ymax": 36},
+    "curves": {
+      "C1": {"type": "parabola", "p": "1/2", "vertex": [0, -20], "axis": "y", "direction": "+"},
+      "C2": {"type": "parabola", "p": "1/4", "vertex": [-20, 20], "axis": "x", "direction": "+"},
+      "K": {"type": "circle", "center": ["1/4", "41/2"], "radius": "sqrt(805)/4"}
+    },
+    "points": {
+      "V1": [0, -20],
+      "V2": [-20, 20],
+      "O": ["1/4", "41/2"],
+      "A": ["2*CRootOf(4*x**4 - 80*x**2 - x + 360, 0)**2 - 20", "CRootOf(4*x**4 - 80*x**2 - x + 360, 0) + 20"],
+      "B": ["2*CRootOf(4*x**4 - 80*x**2 - x + 360, 1)**2 - 20", "CRootOf(4*x**4 - 80*x**2 - x + 360, 1) + 20"],
+      "C": ["2*CRootOf(4*x**4 - 80*x**2 - x + 360, 2)**2 - 20", "CRootOf(4*x**4 - 80*x**2 - x + 360, 2) + 20"],
+      "D": ["2*CRootOf(4*x**4 - 80*x**2 - x + 360, 3)**2 - 20", "CRootOf(4*x**4 - 80*x**2 - x + 360, 3) + 20"]
+    },
+    "query": {
+      "type": "custom",
+      "expr": "5+280",
+      "vals": {
+        "kmin": "5",
+        "kmax": "280",
+        "rbound": "6731/24"
+      }
+    }
+  },
+  "lesson": {
+    "meta": "交互解题 · 抛物线",
+    "title": "设 $S$ 是满足下列条件的正整数 $k$ 的集合：抛物线 $y=x^{2}-k$ 与 $x=2(y-20)^{2}-k$ 有四个不同的公共点，且这四点所在圆的半径不超过 $21$。求 $S$ 中最小元素与最大元素的和。",
+    "answerLabel": "最小元素与最大元素的和"
+  },
+  "steps": [
+    {
+      "title": "建立平面直角坐标系",
+      "content": "<p>两条抛物线为 $y=x^{2}-k$ 与 $x=2(y-20)^{2}-k$，$k$ 为正整数。前一条改写成 $x^{2}=2\\cdot\\dfrac{1}{2}\\,(y+k)$，顶点 $(0,-k)$，对称轴为 $y$ 轴，开口向上，$p=\\dfrac{1}{2}$。后一条改写成 $(y-20)^{2}=2\\cdot\\dfrac{1}{4}\\,(x+k)$，顶点 $(-k,20)$，对称轴平行于 $x$ 轴，开口向右，$p=\\dfrac{1}{4}$。</p>",
+      "highlight": ["Axis", "Curve_C1", "Curve_C2", "Point_V1", "Point_V2"]
+    },
+    {
+      "title": "四个交点对应四个实根",
+      "content": "<p>设公共点满足两式。令 $s=y-20$，则 $x=2s^{2}-k$，并且 $x^{2}=s+k+20$，于是</p><p>$$g(s)=(2s^{2}-k)^{2}-s-k-20=4s^{4}-4ks^{2}-s+(k-5)(k+4).$$</p><p>当 $k&gt;5$ 时，$g\\!\\left(\\pm\\sqrt{\\dfrac{k}{2}}\\right)=\\pm\\sqrt{\\dfrac{k}{2}}-k-20&lt;0$，$g(0)=(k-5)(k+4)&gt;0$，而 $|s|\\to\\infty$ 时 $g\\to+\\infty$。四个开区间</p><p>$$\\left(-\\infty,-\\sqrt{\\dfrac{k}{2}}\\right),\\ \\left(-\\sqrt{\\dfrac{k}{2}},0\\right),\\ \\left(0,\\sqrt{\\dfrac{k}{2}}\\right),\\ \\left(\\sqrt{\\dfrac{k}{2}},+\\infty\\right)$$</p><p>各有一个实根，彼此不同。当 $k=5$ 时 $g(s)=s(4s^{3}-20s-1)$。三次式 $h(s)=4s^{3}-20s-1$ 的导数 $h'(s)=12s^{2}-20$ 的零点为 $\\pm\\sqrt{\\dfrac{5}{3}}$，且 $h$ 在负零点处为正、在正零点处为负、$h(0)=-1$，故 $h$ 有三个不同实根，加上 $s=0$ 共四个。不同的 $s$ 给出不同的 $y$，所以 $k\\ge 5$ 时恰有四个不同公共点。图中这四点为 $A,B,C,D$。</p>",
+      "highlight": ["Curve_C1", "Curve_C2", "Point_A", "Point_B", "Point_C", "Point_D"],
+      "boundingbox": [-12, 30, 12, 10]
+    },
+    {
+      "title": "k 不超过 4 时只有两个交点",
+      "content": "<p>$g'(s)=16s^{3}-8ks-1$。在临界点上 $k=2s^{2}-\\dfrac{1}{8s}$（$s\\ne 0$），代回得</p><p>$$g=-s-k-20+\\dfrac{1}{64s^{2}}.$$</p><p>若 $s&lt;0$，则 $2s^{2}&lt;k$，故 $|s|\\le\\sqrt{\\dfrac{k}{2}}$，并且 $\\dfrac{1}{64s^{2}}=(k-2s^{2})^{2}\\le k^{2}$，于是</p><p>$$g\\le\\sqrt{\\dfrac{k}{2}}+k^{2}-k-20.$$</p><p>对正整数 $k\\le 4$，右边不超过 $\\sqrt{2}+16-4-20=\\sqrt{2}-8&lt;0$。若 $s&gt;0$，则 $s&gt;\\sqrt{\\dfrac{k}{2}}$，$\\dfrac{1}{64s^{2}}&lt;\\dfrac{1}{32k}$，故 $g&lt;0$。三个临界值都为负，而两端趋于正无穷，所以只有两个实根。四个不同公共点当且仅当正整数 $k\\ge {{vals.kmin}}$。</p>",
+      "highlight": ["Curve_C1", "Curve_C2", "Point_A", "Point_B", "Point_C", "Point_D"],
+      "boundingbox": [-12, 30, 12, 10]
+    },
+    {
+      "title": "四点共圆与半径",
+      "content": "<p>两方程 $x^{2}-y-k=0$ 与 $2(y-20)^{2}-x-k=0$ 的线性组合</p><p>$$(x^{2}-y-k)+\\dfrac{1}{2}\\big(2(y-20)^{2}-x-k\\big)=0$$</p><p>通过全部公共点，化简为</p><p>$$\\left(x-\\dfrac{1}{4}\\right)^{2}+\\left(y-\\dfrac{41}{2}\\right)^{2}=\\dfrac{3k}{2}+\\dfrac{325}{16}.$$</p><p>这是圆心 $\\left(\\dfrac{1}{4},\\dfrac{41}{2}\\right)$、半径平方 $r^{2}=\\dfrac{3k}{2}+\\dfrac{325}{16}$ 的圆。</p>",
+      "highlight": ["Curve_C1", "Curve_C2", "Curve_K", "Point_A", "Point_B", "Point_C", "Point_D", "Point_O"],
+      "boundingbox": [-12, 30, 12, 10]
+    },
+    {
+      "title": "半径不超过 21",
+      "content": "<p>要求 $r\\le 21$，即 $r^{2}\\le 441$：</p><p>$$\\dfrac{3k}{2}+\\dfrac{325}{16}\\le 441\\implies k\\le {{vals.rbound}}.$$</p><p>$\\dfrac{6731}{24}=280+\\dfrac{11}{24}$，所以最大正整数为 ${{vals.kmax}}$。最小正整数为 ${{vals.kmin}}$。$S=\\{{{vals.kmin}},\\ldots,{{vals.kmax}}\\}$，最小元素与最大元素的和为 ${{answer}}$。</p>",
+      "highlight": ["Curve_K", "Point_O", "Point_A", "Point_B", "Point_C", "Point_D", "Curve_C1", "Curve_C2"],
+      "boundingbox": [-12, 30, 12, 10]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_C1": {"type": "parabola", "curve": "C1", "color": "curve"},
+      "Curve_C2": {"type": "parabola", "curve": "C2", "color": "curve"},
+      "Curve_K": {"type": "circle", "curve": "K", "color": "emphasis"},
+      "Point_V1": {"type": "point", "center": "V1"},
+      "Point_V2": {"type": "point", "center": "V2"},
+      "Point_O": {"type": "point", "center": "O"},
+      "Point_A": {"type": "point", "center": "A"},
+      "Point_B": {"type": "point", "center": "B"},
+      "Point_C": {"type": "point", "center": "C"},
+      "Point_D": {"type": "point", "center": "D"}
+    }
+  }
+}

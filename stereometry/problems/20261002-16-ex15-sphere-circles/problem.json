@@ -1,0 +1,220 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "body": "custom",
+    "scale": 2.2,
+    "points": {
+      "O": [
+        "0",
+        "0",
+        "0"
+      ],
+      "Z": [
+        "0",
+        "0",
+        "1"
+      ],
+      "K0": [
+        "2*sqrt(5)/5",
+        "0",
+        "sqrt(5)/5"
+      ],
+      "K1": [
+        "1/2 - sqrt(5)/10",
+        "sqrt(10 - 2*sqrt(5))*(sqrt(5)/20 + 1/4)",
+        "sqrt(5)/5"
+      ],
+      "K2": [
+        "-1/2 - sqrt(5)/10",
+        "(1/4 - sqrt(5)/20)*sqrt(2*sqrt(5) + 10)",
+        "sqrt(5)/5"
+      ],
+      "K3": [
+        "-1/2 - sqrt(5)/10",
+        "(-1/4 + sqrt(5)/20)*sqrt(2*sqrt(5) + 10)",
+        "sqrt(5)/5"
+      ],
+      "K4": [
+        "1/2 - sqrt(5)/10",
+        "(-1/4 - sqrt(5)/20)*sqrt(10 - 2*sqrt(5))",
+        "sqrt(5)/5"
+      ]
+    },
+    "topo": {
+      "spheres": [
+        "O",
+        "Z",
+        "K0",
+        "K1",
+        "K2",
+        "K3",
+        "K4"
+      ],
+      "edges": [
+        {
+          "a": "O",
+          "b": "Z"
+        },
+        {
+          "a": "O",
+          "b": "K0"
+        },
+        {
+          "a": "O",
+          "b": "K1"
+        },
+        {
+          "a": "O",
+          "b": "K2"
+        },
+        {
+          "a": "O",
+          "b": "K3"
+        },
+        {
+          "a": "O",
+          "b": "K4"
+        },
+        {
+          "a": "K0",
+          "b": "K1"
+        },
+        {
+          "a": "K1",
+          "b": "K2"
+        },
+        {
+          "a": "K2",
+          "b": "K3"
+        },
+        {
+          "a": "K3",
+          "b": "K4"
+        },
+        {
+          "a": "K4",
+          "b": "K0"
+        }
+      ]
+    },
+    "query": {
+      "type": "volume",
+      "kind": "tetra",
+      "pts": [
+        "O",
+        "Z",
+        "K0",
+        "K1"
+      ]
+    },
+    "_note": "所求不属于 5 类 query；index.html 由 _render.py 精确渲染。"
+  },
+  "lesson": {
+    "language": "zh-CN",
+    "meta": "交互解题 · 球面圆半径",
+    "title": "在半径为 $1$ 的球面上有 $n+1$ 个半径相等的圆 $C_0,C_1,\\ldots,C_n$，且对任意 $i\\in\\{1,2,3,4,n\\}$，$C_i$ 与 $C_0$ 相切，$C_i$ 与 $C_{i+1}$ 相切，这里 $C_{n+1}=C_1$。这 $n+1$ 个圆的半径等于",
+    "answerLabel": "圆的半径",
+    "answers": [
+      {
+        "label": "$n+1$ 个等圆的半径",
+        "value": "$\\sqrt{1-\\dfrac{1}{4\\sin^{2}\\dfrac{\\pi}{n}}}$"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "title": "等半径圆的极点",
+      "content": "<p>球半径 $1$，小圆半径 $r$ 时，极点到小圆的球心角 $\\alpha=\\arcsin r$。$C_0$ 的极点放在北极，周围 $n$ 个等圆的极点在纬度 $2\\alpha$ 上成正 $n$ 边形，且相邻相切给出圆心角 $2\\alpha$。</p>",
+      "highlight": [
+        "Axis",
+        "Sphere_unit",
+        "Point_Z",
+        "Point_K0"
+      ],
+      "cameraPos": {
+        "x": 3.6,
+        "y": 4.02,
+        "z": 3.6
+      }
+    },
+    {
+      "title": "球面正三角形",
+      "content": "<p>三极点 $C_0,C_i,C_{i+1}$ 构成边长均为 $2\\alpha$ 的等边球面三角形，顶角 $\\dfrac{2\\pi}{n}$。余弦定理：</p>$$\\cos 2\\alpha=\\cos^{2}2\\alpha+\\sin^{2}2\\alpha\\cos\\dfrac{2\\pi}{n}.$$",
+      "highlight": [
+        "Point_Z",
+        "Point_K0",
+        "Point_K1",
+        "Line_K0K1",
+        "Sphere_unit"
+      ],
+      "cameraPos": {
+        "x": 3.37,
+        "y": 5.06,
+        "z": 2.7
+      }
+    },
+    {
+      "title": "解出 $r$",
+      "content": "<p>令 $x=\\cos 2\\alpha$，得 $x=\\dfrac{\\cos(2\\pi/n)}{1-\\cos(2\\pi/n)}$，从而</p>$$r^{2}=\\sin^{2}\\alpha=1-\\dfrac{1}{4\\sin^{2}(\\pi/n)}.$$<p>图中画出 $n=5$ 的情形。这 $n+1$ 个圆的半径等于 $\\sqrt{1-\\dfrac{1}{4\\sin^{2}\\dfrac{\\pi}{n}}}$。</p>",
+      "highlight": [
+        "Point_K0",
+        "Point_K1",
+        "Point_K2",
+        "Point_K3",
+        "Point_K4",
+        "Sphere_unit"
+      ],
+      "cameraPos": {
+        "x": 4.04,
+        "y": 3.71,
+        "z": 3.37
+      }
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {
+        "type": "axes",
+        "size": 2
+      },
+      "Point_Z": {
+        "type": "point",
+        "center": "Z"
+      },
+      "Point_K0": {
+        "type": "point",
+        "center": "K0"
+      },
+      "Point_K1": {
+        "type": "point",
+        "center": "K1"
+      },
+      "Point_K2": {
+        "type": "point",
+        "center": "K2"
+      },
+      "Point_K3": {
+        "type": "point",
+        "center": "K3"
+      },
+      "Point_K4": {
+        "type": "point",
+        "center": "K4"
+      },
+      "Line_K0K1": {
+        "type": "line",
+        "a": "K0",
+        "b": "K1",
+        "color": "emphasis",
+        "depthTest": false
+      },
+      "Sphere_unit": {
+        "type": "sphere",
+        "center": "O",
+        "radius": 2.2,
+        "opacity": 0.1
+      }
+    }
+  },
+  "_answer": "\\sqrt{1-\\dfrac{1}{4\\sin^{2}\\dfrac{\\pi}{n}}}"
+}

@@ -1,0 +1,74 @@
+{
+  "spec": {
+    "language": "zh-CN",
+    "tags": ["parabola"],
+    "frame": {"xmin": -5, "xmax": 6, "ymin": -6, "ymax": 4},
+    "curves": {
+      "C1": {"type": "parabola", "p": 2, "vertex": [-1, 0], "axis": "x", "direction": "+"},
+      "C2": {"type": "implicit", "expr": "x**2 - 4*x*y + 4*y**2 + 8*x + 4*y - 4"},
+      "L1": {"type": "line", "a": 1, "b": 0, "c": 2},
+      "L2": {"type": "line", "a": 2, "b": 1, "c": -2},
+      "K": {"type": "circle", "center": ["1/2", "-3/2"], "radius": "5*sqrt(2)/2"}
+    },
+    "points": {
+      "A": [-2, 1],
+      "B": [-2, -4],
+      "C": [0, 2],
+      "D": [3, -4]
+    },
+    "givens": [
+      {"name": "F", "kind": "focus", "of": "C1", "which": "right"}
+    ],
+    "query": {"type": "custom", "expr": "0"}
+  },
+  "lesson": {
+    "meta": "交互解题 · 抛物线",
+    "title": "平面上两条抛物线 $C_1,C_2$ 焦点重合，准线分别为 $l_1,l_2$。$l_1$ 与 $C_2$ 交于 $A,B$，$l_2$ 与 $C_1$ 交于 $C,D$。证明 $A,B,C,D$ 四点共圆。",
+    "answerLabel": "四点共圆",
+    "answers": [
+      {"label": "结论", "value": "$A,B,C,D$ 四点共圆"}
+    ]
+  },
+  "steps": [
+    {
+      "title": "把公共焦点放在原点",
+      "content": "<p>把公共焦点 $F$ 放在原点。记两条准线为 $L_1=a_1x+b_1y+c_1=0$、$L_2=a_2x+b_2y+c_2=0$，$N_i=a_i^{2}+b_i^{2}$。抛物线 $C_i$ 是到 $F$ 与到 $l_i$ 等距的点的轨迹，即 $N_i(x^{2}+y^{2})=L_i^{2}$。</p>",
+      "highlight": ["Axis", "Curve_C1", "Curve_C2", "Line_L1", "Line_L2", "Point_F"]
+    },
+    {
+      "title": "求出四个交点",
+      "content": "<p>记 $l_1\\cap C_2=\\{A,B\\}$，$l_2\\cap C_1=\\{C,D\\}$。题设给出两个交点，故两条准线不垂直。</p>",
+      "highlight": ["Curve_C1", "Curve_C2", "Line_L1", "Line_L2", "Point_A", "Point_B", "Point_C", "Point_D", "Point_F"]
+    },
+    {
+      "title": "用定义写出一个二次式",
+      "content": "<p>一般地，记 $L_1=a_1x+b_1y+c_1$，$L_2=a_2x+b_2y+c_2$，$N_i=a_i^{2}+b_i^{2}$。两条抛物线是 $N_1(x^{2}+y^{2})=L_1^{2}$ 与 $N_2(x^{2}+y^{2})=L_2^{2}$。于是 $A,B$ 满足 $L_1=0$ 且 $N_2(x^{2}+y^{2})=L_2^{2}$，$C,D$ 满足 $L_2=0$ 且 $N_1(x^{2}+y^{2})=L_1^{2}$。二次式</p><p>$$E=N_1N_2(x^{2}+y^{2})-N_1L_2^{2}-N_2L_1^{2}$$</p><p>在这四点都为零：例如在 $A$ 上，$L_1=0$ 且 $L_2^{2}=N_2(x^{2}+y^{2})$，代入即得 $E=0$。同时 $A,B$ 在 $l_1$ 上，$C,D$ 在 $l_2$ 上，所以乘积 $L_1L_2$ 在四点也为零。</p>",
+      "highlight": ["Line_L1", "Line_L2", "Point_A", "Point_B", "Point_C", "Point_D", "Point_F", "Curve_C1", "Curve_C2"]
+    },
+    {
+      "title": "配成圆的方程",
+      "content": "<p>令 $\\delta=a_1a_2+b_1b_2$，考虑 $\\Gamma=E+2\\delta\\, L_1L_2$。它仍通过四点。展开二次项：$x^{2}$ 的系数为</p><p>$$N_1N_2-N_1a_2^{2}-N_2a_1^{2}+2\\delta a_1a_2=N_1b_2^{2}-N_2a_1^{2}+2\\delta a_1a_2.$$</p><p>把 $N_1=a_1^{2}+b_1^{2}$、$N_2=a_2^{2}+b_2^{2}$ 代入，交叉项消去后正好是 $\\delta^{2}$。$y^{2}$ 的系数同样是 $\\delta^{2}$。$xy$ 的系数为</p><p>$$-2N_1a_2b_2-2N_2a_1b_1+2\\delta(a_1b_2+a_2b_1),$$</p><p>展开后四组单项分别抵消，结果为 $0$。因此</p><p>$$\\Gamma=\\delta^{2}(x^{2}+y^{2})+(\\text{一次项})=0.$$</p><p>题设给出两个交点，故两条准线不垂直，$\\delta\\ne 0$，上式是圆。</p>",
+      "highlight": ["Curve_K", "Point_A", "Point_B", "Point_C", "Line_L1", "Line_L2"]
+    },
+    {
+      "title": "四点都在这个圆上",
+      "content": "<p>$\\Gamma$ 通过 $A,B,C,D$，所以四点共圆。</p>",
+      "highlight": ["Curve_K", "Curve_C1", "Curve_C2", "Line_L1", "Line_L2", "Point_A", "Point_B", "Point_C", "Point_D", "Point_F"]
+    }
+  ],
+  "model": {
+    "elements": {
+      "Axis": {"type": "axes"},
+      "Curve_C1": {"type": "parabola", "curve": "C1", "color": "curve"},
+      "Curve_C2": {"type": "implicit", "curve": "C2", "color": "curve"},
+      "Line_L1": {"type": "line", "curve": "L1", "color": "normal"},
+      "Line_L2": {"type": "line", "curve": "L2", "color": "normal"},
+      "Curve_K": {"type": "circle", "curve": "K", "color": "emphasis"},
+      "Point_F": {"type": "point", "center": "F"},
+      "Point_A": {"type": "point", "center": "A"},
+      "Point_B": {"type": "point", "center": "B"},
+      "Point_C": {"type": "point", "center": "C"},
+      "Point_D": {"type": "point", "center": "D"}
+    }
+  }
+}

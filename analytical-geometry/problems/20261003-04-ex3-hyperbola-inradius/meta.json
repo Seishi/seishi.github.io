@@ -1,0 +1,12 @@
+{
+  "id": "20261003-04-ex3-hyperbola-inradius",
+  "slug": "ex3-hyperbola-inradius",
+  "created": "2026-10-03T22:08:33+08:00",
+  "source_type": "image",
+  "source_file": "source.jpg",
+  "tags": [
+    "hyperbola"
+  ],
+  "title": "双曲线 $E:\\dfrac{x^{2}}{4}-y^{2}=1$ 的右焦点为 $F$，圆 $x^{2}+y^{2}=1$ 的一条切线与双曲线的右支、左支分别交于 $A,B$，切点 $T$ 在第四象限。若 $\\triangle ABF$ 的内切圆半径为 $r$，求 $r$ 的取值范围。",
+  "answer": "$(0,-4 + 2 \\sqrt{5})$"
+}
